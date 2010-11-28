@@ -298,13 +298,13 @@ globalkeys = awful.util.table.join(
     awful.key({			  }, "Print", function ()
 	-- 截图：全屏
 	awful.util.spawn("zsh -c 'cd ~/tmpfs\nscrot\n'")
-	os.execute("sleep .1")
+	os.execute("sleep .5")
 	naughty.notify({title="截图", text="全屏截图已保存。"})
     end),
     awful.key({ "Shift",	  }, "Print", function ()
 	-- 截图：当前窗口
 	awful.util.spawn("zsh -c 'cd ~/tmpfs\nscrot -u\n'")
-	os.execute("sleep .1")
+	os.execute("sleep .5")
 	naughty.notify({title="截图", text="当前窗口截图已保存。"})
     end),
 
