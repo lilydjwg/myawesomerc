@@ -530,8 +530,6 @@ awful.rules.rules = {
       properties = { maximized_horizontal = true,
 		     maximized_vertical = true } },
 
-    { rule = { class = "Firefox" },
-      properties = { tag = tags[1][9] } },
     { rule = { class = "Empathy" },
       properties = { tag = tags[1][6] } },
 }
