@@ -502,7 +502,7 @@ awful.rules.rules = {
       properties = { floating = true } },
     { rule = { class = "Gnome-mplayer" },
       properties = { floating = true } },
-    { rule = { class = "pinentry" },
+    { rule = { class = "feh" },
       properties = { floating = true } },
     { rule = { class = "gimp" },
       properties = { floating = true } },
