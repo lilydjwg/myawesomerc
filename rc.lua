@@ -89,7 +89,6 @@ myawesomemenu = {
 }
 
 mymenu = {
-   { "火狐", "firefox" },
    { "新立得", "gksu -D /usr/share/applications/synaptic.desktop synaptic" },
    { "Wireshark", "gksu -D /usr/share/applications/wireshark.desktop wireshark" },
    { "VirtualBox", "VirtualBox" },
@@ -99,7 +98,8 @@ mymainmenu = awful.menu({ items = { { "Awesome", myawesomemenu, beautiful.awesom
 				    { "Debian", debian.menu.Debian_menu.Debian },
 				    { "常用", mymenu },
 				    { "打开终端", terminal },
-				    { "GVIM", "gvim" }
+				    { "火狐", "firefox" },
+				    { "GVIM", "gvim" },
 				  }
 			})
 
