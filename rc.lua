@@ -85,7 +85,7 @@ end
 myawesomemenu = {
    { "编辑配置", editor_cmd .. " " .. awful.util.getdir("config") .. "/rc.lua" },
    { "重新加载", awesome.restart },
-   { "注销", awesome.quit }
+   { "注销", awesome.quit },
 }
 
 mymenu = {
@@ -95,11 +95,12 @@ mymenu = {
 }
 
 mymainmenu = awful.menu({ items = { { "Awesome", myawesomemenu, beautiful.awesome_icon },
-				    { "Debian", debian.menu.Debian_menu.Debian },
-				    { "常用", mymenu },
-				    { "打开终端", terminal },
-				    { "火狐", "firefox" },
+				    { "终端", terminal },
 				    { "GVIM", "gvim" },
+				    { "火狐", "firefox" },
+				    { "常用", mymenu },
+				    { "Debian", debian.menu.Debian_menu.Debian },
+				    { "关机", "dbus-send --system --print-reply --dest=org.freedesktop.Hal /org/freedesktop/Hal/devices/computer org.freedesktop.Hal.Device.SystemPowerManagement.Shutdown" },
 				  }
 			})
 
