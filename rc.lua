@@ -526,6 +526,8 @@ awful.rules.rules = {
       properties = { floating = true } },
     { rule = { name = "Firefox 首选项" },
       properties = { floating = true } },
+    { rule = { instance = "QQ.exe" },
+      properties = { floating = true } },
 
     { rule = { class = "FullScreenHtop" },
       properties = { maximized_horizontal = true,
