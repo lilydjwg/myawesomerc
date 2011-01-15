@@ -143,9 +143,8 @@ mytasklist.buttons = awful.util.table.join(
 					      if cf == c and not cf.minimized then
 						 cf.minimized = true
 						 do return end
-					      end
-					      if not c:isvisible() then
-						 awful.tag.viewonly(c:tags()[1])
+					      elseif c.minimized then
+						 c.minimized = false
 					      end
 					      client.focus = c
 					      c:raise()
