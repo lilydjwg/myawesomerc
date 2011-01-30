@@ -5,10 +5,18 @@ local table = table
 
 module("myutil")
 
--- {{{1 run_or_raise
--- 来源: http://awesome.naquadah.org/wiki/Run_or_raise
--- {{{2 主函数
-function run_or_raise(cmd, properties)
+-- Returns true if all pairs in table1 are present in table2 {{{1
+function match (table1, table2)
+  for k, v in pairs(table1) do
+    if table2[k] ~= v and not table2[k]:find(v) then
+      return false
+    end
+  end
+  return true
+end
+
+-- Get clients by condition {{{1
+function getclients(properties)
   local clients = client.get()
   local focused = awful.client.next(0)
   local findex = 0
@@ -24,6 +32,15 @@ function run_or_raise(cmd, properties)
       end
     end
   end
+  return matched_clients, findex
+end
+
+-- {{{1 run_or_raise
+-- 来源: http://awesome.naquadah.org/wiki/Run_or_raise
+function run_or_raise(cmd, properties, beforemove)
+  local findex, matched_clients
+  matched_clients, findex = getclients(properties)
+  local n = #matched_clients
   if n > 0 then
     local c = matched_clients[1]
     -- if the focused window matched switch focus to next in list
@@ -32,22 +49,17 @@ function run_or_raise(cmd, properties)
     end
     local ctags = c:tags()
     local curtag = awful.tag.selected()
+    if beforemove then
+      beforemove(c)
+    end
     awful.client.movetotag(curtag, c)
     -- And then focus the client
     client.focus = c
     c:raise()
-    return
+    return c
   end
   awful.util.spawn(cmd)
 end
 
--- Returns true if all pairs in table1 are present in table2 {{{2
-function match (table1, table2)
-  for k, v in pairs(table1) do
-    if table2[k] ~= v and not table2[k]:find(v) then
-      return false
-    end
-  end
-  return true
-end
-
+-- {{{1 vim modeline
+-- vim: se fdm=marker:
