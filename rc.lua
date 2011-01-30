@@ -92,6 +92,7 @@ mymenu = {
    { "新立得", "gksu -D /usr/share/applications/synaptic.desktop synaptic" },
    { "Wireshark", "gksu -D /usr/share/applications/wireshark.desktop wireshark" },
    { "VirtualBox", "VirtualBox" },
+   { "文档查看器", "evince" },
 }
 
 mymainmenu = awful.menu({ items = { { "Awesome", myawesomemenu, beautiful.awesome_icon },
@@ -357,13 +358,6 @@ globalkeys = awful.util.table.join(
 	end
     end),
     awful.key({ modkey,		  }, "Escape", awful.tag.history.restore),
-    -- 临时窗口 -> tag10
-    awful.key({ modkey,		  }, "q", function ()
-	local c = client.focus
-	if c.class == 'FullScreenHtop' or c.class == 'TempTerm' then
-	    awful.client.movetotag(tags[mouse.screen][10], c)
-	end
-    end),
 
     -- {{{3 窗口布局
     awful.key({ modkey,		  }, "l",     function () awful.tag.incmwfact( 0.05)	end),
@@ -407,6 +401,14 @@ globalkeys = awful.util.table.join(
 	else
 	    myutil.run_or_raise("gnome-terminal --disable-factory --class FullScreenHtop -e 'htop'",
 	    { class = "FullScreenHtop" })
+	end
+    end),
+
+    -- {{{4 临时窗口 -> tag10
+    awful.key({ modkey,		  }, "q", function ()
+	local c = client.focus
+	if c.class == 'FullScreenHtop' or c.class == 'TempTerm' then
+	    awful.client.movetotag(tags[mouse.screen][10], c)
 	end
     end),
 
@@ -500,6 +502,8 @@ awful.rules.rules = {
     { rule = { class = "MPlayer" },
       properties = { floating = true } },
     { rule = { class = "Gnome-mplayer" },
+      properties = { floating = true } },
+    { rule = { class = "Totem" },
       properties = { floating = true } },
     { rule = { class = "feh" },
       properties = { floating = true } },
