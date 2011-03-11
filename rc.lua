@@ -537,6 +537,8 @@ awful.rules.rules = {
 
     { rule = { class = "Empathy" },
       properties = { tag = tags[1][6] } },
+    { rule = { class = "QQ.exe" },
+      properties = { tag = tags[1][3] } },
 }
 
 -- {{{1 Signals
@@ -571,6 +573,12 @@ client.add_signal("manage", function (c, startup)
 	    awful.placement.no_overlap(c)
 	    awful.placement.no_offscreen(c)
 	end
+    end
+    if c.class == 'QQ.exe' and c.above then
+	naughty.notify({title="QQ广告屏蔽", text="检测到一个符合条件的窗口，标题为".. c.name .."。"})
+    end
+    if c.class == 'QQ.exe' and c.name == '腾讯网新闻' then
+	c:kill()
     end
 end)
 
