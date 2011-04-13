@@ -28,7 +28,7 @@ local function empathy(p)
     local cls = {}
     local buddylist
     for k, c in ipairs(p.clients) do
-      if c.name ~= '联系人列表' then
+      if c.name ~= '联系人列表' and c.name ~= 'Contact List' then
 	cls[k] = c
       else
 	buddylist = c
