@@ -530,10 +530,13 @@ awful.rules.rules = {
       properties = { floating = true } },
     { rule = { instance = "QQ.exe" },
       properties = { floating = true } },
-
     { rule = { class = "FullScreenHtop" },
       properties = { maximized_horizontal = true,
 		     maximized_vertical = true } },
+    { rule = { instance = "Toplevel" }, --火狐的对话框
+      properties = { floating = true } },
+    { rule = { instance = "gnome-panel" },
+      properties = { above = true } },
 
     { rule = { class = "Empathy" },
       properties = { tag = tags[1][6] } },
