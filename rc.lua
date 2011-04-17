@@ -4,6 +4,7 @@ require("awful.autofocus")
 require("awful.rules")
 -- Theme handling library
 require("beautiful")
+require("vicious")
 -- Notification library
 require("naughty")
 -- require("vicious")
@@ -115,11 +116,26 @@ myclock = timer({ timeout = 1 })
 myclock:add_signal("timeout", function() mytextclock.text = os.date(" %Y年%m月%d日 %H:%M:%S %A ") end)
 myclock:start()
 
--- {{{2 Network usage widget
--- Initialize widget
--- netwidget = widget({ type = "textbox" })
--- Register widget
--- vicious.register(netwidget, vicious.widgets.net, '<span color="#CC9393">${eth0 down_kb}</span> <span color="#7F9F7F">${eth0 up_kb}</span>', 3)
+-- {{{2 vicious widgets
+netwidget = widget({ type = "textbox" })
+vicious.register(netwidget, vicious.widgets.net, '↓<span color="#5798d9">${eth0 down_kb}</span> ↑<span color="#c2ba62">${eth0 up_kb}</span> ', 3)
+
+memwidget = widget({ type = "textbox" })
+vicious.register(memwidget, vicious.widgets.mem, 'Mem <span color="#90ee90">$1%</span>', 10)
+
+cputempwidget = widget({ type = "textbox" })
+cputempwidget_clock = timer({ timeout = 2 })
+cputempwidget_clock:add_signal("timeout", function()
+    local fc = ''
+    local f  = io.popen("sensors")
+    for line in f:lines() do
+	fc = line:match('^CPU Temperature: [+-](%S+)')
+	if fc then break end
+    end
+    f:close()
+    cputempwidget.text = ' CPU: <span color="#add8e6">' .. fc .. '</span> '
+end)
+cputempwidget_clock:start()
 
 -- {{{2 Create a systray
 mysystray = widget({ type = "systray" })
@@ -201,8 +217,10 @@ for s = 1, screen.count() do -- {{{2
 	},
 	mylayoutbox[s],
 	mytextclock,
-	-- netwidget,
 	s == 1 and mysystray or nil,
+	netwidget,
+	memwidget,
+	cputempwidget,
 	mytasklist[s],
 	layout = awful.widget.layout.horizontal.rightleft
     }
