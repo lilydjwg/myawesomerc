@@ -575,7 +575,7 @@ client.add_signal("manage", function (c, startup)
 	    awful.placement.no_offscreen(c)
 	end
     end
-    if c.name:match('^FlashGot') then
+    if c.name and c.name:match('^FlashGot') then
 	c.minimized = true
 	-- naughty.notify({title="FlashGot", text="OK"})
     end
