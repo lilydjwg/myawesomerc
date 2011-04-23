@@ -118,10 +118,10 @@ myclock:start()
 
 -- {{{2 vicious widgets
 netwidget = widget({ type = "textbox" })
-vicious.register(netwidget, vicious.widgets.net, '↓<span color="#5798d9">${eth0 down_kb}</span> ↑<span color="#c2ba62">${eth0 up_kb}</span> ', 3)
+vicious.register(netwidget, vicious.widgets.net, '↓<span color="#5798d9">${eth0 down_kb}</span> ↑<span color="#c2ba62">${eth0 up_kb}</span> ', 2)
 
 memwidget = widget({ type = "textbox" })
-vicious.register(memwidget, vicious.widgets.mem, 'Mem <span color="#90ee90">$1%</span>', 10)
+vicious.register(memwidget, vicious.widgets.mem, 'Mem <span color="#90ee90">$1%</span>', 3)
 
 cputempwidget = widget({ type = "textbox" })
 cputempwidget_clock = timer({ timeout = 2 })
@@ -562,6 +562,7 @@ awful.rules.rules = {
 
 -- {{{1 Signals
 -- Signal function to execute when a new client appears.
+qqad_blocked = 0
 client.add_signal("manage", function (c, startup)
     -- Add a titlebar
     -- awful.titlebar.add(c, { modkey = modkey })
@@ -602,9 +603,10 @@ client.add_signal("manage", function (c, startup)
     end
     if c.instance == 'QQ.exe' then
 	-- naughty.notify({title="新窗口", text="名称为 ".. c.name .."，class 为 " .. c.class:gsub('&', '&amp;') .. " 的窗口已接受管理。", preset=naughty.config.presets.critical})
-	if c.name == '上线提醒' or c.name == 'TXMenuWindow' then
+	if c.name and c.name == '上线提醒' or c.name == 'TXMenuWindow' then
 	elseif c.above and not c.name:match('^%w+$') then
-	    naughty.notify({title="QQ广告屏蔽", text="检测到一个符合条件的窗口，标题为".. c.name .."。"})
+	    qqad_blocked = qqad_blocked + 1
+	    naughty.notify({title="QQ广告屏蔽 " .. qqad_blocked, text="检测到一个符合条件的窗口，标题为".. c.name .."。"})
 	    c:kill()
 	else
 	    awful.client.movetotag(tags[mouse.screen][3], c)
