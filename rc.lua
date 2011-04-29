@@ -10,7 +10,7 @@ require("naughty")
 -- require("vicious")
 
 -- Load Debian menu entries
-require("debian.menu")
+-- require("debian.menu")
 
 -- my modules
 require("empathy")
@@ -90,8 +90,7 @@ myawesomemenu = {
 }
 
 mymenu = {
-   { "新立得", "gksu -D /usr/share/applications/synaptic.desktop synaptic" },
-   { "Wireshark", "gksu -D /usr/share/applications/wireshark.desktop wireshark" },
+   { "Wireshark", "wireshark" },
    { "VirtualBox", "VirtualBox" },
    { "文档查看器", "evince" },
 }
@@ -101,7 +100,6 @@ mymainmenu = awful.menu({ items = { { "Awesome", myawesomemenu, beautiful.awesom
 				    { "GVIM", "gvim" },
 				    { "火狐", "firefox" },
 				    { "常用", mymenu },
-				    { "Debian", debian.menu.Debian_menu.Debian },
 				    { "关机", "dbus-send --system --print-reply --dest=org.freedesktop.Hal /org/freedesktop/Hal/devices/computer org.freedesktop.Hal.Device.SystemPowerManagement.Shutdown" },
 				  }
 			})
@@ -129,11 +127,11 @@ cputempwidget_clock:add_signal("timeout", function()
     local fc = ''
     local f  = io.popen("sensors")
     for line in f:lines() do
-	fc = line:match('^CPU Temperature: [+-](%S+)')
+	fc = line:match('^CPU Temperature:%s+[+-](%S+)')
 	if fc then break end
     end
     f:close()
-    if tonumber(fc:match('%d+')) > 65 then
+    if fc and tonumber(fc:match('%d+')) > 65 then
 	naughty.notify({title="警告", text="CPU 温度已超过 65℃！", preset=naughty.config.presets.critical})
     end
     cputempwidget.text = ' CPU: <span color="#add8e6">' .. fc .. '</span> '
