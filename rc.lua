@@ -85,24 +85,24 @@ end
 -- Create a laucher widget and a main menu
 myawesomemenu = {
    { "编辑配置", editor_cmd .. " " .. awful.util.getdir("config") .. "/rc.lua" },
-   { "重新加载", awesome.restart },
+   { "重新加载", awesome.restart, '/usr/share/icons/gnome/16x16/actions/stock_refresh.png' },
    { "注销", awesome.quit },
 }
 
 mymenu = {
-   { "新立得", "gksu -D /usr/share/applications/synaptic.desktop synaptic" },
-   { "Wireshark", "gksu -D /usr/share/applications/wireshark.desktop wireshark" },
-   { "VirtualBox", "VirtualBox" },
-   { "文档查看器", "evince" },
+   { "新立得", "gksu -D /usr/share/applications/synaptic.desktop synaptic", '/usr/share/pixmaps/synaptic.png' },
+   { "Wireshark", "gksu -D /usr/share/applications/wireshark.desktop wireshark", '/usr/share/pixmaps/hi48-app-wireshark.png'},
+   { "VirtualBox", "VirtualBox", '/usr/share/icons/hicolor/16x16/apps/virtualbox.png' },
+   { "文档查看器", "evince", '/usr/share/icons/hicolor/16x16/apps/evince.png' },
 }
 
 mymainmenu = awful.menu({ items = { { "Awesome", myawesomemenu, beautiful.awesome_icon },
-				    { "终端", terminal },
-				    { "GVIM", "gvim" },
-				    { "火狐", "firefox" },
+				    { "终端", terminal, '/usr/share/icons/gnome/16x16/apps/gnome-terminal.png' },
+				    { "GVIM", "gvim", '/usr/share/icons/gnome/16x16/apps/gvim.png' },
+				    { "火狐", "firefox", '/usr/share/pixmaps/firefox.png' },
 				    { "常用", mymenu },
 				    { "Debian", debian.menu.Debian_menu.Debian },
-				    { "关机", "dbus-send --system --print-reply --dest=org.freedesktop.Hal /org/freedesktop/Hal/devices/computer org.freedesktop.Hal.Device.SystemPowerManagement.Shutdown" },
+				    { "关机", "dbus-send --system --print-reply --dest=org.freedesktop.Hal /org/freedesktop/Hal/devices/computer org.freedesktop.Hal.Device.SystemPowerManagement.Shutdown", '/usr/share/icons/gnome/16x16/actions/gtk-quit.png' },
 				  }
 			})
 
