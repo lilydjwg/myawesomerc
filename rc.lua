@@ -85,22 +85,22 @@ end
 -- Create a laucher widget and a main menu
 myawesomemenu = {
    { "编辑配置", editor_cmd .. " " .. awful.util.getdir("config") .. "/rc.lua" },
-   { "重新加载", awesome.restart },
+   { "重新加载", awesome.restart, '/usr/share/icons/gnome/16x16/actions/stock_refresh.png' },
    { "注销", awesome.quit },
 }
 
 mymenu = {
-   { "Wireshark", "wireshark" },
-   { "VirtualBox", "VirtualBox" },
-   { "文档查看器", "evince" },
+   { "Wireshark", "gksu -D /usr/share/applications/wireshark.desktop wireshark", '/usr/share/pixmaps/hi48-app-wireshark.png'},
+   { "VirtualBox", "VirtualBox", '/usr/share/icons/hicolor/16x16/apps/virtualbox.png' },
+   { "文档查看器", "evince", '/usr/share/icons/hicolor/16x16/apps/evince.png' },
 }
 
 mymainmenu = awful.menu({ items = { { "Awesome", myawesomemenu, beautiful.awesome_icon },
-				    { "终端", terminal },
-				    { "GVIM", "gvim" },
-				    { "火狐", "firefox" },
+				    { "终端", terminal, '/usr/share/icons/gnome/16x16/apps/gnome-terminal.png' },
+				    { "GVIM", "gvim", '/usr/share/icons/gnome/16x16/apps/gvim.png' },
+				    { "火狐", "firefox", '/usr/share/pixmaps/firefox.png' },
 				    { "常用", mymenu },
-				    { "关机", "dbus-send --system --print-reply --dest=org.freedesktop.Hal /org/freedesktop/Hal/devices/computer org.freedesktop.Hal.Device.SystemPowerManagement.Shutdown" },
+				    { "关机", "dbus-send --system --print-reply --dest=org.freedesktop.Hal /org/freedesktop/Hal/devices/computer org.freedesktop.Hal.Device.SystemPowerManagement.Shutdown", '/usr/share/icons/gnome/16x16/actions/gtk-quit.png' },
 				  }
 			})
 
@@ -147,12 +147,12 @@ mypromptbox = {}
 mylayoutbox = {}
 mytaglist = {}
 mytaglist.buttons = awful.util.table.join(
-		    awful.button({ }, 1, awful.tag.viewonly),
-		    awful.button({ modkey }, 1, awful.client.movetotag),
-		    awful.button({ }, 3, awful.tag.viewtoggle),
-		    awful.button({ modkey }, 3, awful.client.toggletag),
-		    awful.button({ }, 4, awful.tag.viewnext),
-		    awful.button({ }, 5, awful.tag.viewprev)
+			awful.button({ }, 1, awful.tag.viewonly),
+			awful.button({ modkey }, 1, awful.client.movetotag),
+			awful.button({ }, 3, awful.tag.viewtoggle),
+			awful.button({ modkey }, 3, awful.client.toggletag),
+			awful.button({ }, 4, awful.tag.viewprev),
+			awful.button({ }, 5, awful.tag.viewnext)
 		    )
 mytasklist = {}
 mytasklist.buttons = awful.util.table.join(
@@ -230,8 +230,8 @@ end
 -- {{{1 Mouse bindings
 root.buttons(awful.util.table.join(
     awful.button({ }, 3, function () mymainmenu:toggle() end),
-    awful.button({ }, 4, awful.tag.viewnext),
-    awful.button({ }, 5, awful.tag.viewprev)
+    awful.button({ }, 4, awful.tag.viewprev),
+    awful.button({ }, 5, awful.tag.viewnext)
 ))
 
 -- {{{1 键盘快捷键
