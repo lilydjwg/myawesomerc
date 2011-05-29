@@ -90,15 +90,15 @@ myawesomemenu = {
 }
 
 mymenu = {
-   { "Wireshark", "gksu -D /usr/share/applications/wireshark.desktop wireshark", '/usr/share/pixmaps/hi48-app-wireshark.png'},
-   { "VirtualBox", "VirtualBox", '/usr/share/icons/hicolor/16x16/apps/virtualbox.png' },
+   { "Wireshark", "wireshark", '/usr/share/icons/hicolor/32x32/apps/wireshark.png'},
+   { "VirtualBox", "VirtualBox", '/usr/share/icons/hicolor/32x32/mimetypes/virtualbox.png' },
    { "文档查看器", "evince", '/usr/share/icons/hicolor/16x16/apps/evince.png' },
 }
 
 mymainmenu = awful.menu({ items = { { "Awesome", myawesomemenu, beautiful.awesome_icon },
 				    { "终端", terminal, '/usr/share/icons/gnome/16x16/apps/gnome-terminal.png' },
-				    { "GVIM", "gvim", '/usr/share/icons/gnome/16x16/apps/gvim.png' },
-				    { "火狐", "firefox", '/usr/share/pixmaps/firefox.png' },
+				    { "GVIM", "gvim" },
+				    { "火狐", "firefox", '/usr/share/icons/hicolor/32x32/apps/firefox.png' },
 				    { "常用", mymenu },
 				    { "关机", "dbus-send --system --print-reply --dest=org.freedesktop.Hal /org/freedesktop/Hal/devices/computer org.freedesktop.Hal.Device.SystemPowerManagement.Shutdown", '/usr/share/icons/gnome/16x16/actions/gtk-quit.png' },
 				  }
@@ -523,6 +523,8 @@ awful.rules.rules = {
     { rule = { class = "Gnome-mplayer" },
       properties = { floating = true } },
     { rule = { class = "Totem" },
+      properties = { floating = true } },
+    { rule = { class = "Eog" },
       properties = { floating = true } },
     { rule = { class = "feh" },
       properties = { floating = true } },

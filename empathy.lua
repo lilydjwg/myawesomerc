@@ -8,7 +8,7 @@
 local ipairs = ipairs
 local math = math
 -- “联系人列表”宽度
-local buddylist_height = 285
+local buddylist_height = 295
 -- local naughty = naughty
 
 --- empathy layouts module for awful
