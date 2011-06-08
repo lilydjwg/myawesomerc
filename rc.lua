@@ -520,6 +520,8 @@ awful.rules.rules = {
 		     buttons = clientbuttons } },
     { rule = { class = "MPlayer" },
       properties = { floating = true } },
+    { rule = { class = "Flashplayer" },
+      properties = { floating = true } },
     { rule = { class = "Gnome-mplayer" },
       properties = { floating = true } },
     { rule = { class = "Totem" },
