@@ -623,7 +623,6 @@ client.add_signal("focus", function(c) c.border_color = beautiful.border_focus e
 client.add_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 
 awful.util.spawn("awesomeup")
-awful.util.spawn("numlockx on")
 awful.tag.viewonly(tags[1][6])
 
 -- vim: set fdm=marker sw=4 sts=4:
