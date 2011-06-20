@@ -8,7 +8,8 @@ module("myutil")
 -- Returns true if all pairs in table1 are present in table2 {{{1
 function match (table1, table2)
   for k, v in pairs(table1) do
-    if table2[k] ~= v and not table2[k]:find(v) then
+    -- not all clients have all properties so first test if it is nil
+    if table2[k] and table2[k] ~= v and not table2[k]:find(v) then
       return false
     end
   end
