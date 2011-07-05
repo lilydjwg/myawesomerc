@@ -499,7 +499,7 @@ clientbuttons = awful.util.table.join(
     awful.button({ }, 1, function (c) client.focus = c; c:raise() end),
     awful.button({ modkey }, 1, awful.mouse.client.move),
     awful.button({ modkey }, 2, function (c) client.focus = c; c:kill() end),
-    awful.button({ modkey }, 3, awful.mouse.client.resize))
+    awful.button({ modkey }, 3, function (c) awful.mouse.client.resize(c, "bottom_right") end))
 
 -- {{{3 Set keys
 root.keys(globalkeys)
@@ -528,6 +528,8 @@ awful.rules.rules = {
     { rule = { class = "gimp" },
       properties = { floating = true } },
     -- 下面是我自己的设置
+    { rule = { class = "Screenkey" },
+      properties = { floating = true } },
     { rule = { class = "Screenruler" },
       properties = { floating = true,
 		     focus = false,
