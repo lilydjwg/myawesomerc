@@ -605,7 +605,7 @@ client.add_signal("manage", function (c, startup)
     end
     if c.instance == 'QQ.exe' then
 	-- naughty.notify({title="新窗口", text="名称为 ".. c.name .."，class 为 " .. c.class:gsub('&', '&amp;') .. " 的窗口已接受管理。", preset=naughty.config.presets.critical})
-	if c.name and c.name == '上线提醒' or c.name == 'TXMenuWindow' then
+	if c.name and c.name == '上线提醒' or c.name == 'TXMenuWindow' or c.name == '关闭提示' or c.name == '系统消息' or c.name == '选择文件夹' then
 	elseif c.name and c.above and not c.name:match('^%w+$') then
 	    qqad_blocked = qqad_blocked + 1
 	    naughty.notify({title="QQ广告屏蔽 " .. qqad_blocked, text="检测到一个符合条件的窗口，标题为".. c.name .."。"})
