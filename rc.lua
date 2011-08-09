@@ -621,6 +621,7 @@ client.add_signal("manage", function (c, startup)
 		awful.client.movetotag(tags[mouse.screen][3], c)
 	    end
 	end
+	handled = false
     end
 end)
 
