@@ -122,22 +122,22 @@ vicious.register(netwidget, vicious.widgets.net, '↓<span color="#5798d9">${eth
 memwidget = widget({ type = "textbox" })
 vicious.register(memwidget, vicious.widgets.mem, 'Mem <span color="#90ee90">$1%</span>', 3)
 
--- cputempwidget = widget({ type = "textbox" })
--- cputempwidget_clock = timer({ timeout = 2 })
--- cputempwidget_clock:add_signal("timeout", function()
---     local fc = ''
---     local f  = io.popen("sensors")
---     for line in f:lines() do
---         fc = line:match('^CPU Temperature:%s+[+-](%S+)')
---         if fc then break end
---     end
---     f:close()
---     if fc and tonumber(fc:match('%d+')) > 65 then
---         naughty.notify({title="警告", text="CPU 温度已超过 65℃！", preset=naughty.config.presets.critical})
---     end
---     cputempwidget.text = ' CPU: <span color="#add8e6">' .. fc .. '</span> '
--- end)
--- cputempwidget_clock:start()
+cputempwidget = widget({ type = "textbox" })
+cputempwidget_clock = timer({ timeout = 2 })
+cputempwidget_clock:add_signal("timeout", function()
+    local fc = ''
+    local f  = io.popen("sensors")
+    for line in f:lines() do
+	fc = line:match('^CPU Temperature:%s+[+-](%S+)')
+	if fc then break end
+    end
+    f:close()
+    if fc and tonumber(fc:match('%d+')) > 65 then
+	naughty.notify({title="警告", text="CPU 温度已超过 65℃！", preset=naughty.config.presets.critical})
+    end
+    cputempwidget.text = ' CPU: <span color="#add8e6">' .. fc .. '</span> '
+end)
+cputempwidget_clock:start()
 
 -- {{{2 Create a systray
 mysystray = widget({ type = "systray" })
@@ -222,7 +222,7 @@ for s = 1, screen.count() do -- {{{2
 	s == 1 and mysystray or nil,
 	netwidget,
 	memwidget,
-	-- cputempwidget,
+	cputempwidget,
 	mytasklist[s],
 	layout = awful.widget.layout.horizontal.rightleft
     }
