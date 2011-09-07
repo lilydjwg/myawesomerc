@@ -1,0 +1,116 @@
+ menuf27b59fafea3e9ffcf3f6993c1c1439e = {     {"Avahi SSH服务器浏览器", "/usr/bin/bssh"},
+     {"Avahi VNC服务器浏览器", "/usr/bin/bvnc"},
+     {"Dropbox", "/opt/dropbox/dropboxd"},
+     {"ELinks", "xterm -e /usr/bin/elinks "},
+     {"Empathy", "empathy"},
+     {"Firefox", "firefox "},
+     {"Google Chrome", "/opt/google/chrome/google-chrome "},
+     {"Opera", "/usr/bin/opera "},
+     {"Pidgin 互联网通讯程序", "pidgin"},
+     {"Transmission", "transmission-gtk "},
+     {"Wuala", "wuala"},
+     {"Zenmap", "zenmap "},
+     {"Zenmap (as root)", "/usr/share/zenmap/su-to-zenmap.sh "},
+ }
+
+ menu5a0afc9dbd6c2e98769d4620d4fb5b13 = {     {"Adobe Flash Player", "flash-player-properties"},
+     {"Celestia", "celestia"},
+     {"Fcitx配置工具", "fcitx-configtool"},
+     {"Java", "jcontrol"},
+     {"Java Policy Settings", "policytool"},
+     {"JavaWS", "javaws-launcher "},
+     {"Opera Widget Manager", "/usr/bin/opera-widget-manager"},
+     {"SAGE", "xterm -e /opt/sage/sage -notebook"},
+     {"密钥环管理器", "gnome-keyring-manager"},
+ }
+
+ menudb53804b7d726967c58fcc8c9ca03d27 = {     {"LibreOffice ", "libreoffice "},
+     {"LibreOffice Base", "libreoffice --base "},
+     {"LibreOffice Calc", "libreoffice --calc "},
+     {"LibreOffice Draw", "libreoffice --draw "},
+     {"LibreOffice Impress", "libreoffice --impress "},
+     {"LibreOffice Math", "libreoffice --math "},
+     {"LibreOffice Writer", "libreoffice --writer "},
+     {"Microsoft Office Excel 2003", "msexcel"},
+     {"Microsoft Office PowerPoint 2003", "mspowerpoint"},
+     {"Microsoft Office Word 2003", "msword"},
+     {"字典", "gnome-dictionary"},
+ }
+
+ menu9be72ba165a45aaed9f950ec718475be = {     {"Blender", "blender"},
+     {"Dia 图表编辑器", "dia "},
+     {"GNU 图像处理程序", "gimp-2.6 "},
+     {"Inkscape", "inkscape "},
+     {"图像查看器", "eog "},
+ }
+
+ menu526fe18cc54d217db3fdb0bf6c5e9bc8 = {     {"FlashPlayer", "flashplayer"},
+     {"QT V4L2 test Utility", "qv4l2"},
+     {"VLC media player", "vlc "},
+     {"gtk-recordMyDesktop", "gtk-recordMyDesktop"},
+ }
+
+ menu8640cb1581c2ae2de5a1462405b2943b = {     {"Stellarium nightsky renderer", "stellarium"},
+ }
+
+ menuba08216f13dd1742157412386eee1225 = {     {"Chromium B.S.U.", "chromium-bsu"},
+ }
+
+ menude71492af019157e5a5ef958b570e760 = {     {"Avahi Zero浏览器", "/usr/bin/avahi-discover"},
+     {"ELF Library Viewer", "elflibviewer -caption \"ELF Library Viewer\" "},
+     {"Fcitx", "fcitx"},
+     {"Fcitx (使用Kimpanel)", "fcitx -u fcitx-kimpanel-ui"},
+     {"GParted", "gksu /usr/sbin/gparted "},
+     {"Htop", "xterm -e htop"},
+     {"Oracle VM VirtualBox", "VirtualBox "},
+     {"Wireshark", "wireshark"},
+     {"磁盘使用分析器", "baobab"},
+     {"系统日志查看器", "gnome-system-log"},
+     {"配置编辑器", "gconf-editor"},
+ }
+
+ menu41282bf95e43c64d579757573a03cdde = {     {"CMake", "cmake-gui "},
+     {"Devhelp", "devhelp"},
+     {"ELF Library Viewer", "elflibviewer -caption \"ELF Library Viewer\" "},
+     {"Emacs Text Editor", "emacs "},
+     {"Java Monitoring and Management Console", "jconsole"},
+     {"Java VisualVM", "jvisualvm"},
+     {"Meld", "meld"},
+     {"Qt Assistant", "/usr/bin/assistant"},
+     {"Qt Designer", "/usr/bin/designer"},
+     {"Qt Linguist", "/usr/bin/linguist"},
+     {"SQLite Manager", "xulrunner /usr/share/sqlite-manager/application.ini -f  "},
+ }
+
+ menuc9a6ee90f5d43732e3f6cf4dcaa8493c = {     {"7-Zip FM", "7zFM"},
+     {"Leafpad", "leafpad "},
+     {"Parcellite", "parcellite"},
+     {"Qalculate!", "qalculate-gtk"},
+     {"Root 终端", "gksu -l gnome-terminal"},
+     {"ScreenRuler", "screenruler"},
+     {"Screenkey", "screenkey"},
+     {"Shutter", "shutter "},
+     {"gVim", "gvim "},
+     {"gedit", "gedit "},
+     {"字符映射表", "gucharmap"},
+     {"密码和加密密钥", "seahorse"},
+     {"归档管理器", "file-roller "},
+     {"抓图", "gnome-screenshot --interactive"},
+     {"搜索文件...", "gnome-search-tool"},
+     {"星际译王", "stardict"},
+     {"磁盘实用工具", "palimpsest"},
+     {"终端", "gnome-terminal"},
+ }
+
+xdgmenu = {    {"互联网", menuf27b59fafea3e9ffcf3f6993c1c1439e},
+    {"其它", menu5a0afc9dbd6c2e98769d4620d4fb5b13},
+    {"办公", menudb53804b7d726967c58fcc8c9ca03d27},
+    {"图形", menu9be72ba165a45aaed9f950ec718475be},
+    {"影音", menu526fe18cc54d217db3fdb0bf6c5e9bc8},
+    {"教育", menu8640cb1581c2ae2de5a1462405b2943b},
+    {"游戏", menuba08216f13dd1742157412386eee1225},
+    {"系统工具", menude71492af019157e5a5ef958b570e760},
+    {"编程", menu41282bf95e43c64d579757573a03cdde},
+    {"附件", menuc9a6ee90f5d43732e3f6cf4dcaa8493c},
+}
+

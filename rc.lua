@@ -15,6 +15,7 @@ require("naughty")
 -- my modules
 require("empathy")
 require("myutil")
+require("menu")
 
 os.setlocale("zh_CN.UTF-8")
 
@@ -101,6 +102,7 @@ mymainmenu = awful.menu({ items = { { "Awesome", myawesomemenu, beautiful.awesom
           { "G&VIM", "gvim", '/usr/share/pixmaps/gvim.png' },
           { "火狐 (&F)", "firefox", '/usr/share/icons/hicolor/32x32/apps/firefox.png' },
           { "常用 (&U)", mymenu },
+          { "应用程序 (&A)", xdgmenu },
           { "挂起 (&S)", "dbus-send --print-reply --system --dest=org.freedesktop.Hal /org/freedesktop/Hal/devices/computer org.freedesktop.Hal.Device.SystemPowerManagement.Suspend int32:0" },
           { "关机 (&H)", "dbus-send --print-reply --system --dest=org.freedesktop.Hal /org/freedesktop/Hal/devices/computer org.freedesktop.Hal.Device.SystemPowerManagement.Shutdown", '/usr/share/icons/gnome/16x16/actions/gtk-quit.png' },
           }
