@@ -84,27 +84,27 @@ end
 -- {{{1 Menu
 -- Create a laucher widget and a main menu
 myawesomemenu = {
-   { "编辑配置", editor_cmd .. " " .. awful.util.getdir("config") .. "/rc.lua" },
-   { "重新加载", awesome.restart, '/usr/share/icons/gnome/16x16/actions/stock_refresh.png' },
-   { "注销", awesome.quit },
+   { "编辑配置 (&E)", editor_cmd .. " " .. awful.util.getdir("config") .. "/rc.lua" },
+   { "重新加载 (&R)", awesome.restart, '/usr/share/icons/gnome/16x16/actions/stock_refresh.png' },
+   { "注销 (&L)", awesome.quit },
 }
 
 mymenu = {
-   { "Nautilus", "nautilus --no-desktop /home/lilydjwg/tmpfs", '/usr/share/icons/hicolor/32x32/apps/nautilus.png' },
-   { "Wireshark", "wireshark", '/usr/share/icons/hicolor/32x32/apps/wireshark.png'},
-   { "VirtualBox", "VirtualBox", '/usr/share/icons/hicolor/32x32/mimetypes/virtualbox.png' },
-   { "文档查看器", "evince", '/usr/share/icons/hicolor/16x16/apps/evince.png' },
+   { "&Nautilus", "nautilus --no-desktop /home/lilydjwg/tmpfs", '/usr/share/icons/hicolor/32x32/apps/nautilus.png' },
+   { "&Wireshark", "wireshark", '/usr/share/icons/hicolor/32x32/apps/wireshark.png'},
+   { "&VirtualBox", "VirtualBox", '/usr/share/icons/hicolor/32x32/mimetypes/virtualbox.png' },
+   { "文档查看器 (&E)", "evince", '/usr/share/icons/hicolor/16x16/apps/evince.png' },
 }
 
 mymainmenu = awful.menu({ items = { { "Awesome", myawesomemenu, beautiful.awesome_icon },
-          { "终端", terminal, '/usr/share/icons/gnome/16x16/apps/gnome-terminal.png' },
-          { "GVIM", "gvim", '/usr/share/pixmaps/gvim.png' },
-          { "火狐", "firefox", '/usr/share/icons/hicolor/32x32/apps/firefox.png' },
-          { "常用", mymenu },
-          { "挂起", "dbus-send --print-reply --system --dest=org.freedesktop.Hal /org/freedesktop/Hal/devices/computer org.freedesktop.Hal.Device.SystemPowerManagement.Suspend int32:0" },
-          { "关机", "dbus-send --print-reply --system --dest=org.freedesktop.Hal /org/freedesktop/Hal/devices/computer org.freedesktop.Hal.Device.SystemPowerManagement.Shutdown", '/usr/share/icons/gnome/16x16/actions/gtk-quit.png' },
+          { "终端 (&T)", terminal, '/usr/share/icons/gnome/16x16/apps/gnome-terminal.png' },
+          { "G&VIM", "gvim", '/usr/share/pixmaps/gvim.png' },
+          { "火狐 (&F)", "firefox", '/usr/share/icons/hicolor/32x32/apps/firefox.png' },
+          { "常用 (&U)", mymenu },
+          { "挂起 (&S)", "dbus-send --print-reply --system --dest=org.freedesktop.Hal /org/freedesktop/Hal/devices/computer org.freedesktop.Hal.Device.SystemPowerManagement.Suspend int32:0" },
+          { "关机 (&H)", "dbus-send --print-reply --system --dest=org.freedesktop.Hal /org/freedesktop/Hal/devices/computer org.freedesktop.Hal.Device.SystemPowerManagement.Shutdown", '/usr/share/icons/gnome/16x16/actions/gtk-quit.png' },
           }
-      })
+})
 
 mylauncher = awful.widget.launcher({ image = image(beautiful.awesome_icon),
            menu = mymainmenu })
