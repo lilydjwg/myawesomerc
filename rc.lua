@@ -565,6 +565,7 @@ awful.rules.rules = {
 
 -- {{{1 Signals
 -- Signal function to execute when a new client appears.
+-- {{{2 manage
 qqad_blocked = 0
 qq_dontblock = { '上线提醒', 'TXMenuWindow', '关闭提示', '系统消息', '选择文件夹', '导出', '查找' }
 client.add_signal("manage", function (c, startup)
@@ -626,8 +627,12 @@ client.add_signal("manage", function (c, startup)
   end
 end)
 
+-- {{{2 focus and unfocus
+client.add_signal("focus", function(c) c.border_color = beautiful.border_focus end)
+client.add_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
+
+-- {{{2 for GIMP
 client.add_signal("focus", function(c)
-  c.border_color = beautiful.border_focus
   if c.class and c.class == 'Gimp-2.6' then
     for _, i in ipairs(c:tags()) do
       for _, j in ipairs(i:clients()) do
@@ -639,7 +644,6 @@ client.add_signal("focus", function(c)
   end
 end)
 client.add_signal("unfocus", function(c)
-  c.border_color = beautiful.border_normal
   if c.class and c.class == 'Gimp-2.6' then
     for _, i in ipairs(c:tags()) do
       for _, j in ipairs(i:clients()) do
@@ -651,6 +655,7 @@ client.add_signal("unfocus", function(c)
   end
 end)
 
+-- {{{1 other things
 awful.util.spawn("awesomeup")
 awful.tag.viewonly(tags[1][6])
 
