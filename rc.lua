@@ -54,6 +54,10 @@ layouts =
   awful.layout.suit.magnifier,
 }
 
+-- 单击时是否 raise 窗口
+raise_client = {}
+n = function(n) naughty.notify({title="消息", text=tostring(n)}) end
+
 -- {{{1 Tags
 -- Define a tag table which hold all screen tags.
 tags_name = { "1", "2", "3", "4", "5文件", "6聊天", "7GVIM", "8终端", "9火狐", '0' }
@@ -160,36 +164,37 @@ mytaglist.buttons = awful.util.table.join(
       )
 mytasklist = {}
 mytasklist.buttons = awful.util.table.join(
-       awful.button({ }, 1, function (c)
-              cf = client.focus
-              if cf == c and not cf.minimized then
-             cf.minimized = true
-             do return end
-              elseif c.minimized then
-             c.minimized = false
-              end
-              client.focus = c
-              c:raise()
-            end),
-       awful.button({ }, 2, function (c)
-              c:kill()
-            end),
-       awful.button({ }, 3, function ()
-              if instance then
-              instance:hide()
-              instance = nil
-              else
-              instance = awful.menu.clients({ width=250 })
-              end
-            end),
-       awful.button({ }, 4, function ()
-              awful.client.focus.byidx(1)
-              if client.focus then client.focus:raise() end
-            end),
-       awful.button({ }, 5, function ()
-              awful.client.focus.byidx(-1)
-              if client.focus then client.focus:raise() end
-            end))
+  awful.button({ }, 1, function (c)
+    cf = client.focus
+    if cf == c and not cf.minimized then
+      cf.minimized = true
+      do return end
+    elseif c.minimized then
+      c.minimized = false
+    end
+    client.focus = c
+    c:raise()
+  end),
+  awful.button({ }, 2, function (c)
+    c:kill()
+  end),
+  awful.button({ }, 3, function ()
+    if instance then
+      instance:hide()
+      instance = nil
+    else
+      instance = awful.menu.clients({ width=250 })
+    end
+  end),
+  awful.button({ }, 4, function ()
+    awful.client.focus.byidx(1)
+    if client.focus then client.focus:raise() end
+  end),
+  awful.button({ }, 5, function ()
+    awful.client.focus.byidx(-1)
+    if client.focus then client.focus:raise() end
+  end)
+)
 
 for s = 1, screen.count() do -- {{{2
   -- Create a promptbox for each screen
@@ -316,50 +321,45 @@ globalkeys = awful.util.table.join(
   movebyrelidx(-1, false)
   end),
   awful.key({ modkey, "Mod1"    }, "n",    function ()
-  movebyrelidx(1, false)
+    movebyrelidx(1, false)
   end),
   -- 截图 {{{3
   awful.key({       }, "Print", function ()
-  -- 截图：全屏
-  awful.util.spawn("zsh -c 'cd ~/tmpfs\nscrot\n'")
-  os.execute("sleep .5")
-  naughty.notify({title="截图", text="全屏截图已保存。"})
+    -- 截图：全屏
+    awful.util.spawn("zsh -c 'cd ~/tmpfs\nscrot\n'")
+    os.execute("sleep .5")
+    naughty.notify({title="截图", text="全屏截图已保存。"})
   end),
 
   -- {{{3 窗口管理
   -- Alt-Tab etc
-  awful.key({ "Mod1",     }, "Tab",
-  function ()
+  awful.key({ "Mod1",     }, "Tab", function ()
     awful.client.focus.byidx( 1)
     if client.focus then client.focus:raise() end
   end),
-  awful.key({ "Mod1", "Shift"   }, "Tab",
-  function ()
+  awful.key({ "Mod1", "Shift"   }, "Tab", function ()
     awful.client.focus.byidx(-1)
     if client.focus then client.focus:raise() end
   end),
 
-  awful.key({ modkey,     }, "j",
-  function ()
+  awful.key({ modkey,     }, "j", function ()
     awful.client.focus.byidx( 1)
     if client.focus then client.focus:raise() end
   end),
-  awful.key({ modkey,     }, "k",
-  function ()
+  awful.key({ modkey,     }, "k", function ()
     awful.client.focus.byidx(-1)
     if client.focus then client.focus:raise() end
   end),
   -- Unminimize clients
-  awful.key({ modkey, "Control" }, "m",
-  function ()
+  awful.key({ modkey, "Control" }, "m", function ()
     local allclients = client.get(mouse.screen)
     for _, c in ipairs(allclients) do
-    if c.minimized and c:tags()[mouse.screen] == awful.tag.selected(mouse.screen) then
-      c.minimized = false
-      client.focus = c
-      c:raise()
-      return
-    end
+      if c.minimized and c:tags()[mouse.screen] == awful.tag.selected(mouse.screen) then
+	c.minimized = false
+	client.focus = c
+	c:raise()
+	return
+      end
     end
   end),
 
@@ -369,10 +369,10 @@ globalkeys = awful.util.table.join(
   awful.key({ modkey, "Control" }, "k", function () awful.screen.focus_relative(-1) end),
   awful.key({ modkey,     }, "u", awful.client.urgent.jumpto),
   awful.key({ modkey,     }, "Tab", function ()
-  awful.client.focus.history.previous()
-  if client.focus then
-    client.focus:raise()
-  end
+    awful.client.focus.history.previous()
+    if client.focus then
+      client.focus:raise()
+    end
   end),
   awful.key({ modkey,     }, "Escape", awful.tag.history.restore),
 
@@ -499,7 +499,12 @@ end
 
 -- {{{3 鼠标键绑定
 clientbuttons = awful.util.table.join(
-  awful.button({ }, 1, function (c) client.focus = c; c:raise() end),
+  awful.button({ }, 1, function (c)
+    client.focus = c
+    if raise_client[c] then
+      c:raise()
+    end
+  end),
   awful.button({ modkey }, 1, awful.mouse.client.move),
   awful.button({ modkey }, 2, function (c) client.focus = c; c:kill() end),
   awful.button({ modkey }, 3, function (c) awful.mouse.client.resize(c, "bottom_right") end))
@@ -576,56 +581,62 @@ client.add_signal("manage", function (c, startup)
 
   -- Enable sloppy focus
   c:add_signal("mouse::leave", function(c)
-  if awful.layout.get(c.screen) ~= awful.layout.suit.magnifier
-    and awful.client.focus.filter(c) then
-    client_unfocused = c.window
-  end
+    if awful.layout.get(c.screen) ~= awful.layout.suit.magnifier
+      and awful.client.focus.filter(c) then
+      client_unfocused = c.window
+    end
   end)
   c:add_signal("mouse::enter", function(c)
-  -- 如果离开后又进入同一窗口则忽略，这解决了由于输入条而造成的焦点移动
-  if client_unfocused ~= c.window
-    and awful.layout.get(c.screen) ~= awful.layout.suit.magnifier
-    and awful.client.focus.filter(c) then
-    client.focus = c
-  end
+    -- 如果离开后又进入同一窗口则忽略，这解决了由于输入条而造成的焦点移动
+    if client_unfocused ~= c.window
+      and awful.layout.get(c.screen) ~= awful.layout.suit.magnifier
+      and awful.client.focus.filter(c) then
+      client.focus = c
+    end
   end)
 
-  if not startup then
-  -- Set the windows at the slave,
-  -- i.e. put it at the end of others instead of setting it master.
-  -- awful.client.setslave(c)
-
-  -- Put windows in a smart way, only if they does not set an initial position.
-  if not c.size_hints.user_position and not c.size_hints.program_position then
-    awful.placement.no_overlap(c)
-    awful.placement.no_offscreen(c)
+  if c.class and c.class == 'Gimp-2.6' then
+    raise_client[c] = false
+  else
+    raise_client[c] = true
   end
+
+  if not startup then
+    -- Set the windows at the slave,
+    -- i.e. put it at the end of others instead of setting it master.
+    -- awful.client.setslave(c)
+
+    -- Put windows in a smart way, only if they does not set an initial position.
+    if not c.size_hints.user_position and not c.size_hints.program_position then
+      awful.placement.no_overlap(c)
+      awful.placement.no_offscreen(c)
+    end
   end
   if c.name and c.name:match('^FlashGot') then
-  c.minimized = true
-  -- naughty.notify({title="FlashGot", text="OK"})
+    c.minimized = true
+    -- naughty.notify({title="FlashGot", text="OK"})
   end
   if c.class == 'Empathy' then
-  awful.client.movetotag(tags[mouse.screen][6], c)
+    awful.client.movetotag(tags[mouse.screen][6], c)
   end
   if c.instance == 'QQ.exe' then
-  -- naughty.notify({title="新窗口", text="名称为 ".. c.name .."，class 为 " .. c.class:gsub('&', '&amp;') .. " 的窗口已接受管理。", preset=naughty.config.presets.critical})
-  for _, i in pairs(qq_dontblock) do
-    if c.name == i then
-    handled = true
-    break
+    -- naughty.notify({title="新窗口", text="名称为 ".. c.name .."，class 为 " .. c.class:gsub('&', '&amp;') .. " 的窗口已接受管理。", preset=naughty.config.presets.critical})
+    for _, i in pairs(qq_dontblock) do
+      if c.name == i then
+	handled = true
+	break
+      end
     end
-  end
-  if not handled then
-    if c.name and c.above and not c.name:match('^%w+$') then
-    qqad_blocked = qqad_blocked + 1
-    naughty.notify({title="QQ广告屏蔽 " .. qqad_blocked, text="检测到一个符合条件的窗口，标题为".. c.name .."。"})
-    c:kill()
-    else
-    awful.client.movetotag(tags[mouse.screen][3], c)
+    if not handled then
+      if c.name and c.above and not c.name:match('^%w+$') then
+	qqad_blocked = qqad_blocked + 1
+	naughty.notify({title="QQ广告屏蔽 " .. qqad_blocked, text="检测到一个符合条件的窗口，标题为".. c.name .."。"})
+	c:kill()
+      else
+	awful.client.movetotag(tags[mouse.screen][3], c)
+      end
     end
-  end
-  handled = false
+    handled = false
   end
 end)
 
@@ -633,32 +644,13 @@ end)
 client.add_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.add_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 
--- {{{2 for GIMP
-client.add_signal("focus", function(c)
-  if c.class and c.class == 'Gimp-2.6' then
-    for _, i in ipairs(c:tags()) do
-      for _, j in ipairs(i:clients()) do
-        if j.role and (j.role == 'gimp-toolbox' or j.role == 'gimp-dock') then
-          j.above = true
-        end
-      end
-    end
-  end
-end)
-client.add_signal("unfocus", function(c)
-  if c.class and c.class == 'Gimp-2.6' then
-    for _, i in ipairs(c:tags()) do
-      for _, j in ipairs(i:clients()) do
-        if j.role and (j.role == 'gimp-toolbox' or j.role == 'gimp-dock') then
-          j.above = false
-        end
-      end
-    end
-  end
+-- {{{2 unmanage
+client.add_signal("unmanage", function(c)
+  raise_client[c] = nil
 end)
 
 -- {{{1 other things
 awful.util.spawn("awesomeup")
 awful.tag.viewonly(tags[1][6])
 
--- vim: set fdm=marker sw=4 sts=4:
+-- vim: set fdm=marker:
