@@ -101,7 +101,8 @@ mymainmenu = awful.menu({ items = { { "Awesome", myawesomemenu, beautiful.awesom
 				    { "GVIM", "gvim", '/usr/share/pixmaps/gvim.png' },
 				    { "火狐", "firefox", '/usr/share/icons/hicolor/32x32/apps/firefox.png' },
 				    { "常用", mymenu },
-				    { "关机", "dbus-send --system --print-reply --dest=org.freedesktop.Hal /org/freedesktop/Hal/devices/computer org.freedesktop.Hal.Device.SystemPowerManagement.Shutdown", '/usr/share/icons/gnome/16x16/actions/gtk-quit.png' },
+				    { "挂起", "dbus-send --print-reply --system --dest=org.freedesktop.Hal /org/freedesktop/Hal/devices/computer org.freedesktop.Hal.Device.SystemPowerManagement.Suspend int32:0" },
+				    { "关机", "dbus-send --print-reply --system --dest=org.freedesktop.Hal /org/freedesktop/Hal/devices/computer org.freedesktop.Hal.Device.SystemPowerManagement.Shutdown", '/usr/share/icons/gnome/16x16/actions/gtk-quit.png' },
 				  }
 			})
 
