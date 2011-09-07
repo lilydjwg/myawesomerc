@@ -626,8 +626,30 @@ client.add_signal("manage", function (c, startup)
     end
 end)
 
-client.add_signal("focus", function(c) c.border_color = beautiful.border_focus end)
-client.add_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
+client.add_signal("focus", function(c)
+    c.border_color = beautiful.border_focus
+    if c.class and c.class == 'Gimp-2.6' then
+        for _, i in ipairs(c:tags()) do
+            for _, j in ipairs(i:clients()) do
+                if j.role and (j.role == 'gimp-toolbox' or j.role == 'gimp-dock') then
+                    j.above = true
+                end
+            end
+        end
+    end
+end)
+client.add_signal("unfocus", function(c)
+    c.border_color = beautiful.border_normal
+    if c.class and c.class == 'Gimp-2.6' then
+        for _, i in ipairs(c:tags()) do
+            for _, j in ipairs(i:clients()) do
+                if j.role and (j.role == 'gimp-toolbox' or j.role == 'gimp-dock') then
+                    j.above = false
+                end
+            end
+        end
+    end
+end)
 
 awful.util.spawn("awesomeup")
 awful.tag.viewonly(tags[1][6])
