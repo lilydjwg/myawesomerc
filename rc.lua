@@ -55,7 +55,7 @@ layouts =
 }
 
 -- 单击时是否 raise 窗口
-raise_client = {}
+raise_on_click = {}
 n = function(n) naughty.notify({title="消息", text=tostring(n)}) end
 
 -- {{{1 Tags
@@ -501,7 +501,7 @@ end
 clientbuttons = awful.util.table.join(
   awful.button({ }, 1, function (c)
     client.focus = c
-    if raise_client[c] then
+    if raise_on_click[c] then
       c:raise()
     end
   end),
@@ -596,9 +596,9 @@ client.add_signal("manage", function (c, startup)
   end)
 
   if c.class and c.class == 'Gimp-2.6' then
-    raise_client[c] = false
+    raise_on_click[c] = false
   else
-    raise_client[c] = true
+    raise_on_click[c] = true
   end
 
   if not startup then
@@ -646,7 +646,7 @@ client.add_signal("unfocus", function(c) c.border_color = beautiful.border_norma
 
 -- {{{2 unmanage
 client.add_signal("unmanage", function(c)
-  raise_client[c] = nil
+  raise_on_click[c] = nil
 end)
 
 -- {{{1 other things
