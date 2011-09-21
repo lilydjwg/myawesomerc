@@ -513,6 +513,19 @@ clientbuttons = awful.util.table.join(
 root.keys(globalkeys)
 
 -- {{{1 Rules
+floating_apps = {
+  class = {
+    'MPlayer', 'Flashplayer', 'Gnome-mplayer', 'Totem',
+    'Eog', 'feh', 'Display', 'gimp',
+    'Screenkey', 'TempTerm',
+  },
+  name = {
+    '文件传输', 'Firefox 首选项',
+  },
+  instance = {
+    'QQ.exe', 'Toplevel', -- 火狐的对话框
+  },
+}
 awful.rules.rules = {
   -- All clients will match this rule.
   { rule = { },
@@ -521,54 +534,26 @@ awful.rules.rules = {
        focus = true,
        keys = clientkeys,
        buttons = clientbuttons } },
-  { rule = { class = "MPlayer" },
-    properties = { floating = true } },
-  { rule = { class = "Flashplayer" },
-    properties = { floating = true } },
-  { rule = { class = "Gnome-mplayer" },
-    properties = { floating = true } },
-  { rule = { class = "Totem" },
-    properties = { floating = true } },
-  { rule = { class = "Eog" },
-    properties = { floating = true } },
-  { rule = { class = "feh" },
-    properties = { floating = true } },
-  { rule = { class = "gimp" },
-    properties = { floating = true } },
-  -- 下面是我自己的设置
-  { rule = { class = "Screenkey" },
-    properties = { floating = true } },
   { rule = { class = "Screenruler" },
     properties = { floating = true,
        focus = false,
        border_width = 0} },
-  { rule = { class = "Gloobus-preview" },
-    properties = { floating = true,
-       skip_taskbar = true,
-       above = true,
-       border_width = 0} },
-  { rule = { name = "文件传输" },
-    properties = { floating = true } },
-   -- 居中的终端
-  { rule = { class = "TempTerm" },
-    properties = { floating = true } },
-  { rule = { class = "Tomboy" },
-    properties = { floating = true } },
-  { rule = { name = "Firefox 首选项" },
-    properties = { floating = true } },
-  { rule = { instance = "QQ.exe" },
-    properties = { floating = true } },
   { rule = { class = "FullScreenHtop" },
     properties = { maximized_horizontal = true,
        maximized_vertical = true } },
-  { rule = { instance = "Toplevel" }, --火狐的对话框
-    properties = { floating = true } },
-  { rule = { instance = "gnome-panel" },
-    properties = { above = true } },
 
   { rule = { class = "Empathy" },
     properties = { tag = tags[1][6] } },
 }
+
+for k, v in pairs(floating_apps) do
+  for _, vv in ipairs(v) do
+    table.insert(awful.rules.rules, {
+      rule = { [k] = vv },
+      properties = { floating = true },
+    })
+  end
+end
 
 -- {{{1 Signals
 -- Signal function to execute when a new client appears.
