@@ -523,7 +523,9 @@ floating_apps = {
     '文件传输', 'Firefox 首选项',
   },
   instance = {
-    'QQ.exe', 'Toplevel', -- 火狐的对话框
+    'QQ.exe',
+    'Toplevel', 'Browser', -- 火狐的关于对话框
+    'MATLAB', -- splash
   },
 }
 awful.rules.rules = {
@@ -559,7 +561,7 @@ end
 -- Signal function to execute when a new client appears.
 -- {{{2 manage
 qqad_blocked = 0
-qq_dontblock = { '上线提醒', 'TXMenuWindow', '关闭提示', '系统消息', '选择文件夹', '导出', '查找' }
+qq_dontblock = { '上线提醒', 'TXMenuWindow', '关闭提示', '系统消息', '选择文件夹', '导出', '查找', '保存', '打开' }
 client.add_signal("manage", function (c, startup)
   -- Add a titlebar
   -- awful.titlebar.add(c, { modkey = modkey })
@@ -580,7 +582,7 @@ client.add_signal("manage", function (c, startup)
     end
   end)
 
-  if c.class and c.class == 'Gimp-2.6' then
+  if c.class and c.class == 'Gimp' then
     raise_on_click[c] = false
   else
     raise_on_click[c] = true
