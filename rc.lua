@@ -391,6 +391,7 @@ globalkeys = awful.util.table.join(
   awful.key({ "Control", "Mod1" }, "e", function () awful.util.spawn("nautilus --no-desktop /home/lilydjwg/tmpfs") end),
   awful.key({ "Control", "Mod1", "Shift" }, "x", function () awful.util.spawn("xkill") end),
   awful.key({ "Control", "Mod1" }, "l", function () awful.util.spawn("leave") end),
+  awful.key({ modkey,     }, "x", function () awful.util.spawn("openmsg.py > /dev/null") end),
   awful.key({ modkey,     }, "w", function () mymainmenu:show({keygrabber=true}) end),
   awful.key({ modkey, "Control" }, "r",    awesome.restart),
   awful.key({ modkey, "Control" }, "q",    awesome.quit),
@@ -457,7 +458,7 @@ globalkeys = awful.util.table.join(
   awful.key({ "Mod1"      }, "F2",     function () mypromptbox[mouse.screen]:run() end),
   awful.key({ modkey      }, "r",   function () mypromptbox[mouse.screen]:run() end),
 
-  awful.key({ modkey      }, "x",
+  awful.key({ modkey, 'Shift' }, "x",
       function ()
       awful.prompt.run({ prompt = "Run Lua code: " },
       mypromptbox[mouse.screen].widget,
