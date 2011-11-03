@@ -7,6 +7,7 @@
 -- Grab environment we need
 local ipairs = ipairs
 local math = math
+local table = table
 -- “联系人列表”宽度
 local buddylist_height = 295
 -- local naughty = naughty
@@ -29,7 +30,7 @@ local function empathy(p)
     local buddylist
     for k, c in ipairs(p.clients) do
       if c.name ~= '联系人列表' and c.name ~= 'Contact List' then
-	cls[k] = c
+	table.insert(cls, c)
       else
 	buddylist = c
 	c:geometry({
