@@ -22,6 +22,7 @@
      {"Opera Widget Manager", "/usr/bin/opera-widget-manager"},
      {"SAGE", "xterm -e /opt/sage/sage -notebook"},
      {"密钥环管理器", "gnome-keyring-manager"},
+     {"消息和 VoIP 帐号", "empathy-accounts"},
  }
 
  menudb53804b7d726967c58fcc8c9ca03d27 = {     {"LibreOffice ", "libreoffice "},
@@ -34,7 +35,9 @@
      {"Microsoft Office Excel 2003", "msexcel"},
      {"Microsoft Office PowerPoint 2003", "mspowerpoint"},
      {"Microsoft Office Word 2003", "msword"},
+     {"YAGF", "yagf "},
      {"字典", "gnome-dictionary"},
+     {"电子书阅读", "FBReader "},
  }
 
  menu9be72ba165a45aaed9f950ec718475be = {     {"Blender", "blender"},
@@ -44,7 +47,8 @@
      {"图像查看器", "eog "},
  }
 
- menu526fe18cc54d217db3fdb0bf6c5e9bc8 = {     {"FlashPlayer", "flashplayer"},
+ menu526fe18cc54d217db3fdb0bf6c5e9bc8 = {     {"Audacity", "audacity"},
+     {"FlashPlayer", "flashplayer"},
      {"QT V4L2 test Utility", "qv4l2"},
      {"VLC media player", "vlc "},
      {"gtk-recordMyDesktop", "gtk-recordMyDesktop"},
@@ -60,10 +64,12 @@
      {"ELF Library Viewer", "elflibviewer -caption \"ELF Library Viewer\" "},
      {"Fcitx", "fcitx"},
      {"Fcitx (使用Kimpanel)", "fcitx -u fcitx-kimpanel-ui"},
-     {"GParted", "gksu /usr/sbin/gparted "},
+     {"GParted", "gparted-pkexec"},
      {"Htop", "xterm -e htop"},
      {"Oracle VM VirtualBox", "VirtualBox "},
+     {"TrueCrypt", "truecrypt"},
      {"Wireshark", "wireshark"},
+     {"dconf Editor", "dconf-editor"},
      {"磁盘使用分析器", "baobab"},
      {"系统日志查看器", "gnome-system-log"},
      {"配置编辑器", "gconf-editor"},
@@ -80,6 +86,7 @@
      {"Qt Designer", "/usr/bin/designer"},
      {"Qt Linguist", "/usr/bin/linguist"},
      {"SQLite Manager", "xulrunner /usr/share/sqlite-manager/application.ini -f  "},
+     {"bpython", "xterm -e /usr/bin/bpython"},
  }
 
  menuc9a6ee90f5d43732e3f6cf4dcaa8493c = {     {"7-Zip FM", "7zFM"},
@@ -89,13 +96,13 @@
      {"Root 终端", "gksu -l gnome-terminal"},
      {"ScreenRuler", "screenruler"},
      {"Screenkey", "screenkey"},
+     {"Screenshot", "gnome-screenshot --interactive"},
      {"Shutter", "shutter "},
+     {"bpython", "xterm -e /usr/bin/bpython"},
      {"gVim", "gvim "},
-     {"gedit", "gedit "},
      {"字符映射表", "gucharmap"},
-     {"密码和加密密钥", "seahorse"},
+     {"密码和密钥", "seahorse"},
      {"归档管理器", "file-roller "},
-     {"抓图", "gnome-screenshot --interactive"},
      {"搜索文件...", "gnome-search-tool"},
      {"星际译王", "stardict"},
      {"磁盘实用工具", "palimpsest"},
