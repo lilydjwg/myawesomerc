@@ -517,7 +517,7 @@ root.keys(globalkeys)
 floating_apps = {
   class = {
     'MPlayer', 'Flashplayer', 'Gnome-mplayer', 'Totem',
-    'Eog', 'feh', 'Display', 'gimp',
+    'Eog', 'feh', 'Display', 'Gimp', 'Gimp-2.6',
     'Screenkey', 'TempTerm',
   },
   name = {
@@ -586,7 +586,7 @@ client.add_signal("manage", function (c, startup)
     end
   end)
 
-  if c.class and c.class == 'Gimp' then
+  if c.class and (c.class == 'Gimp' or c.class == 'Gimp-2.6') then
     raise_on_click[c] = false
   else
     raise_on_click[c] = true
