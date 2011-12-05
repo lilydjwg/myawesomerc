@@ -206,7 +206,7 @@ volume_clock:add_signal("timeout", function () volume("update", tb_volume) end)
 volume_clock:start()
 
 tb_volume = widget({ type = "textbox", name = "tb_volume", align = "right" })
-tb_volume.width = 35
+tb_volume.width = 40
 tb_volume:buttons(awful.util.table.join(
   awful.button({ }, 4, function () volume("up", tb_volume) end),
   awful.button({ }, 5, function () volume("down", tb_volume) end),
