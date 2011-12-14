@@ -164,7 +164,7 @@ cputempwidget_clock:add_signal("timeout", function()
   end
   f:close()
   if fc and tonumber(fc:match('%d+')) > 65 then
-  naughty.notify({title="警告", text="CPU 温度已超过 65℃！", preset=naughty.config.presets.critical})
+    naughty.notify({title="警告", text="CPU 温度已超过 65℃！", preset=naughty.config.presets.critical})
   end
   cputempwidget.text = ' CPU: <span color="#add8e6">' .. fc .. '</span> '
 end)
@@ -185,9 +185,9 @@ function volume (mode, widget)
     status = string.match(status, "%[(o[^%]]*)%]")
 
     if string.find(status, "on", 1, true) then
-      volume = '𝅘𝅥𝅮' .. volume .. "%"
+      volume = '♫' .. volume .. "%"
     else
-      volume = '𝅘𝅥𝅮' .. volume .. "<span color='red'>M</span>"
+      volume = '♫' .. volume .. "<span color='red'>M</span>"
     end
     widget.text = volume
   elseif mode == "up" then
@@ -206,7 +206,7 @@ volume_clock:add_signal("timeout", function () volume("update", tb_volume) end)
 volume_clock:start()
 
 tb_volume = widget({ type = "textbox", name = "tb_volume", align = "right" })
-tb_volume.width = 40
+tb_volume.width = 45
 tb_volume:buttons(awful.util.table.join(
   awful.button({ }, 4, function () volume("up", tb_volume) end),
   awful.button({ }, 5, function () volume("down", tb_volume) end),
@@ -635,7 +635,10 @@ end
 -- Signal function to execute when a new client appears.
 -- {{{2 manage
 qqad_blocked = 0
-qq_dontblock = { '上线提醒', 'TXMenuWindow', '关闭提示', '系统消息', '选择文件夹', '导出', '查找', '保存', '打开' }
+qq_dontblock = {
+  '上线提醒', 'TXMenuWindow', '关闭提示', '系统消息', '选择文件夹',
+  '导出', '查找', '保存', '打开', '删除好友',
+}
 client.add_signal("manage", function (c, startup)
   -- Add a titlebar
   -- awful.titlebar.add(c, { modkey = modkey })
