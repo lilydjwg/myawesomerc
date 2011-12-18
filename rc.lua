@@ -171,33 +171,26 @@ end)
 cputempwidget_clock:start()
 
 -- {{{2 Volume Control
-volume_cardid  = 0
-volume_channel = "Master"
 function volume (mode, widget)
   if mode == "update" then
-    local fd = io.popen("amixer -c " .. volume_cardid .. " -- sget " .. volume_channel)
-    local status = fd:read("*all")
-    fd:close()
-
-    local volume = string.match(status, "(%d?%d?%d)%%")
+    local volume = io.popen("pamixer --get-volume"):read("*all")
     volume = string.format("% 3d", volume)
 
-    status = string.match(status, "%[(o[^%]]*)%]")
-
-    if string.find(status, "on", 1, true) then
+    local muted = io.popen("pamixer --get-mute"):read("*all")
+    if muted == "false" then
       volume = '♫' .. volume .. "%"
     else
       volume = '♫' .. volume .. "<span color='red'>M</span>"
     end
     widget.text = volume
   elseif mode == "up" then
-    io.popen("amixer -q -c " .. volume_cardid .. " sset " .. volume_channel .. " 5%+"):read("*all")
+    io.popen("pamixer --increase 5"):read("*all")
     volume("update", widget)
   elseif mode == "down" then
-    io.popen("amixer -q -c " .. volume_cardid .. " sset " .. volume_channel .. " 5%-"):read("*all")
+    io.popen("pamixer --decrease 5"):read("*all")
     volume("update", widget)
   else
-    io.popen("amixer -c " .. volume_cardid .. " sset " .. volume_channel .. " toggle"):read("*all")
+    io.popen("pamixer --toggle-mute"):read("*all")
     volume("update", widget)
   end
 end
@@ -210,6 +203,7 @@ tb_volume.width = 45
 tb_volume:buttons(awful.util.table.join(
   awful.button({ }, 4, function () volume("up", tb_volume) end),
   awful.button({ }, 5, function () volume("down", tb_volume) end),
+  awful.button({ }, 3, function () awful.util.spawn("pavucontrol") end),
   awful.button({ }, 1, function () volume("mute", tb_volume) end)
 ))
 volume("update", tb_volume)
@@ -588,7 +582,7 @@ floating_apps = {
     'MPlayer', 'Flashplayer', 'Gnome-mplayer', 'Totem',
     'Eog', 'feh', 'Display', 'Gimp', 'Gimp-2.6',
     'Screenkey', 'TempTerm', 'AliWangWang',
-    'Dia',
+    'Dia', 'Pavucontrol',
   },
   name = {
     '文件传输', 'Firefox 首选项',
