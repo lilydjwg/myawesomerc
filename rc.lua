@@ -488,6 +488,7 @@ globalkeys = awful.util.table.join(
   -- {{{4 临时窗口 -> tag10
   awful.key({ modkey,     }, "q", function ()
   local c = client.focus
+  if not c then return end
   if c.class == 'FullScreenHtop' or c.class == 'TempTerm' then
     awful.client.movetotag(tags[mouse.screen][10], c)
   end
@@ -585,7 +586,7 @@ floating_apps = {
     'Dia', 'Pavucontrol',
   },
   name = {
-    '文件传输', 'Firefox 首选项',
+    '文件传输', 'Firefox 首选项', '暂存器',
   },
   instance = {
     'QQ.exe',
