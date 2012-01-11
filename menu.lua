@@ -12,6 +12,10 @@
      {"Wuala", "wuala", "/usr/share//icons/hicolor/64x64/apps/wuala.png" },
      {"Zenmap", "zenmap ", "///usr/share/zenmap/pixmaps/zenmap.png" },
      {"Zenmap (as root)", "/usr/share/zenmap/su-to-zenmap.sh ", "///usr/share/zenmap/pixmaps/zenmap.png" },
+     {"aLinkCreator", "alc", "/usr/share/pixmaps/alc.xpm" },
+     {"aMule", "amule", "/usr/share/pixmaps/amule.xpm" },
+     {"aMuleGUI", "amulegui", "/usr/share/pixmaps/amulegui.xpm" },
+     {"wxCas", "wxcas", "/usr/share/pixmaps/wxcas.xpm" },
      {"阿里旺旺", "AliWangWang", "/usr/share/pixmaps/AliWangWang.png" },
  }
 
@@ -36,6 +40,7 @@
 
  menu526fe18cc54d217db3fdb0bf6c5e9bc8 = {     {"Audacity", "audacity", "/usr/share//icons/hicolor/16x16/apps/audacity.png" },
      {"FlashPlayer", "flashplayer", "/usr/share/pixmaps/gflashplayer.png" },
+     {"PulseAudio Volume Control", "pavucontrol", "/usr/share//icons/gnome/16x16/apps/multimedia-volume-control.png" },
      {"QT V4L2 test Utility", "qv4l2", "/usr/share//icons/hicolor/16x16/apps/qv4l2.png" },
      {"VLC media player", "vlc ", "/usr/share//icons/hicolor/16x16/apps/vlc.png" },
      {"gtk-recordMyDesktop", "gtk-recordMyDesktop", "/usr/share/pixmaps/gtk-recordmydesktop.png" },
@@ -61,17 +66,17 @@
      {"TrueCrypt", "truecrypt", "/usr/share/pixmaps/truecrypt.xpm" },
      {"Wireshark", "wireshark ", "/usr/share//icons/hicolor/16x16/apps/wireshark.png" },
      {"dconf Editor", "dconf-editor"},
-     {"rxvt-unicode", "urxvt", "/usr/share//icons/gnome/16x16/apps/terminal.png" },
      {"磁盘使用分析器", "baobab", "/usr/share//icons/hicolor/16x16/apps/baobab.png" },
      {"系统日志查看器", "gnome-system-log", "/usr/share//icons/hicolor/16x16/apps/logview.png" },
      {"配置编辑器", "gconf-editor", "/usr/share//icons/hicolor/16x16/apps/gconf-editor.png" },
  }
 
- menu41282bf95e43c64d579757573a03cdde = {     {"Android SDK", "android", "/usr/share/pixmaps/android-sdk.png" },
+ menu41282bf95e43c64d579757573a03cdde = {     {"Alleyoop", "alleyoop", "/usr/share//icons/hicolor/16x16/apps/alleyoop.png" },
+     {"Android SDK", "android", "/usr/share/pixmaps/android-sdk.png" },
      {"CMake", "cmake-gui ", "/usr/share/pixmaps/CMakeSetup32.png" },
      {"Devhelp", "devhelp", "/usr/share//icons/hicolor/16x16/apps/devhelp.png" },
      {"ELF Library Viewer", "elflibviewer -caption \"ELF Library Viewer\" ", "/usr/share//icons/hicolor/48x48/apps/elflibviewer.png" },
-     {"Emacs Text Editor", "emacs ", "/usr/share/pixmaps/emacs-icon.png" },
+     {"Emacs", "emacs ", "/usr/share//icons/hicolor/16x16/apps/emacs.png" },
      {"Java Monitoring and Management Console", "jconsole", "/usr/share/pixmaps/java.png" },
      {"Java VisualVM", "jvisualvm", "/usr/share/pixmaps/java.png" },
      {"Meld", "meld", "/usr/share//icons/hicolor/16x16/apps/meld.png" },
