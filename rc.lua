@@ -153,22 +153,22 @@ vicious.register(netwidget, vicious.widgets.net, '↓<span color="#5798d9">${eth
 memwidget = widget({ type = "textbox" })
 vicious.register(memwidget, vicious.widgets.mem, 'Mem <span color="#90ee90">$1%</span>', 3)
 
-cputempwidget = widget({ type = "textbox" })
-cputempwidget_clock = timer({ timeout = 2 })
-cputempwidget_clock:add_signal("timeout", function()
-  local fc = ''
-  local f  = io.popen("sensors")
-  for line in f:lines() do
-  fc = line:match('^CPU Temperature:%s+[+-](%S+)')
-  if fc then break end
-  end
-  f:close()
-  if fc and tonumber(fc:match('%d+')) > 65 then
-    naughty.notify({title="警告", text="CPU 温度已超过 65℃！", preset=naughty.config.presets.critical})
-  end
-  cputempwidget.text = ' CPU: <span color="#add8e6">' .. fc .. '</span> '
-end)
-cputempwidget_clock:start()
+-- cputempwidget = widget({ type = "textbox" })
+-- cputempwidget_clock = timer({ timeout = 2 })
+-- cputempwidget_clock:add_signal("timeout", function()
+--   local fc = ''
+--   local f  = io.popen("sensors")
+--   for line in f:lines() do
+--   fc = line:match('^CPU Temperature:%s+[+-](%S+)')
+--   if fc then break end
+--   end
+--   f:close()
+--   if fc and tonumber(fc:match('%d+')) > 65 then
+--     naughty.notify({title="警告", text="CPU 温度已超过 65℃！", preset=naughty.config.presets.critical})
+--   end
+--   cputempwidget.text = ' CPU: <span color="#add8e6">' .. fc .. '</span> '
+-- end)
+-- cputempwidget_clock:start()
 
 -- {{{2 Volume Control
 function volume (mode, widget)
@@ -293,7 +293,7 @@ for s = 1, screen.count() do -- {{{2
     tb_volume,
     netwidget,
     memwidget,
-    cputempwidget,
+    -- cputempwidget,
     mytasklist[s],
     layout = awful.widget.layout.horizontal.rightleft
   }
@@ -496,27 +496,32 @@ globalkeys = awful.util.table.join(
 
   -- {{{3 sdcv
   awful.key({ modkey }, "d", function ()
-  local f = io.popen("xsel -p")
-  local new_word = f:read("*a")
-  f:close()
+    local f = io.popen("xsel -p")
+    local new_word = f:read("*a")
+    f:close()
 
-  if frame ~= nil then
-    naughty.destroy(frame)
-    frame = nil
-    if old_word == new_word then
-    return
+    if frame ~= nil then
+      naughty.destroy(frame)
+      frame = nil
+      if old_word == new_word then
+      return
+      end
     end
-  end
-  old_word = new_word
+    old_word = new_word
 
-  local fc = ""
-  local f  = io.popen("sdcv -n --utf8-output -u 'stardict1.3英汉辞典' '"..new_word.."'")
-  for line in f:lines() do
-    fc = fc .. line .. '\n'
-  end
-  f:close()
-  frame = naughty.notify({ text = fc, timeout = 5, width = 320 })
+    local fc = ""
+    local f  = io.popen("sdcv -n --utf8-output -u 'stardict1.3英汉辞典' '"..new_word.."'")
+    for line in f:lines() do
+      fc = fc .. line .. '\n'
+    end
+    f:close()
+    frame = naughty.notify({ text = fc, timeout = 5, width = 320 })
   end),
+
+  -- {{3 音量
+  awful.key({ }, 'XF86AudioRaiseVolume', function () volume("up", tb_volume) end),
+  awful.key({ }, 'XF86AudioLowerVolume', function () volume("down", tb_volume) end),
+  awful.key({ }, 'XF86AudioMute', function () volume("mute", tb_volume) end),
 
   -- {{{3 Prompt
   awful.key({ "Mod1"      }, "F2",     function () mypromptbox[mouse.screen]:run() end),
