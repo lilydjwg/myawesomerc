@@ -131,8 +131,8 @@ mymainmenu = awful.menu({ items = { { "Awesome", myawesomemenu, beautiful.awesom
           { "火狐 (&F)", "firefox", '/usr/share/icons/hicolor/32x32/apps/firefox.png' },
           { "常用 (&U)", mymenu },
           { "应用程序 (&A)", xdgmenu },
-          { "挂起 (&S)", "dbus-send --print-reply --system --dest=org.freedesktop.Hal /org/freedesktop/Hal/devices/computer org.freedesktop.Hal.Device.SystemPowerManagement.Suspend int32:0" },
-          { "关机 (&H)", "dbus-send --print-reply --system --dest=org.freedesktop.Hal /org/freedesktop/Hal/devices/computer org.freedesktop.Hal.Device.SystemPowerManagement.Shutdown", '/usr/share/icons/gnome/16x16/actions/gtk-quit.png' },
+          { "挂起 (&S)", "dbus-send --system --print-reply --dest=org.freedesktop.UPower /org/freedesktop/UPower org.freedesktop.UPower.Suspend" },
+          { "关机 (&H)", "dbus-send --system --print-reply --dest=org.freedesktop.ConsoleKit /org/freedesktop/ConsoleKit/Manager org.freedesktop.ConsoleKit.Manager.Stop", '/usr/share/icons/gnome/16x16/actions/gtk-quit.png' },
           }
 })
 
