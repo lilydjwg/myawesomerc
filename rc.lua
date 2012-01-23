@@ -588,7 +588,7 @@ floating_apps = {
     'MPlayer', 'Flashplayer', 'Gnome-mplayer', 'Totem',
     'Eog', 'feh', 'Display', 'Gimp', 'Gimp-2.6',
     'Screenkey', 'TempTerm', 'AliWangWang',
-    'Dia', 'Pavucontrol',
+    'Dia', 'Pavucontrol', 'Stardict',
   },
   name = {
     '文件传输', 'Firefox 首选项', '暂存器',
