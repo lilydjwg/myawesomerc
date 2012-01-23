@@ -147,8 +147,15 @@ myclock:add_signal("timeout", function() mytextclock.text = os.date(" %Y年%m月
 myclock:start()
 
 -- {{{2 vicious widgets
+netif = 'eth0'
+function netwidget_text(netif)
+  return '↓<span color="#5798d9">${' ..netif.. ' down_kb}</span> ↑<span color="#c2ba62">${' ..netif.. ' up_kb}</span> '
+end
 netwidget = widget({ type = "textbox" })
-vicious.register(netwidget, vicious.widgets.net, '↓<span color="#5798d9">${eth0 down_kb}</span> ↑<span color="#c2ba62">${eth0 up_kb}</span> ', 2)
+netwidget_v = vicious.register(netwidget, vicious.widgets.net, netwidget_text(netif) , 2)
+function set_netif(interface)
+  netwidget_v.format = netwidget_text(interface)
+end
 
 memwidget = widget({ type = "textbox" })
 vicious.register(memwidget, vicious.widgets.mem, 'Mem <span color="#90ee90">$1%</span>', 3)
