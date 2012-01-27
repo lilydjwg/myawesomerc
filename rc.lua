@@ -158,7 +158,10 @@ function set_netif(interface)
 end
 
 memwidget = widget({ type = "textbox" })
-vicious.register(memwidget, vicious.widgets.mem, 'Mem <span color="#90ee90">$1%</span>', 3)
+vicious.register(memwidget, vicious.widgets.mem, 'Mem <span color="#90ee90">$1%</span>', 5)
+
+batwidget = widget({ type = "textbox" })
+vicious.register(batwidget, vicious.widgets.bat, ' <span color="#0000ff"><span size="18000">$1</span><span rise="4000">$2%</span></span>', 5, 'BAT1')
 
 -- cputempwidget = widget({ type = "textbox" })
 -- cputempwidget_clock = timer({ timeout = 2 })
@@ -299,6 +302,7 @@ for s = 1, screen.count() do -- {{{2
     s == 1 and mysystray or nil,
     tb_volume,
     netwidget,
+    batwidget,
     memwidget,
     -- cputempwidget,
     mytasklist[s],
