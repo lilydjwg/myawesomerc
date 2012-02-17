@@ -49,7 +49,7 @@ theme_path = awful.util.getdir("config") .. "/theme.lua"
 beautiful.init(theme_path)
 
 -- This is used later as the default terminal and editor to run.
-terminal = "gnome-terminal --disable-factory --working-directory=/home/lilydjwg/tmpfs"
+terminal = "gnome-terminal --disable-factory"
 editor = "gvim" or os.getenv("EDITOR") or "editor"
 -- editor_cmd = terminal .. " -e " .. editor
 editor_cmd = editor
@@ -123,6 +123,7 @@ mymenu = {
    { "&Wireshark", "wireshark", '/usr/share/icons/hicolor/32x32/apps/wireshark.png'},
    { "&VirtualBox", "VirtualBox", '/usr/share/icons/hicolor/32x32/mimetypes/virtualbox.png' },
    { "文档查看器 (&E)", "evince", '/usr/share/icons/hicolor/16x16/apps/evince.png' },
+   { "屏幕键盘", "matchbox-keyboard", '/usr/share/pixmaps/matchbox-keyboard.png' },
 }
 
 mymainmenu = awful.menu({ items = { { "Awesome", myawesomemenu, beautiful.awesome_icon },
@@ -131,7 +132,7 @@ mymainmenu = awful.menu({ items = { { "Awesome", myawesomemenu, beautiful.awesom
           { "火狐 (&F)", "firefox", '/usr/share/icons/hicolor/32x32/apps/firefox.png' },
           { "常用 (&U)", mymenu },
           { "应用程序 (&A)", xdgmenu },
-          { "挂起 (&S)", "dbus-send --system --print-reply --dest=org.freedesktop.UPower /org/freedesktop/UPower org.freedesktop.UPower.Suspend" },
+          { "挂起 (&S)", "mysuspend" },
           { "关机 (&H)", "dbus-send --system --print-reply --dest=org.freedesktop.ConsoleKit /org/freedesktop/ConsoleKit/Manager org.freedesktop.ConsoleKit.Manager.Stop", '/usr/share/icons/gnome/16x16/actions/gtk-quit.png' },
           }
 })
@@ -472,13 +473,13 @@ globalkeys = awful.util.table.join(
   -- {{{4 终端
   -- 找一个居中终端来
   awful.key({ modkey,     }, "Return", function ()
-  myutil.run_or_raise("gnome-terminal --disable-factory --working-directory=/home/lilydjwg/tmpfs --class TempTerm --geometry 80x24+343+180",
+  myutil.run_or_raise("gnome-terminal --disable-factory --class TempTerm --geometry 80x24+343+180",
   { class = "TempTerm" })
   end),
 
   -- 新居中终端
   awful.key({ modkey, "Shift"   }, "Return", function ()
-  awful.util.spawn("gnome-terminal --disable-factory --working-directory=/home/lilydjwg/tmpfs --class TempTerm --geometry 80x24+343+180")
+  awful.util.spawn("gnome-terminal --disable-factory --class TempTerm --geometry 80x24+343+180")
   end),
 
   -- 普通终端
@@ -603,6 +604,7 @@ floating_apps = {
   },
   name = {
     '文件传输', 'Firefox 首选项', '暂存器',
+    'Keyboard',
   },
   instance = {
     'QQ.exe',
