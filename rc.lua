@@ -693,6 +693,9 @@ client.add_signal("manage", function (c, startup)
     c.minimized = true
     -- naughty.notify({title="FlashGot", text="OK"})
   end
+  if c.instance == 'empathy-chat' then
+    awful.util.spawn_with_shell('sleep 0.1 && fcitx-remote -t', false)
+  end
   if c.class == 'Empathy' then
     awful.client.movetotag(tags[mouse.screen][6], c)
   end
