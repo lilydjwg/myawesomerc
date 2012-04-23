@@ -551,20 +551,24 @@ globalkeys = awful.util.table.join(
   -- {{{3 窗口的快捷键
 clientkeys = awful.util.table.join(
   -- 置顶
-  awful.key({ modkey,     }, "a",    function (c) c.above = not c.above    end),
-  awful.key({ modkey,     }, "f",    function (c) c.fullscreen = not c.fullscreen  end),
+  awful.key({ modkey,           }, "a",    function (c) c.above = not c.above    end),
+  awful.key({ modkey,           }, "f",    function (c) c.fullscreen = not c.fullscreen  end),
   -- 关闭
-  awful.key({ modkey,     }, "c",    function (c) c:kill()         end),
-  awful.key({ "Mod1",     }, "F4",     function (c) c:kill()         end),
+  awful.key({ modkey,           }, "c",    function (c) c:kill()         end),
+  awful.key({ "Mod1",           }, "F4",     function (c) c:kill()         end),
   awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle     ),
   awful.key({ modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end),
-  awful.key({ modkey,     }, "o",    awful.client.movetoscreen      ),
+  awful.key({ modkey,           }, "o",    awful.client.movetoscreen      ),
   awful.key({ modkey, "Shift"   }, "r",    function (c) c:redraw()         end),
   -- 最大最小化
   awful.key({ modkey, "Shift"   }, "m",    function (c) c.minimized = not c.minimized  end),
-  awful.key({ modkey,     }, "m",    function (c)
-  c.maximized_horizontal = not c.maximized_horizontal
-  c.maximized_vertical   = not c.maximized_vertical
+  awful.key({ modkey,           }, "m", function (c)
+    c.maximized_horizontal = not c.maximized_horizontal
+    c.maximized_vertical   = not c.maximized_vertical
+  end),
+  awful.key({ modkey, "Shift"   }, "c", function (c)
+    if not awful.client.floating.get(c) then return end
+    awful.placement.centered(c)
   end)
 )
 
