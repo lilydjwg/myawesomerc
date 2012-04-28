@@ -162,7 +162,7 @@ memwidget = widget({ type = "textbox" })
 vicious.register(memwidget, vicious.widgets.mem, 'Mem <span color="#90ee90">$1%</span>', 5)
 
 batwidget = widget({ type = "textbox" })
-vicious.register(batwidget, vicious.widgets.bat, ' <span color="#0000ff"><span size="18000">$1</span><span rise="4000">$2%</span></span>', 5, 'BAT1')
+vicious.register(batwidget, vicious.widgets.bat, ' <span color="#0000ff">$1$2%</span>', 5, 'BAT1')
 
 -- cputempwidget = widget({ type = "textbox" })
 -- cputempwidget_clock = timer({ timeout = 2 })
@@ -697,10 +697,10 @@ client.add_signal("manage", function (c, startup)
     c.minimized = true
     -- naughty.notify({title="FlashGot", text="OK"})
   end
-  if c.instance == 'empathy-chat' then
+  if c.instance == 'empathy-chat' or (c.role == 'conversation' and c.class == 'Pidgin') then
     awful.util.spawn_with_shell('sleep 0.1 && fcitx-remote -t', false)
   end
-  if c.class == 'Empathy' then
+  if c.instance == 'empathy-chat' or (c.role == 'conversation' and c.class == 'Pidgin') then
     awful.client.movetotag(tags[mouse.screen][6], c)
   end
   if c.instance == 'QQ.exe' then

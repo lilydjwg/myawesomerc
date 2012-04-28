@@ -29,7 +29,7 @@ local function empathy(p)
     local cls = {}
     local buddylist
     for k, c in ipairs(p.clients) do
-      if c.name ~= '联系人列表' and c.name ~= 'Contact List' then
+      if c.name ~= '联系人列表' and c.name ~= 'Contact List' and c.name ~= '好友列表' then
 	table.insert(cls, c)
       else
 	buddylist = c
