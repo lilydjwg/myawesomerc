@@ -49,9 +49,8 @@ theme_path = awful.util.getdir("config") .. "/theme.lua"
 beautiful.init(theme_path)
 
 -- This is used later as the default terminal and editor to run.
-terminal = "gnome-terminal --disable-factory"
+terminal = "terminal"
 editor = "gvim" or os.getenv("EDITOR") or "editor"
--- editor_cmd = terminal .. " -e " .. editor
 editor_cmd = editor
 
 -- Default modkey.
@@ -127,7 +126,7 @@ mymenu = {
 }
 
 mymainmenu = awful.menu({ items = { { "Awesome", myawesomemenu, beautiful.awesome_icon },
-          { "终端 (&T)", terminal, '/usr/share/icons/gnome/16x16/apps/gnome-terminal.png' },
+          { "终端 (&T)", terminal, '/usr/share/pixmaps/terminal.xpm' },
           { "G&VIM", "gvim", '/usr/share/pixmaps/gvim.png' },
           { "火狐 (&F)", "firefox", '/usr/share/icons/hicolor/32x32/apps/firefox.png' },
           { "常用 (&U)", mymenu },
@@ -473,13 +472,12 @@ globalkeys = awful.util.table.join(
   -- {{{4 终端
   -- 找一个居中终端来
   awful.key({ modkey,     }, "Return", function ()
-  myutil.run_or_raise("gnome-terminal --disable-factory --class TempTerm --geometry 80x24+343+180",
-  { class = "TempTerm" })
+    myutil.run_or_raise("terminal --role=TempTerm --geometry=80x24+343+180", { role = "TempTerm" })
   end),
 
   -- 新居中终端
   awful.key({ modkey, "Shift"   }, "Return", function ()
-  awful.util.spawn("gnome-terminal --disable-factory --class TempTerm --geometry 80x24+343+180")
+    awful.util.spawn("terminal --role=TempTerm --geometry=80x24+343+180")
   end),
 
   -- 普通终端
@@ -489,11 +487,10 @@ globalkeys = awful.util.table.join(
 
   -- htop
   awful.key({ modkey,    }, "z", function ()
-  if client.focus and client.focus.class == 'FullScreenHtop' then
+  if client.focus and client.focus.role == 'FullScreenHtop' then
     awful.client.movetotag(tags[mouse.screen][10], client.focus)
   else
-    myutil.run_or_raise("gnome-terminal --disable-factory --class FullScreenHtop -e 'htop'",
-    { class = "FullScreenHtop" })
+    myutil.run_or_raise("terminal --role=FullScreenHtop -e 'htop'", { role = "FullScreenHtop" })
   end
   end),
 
@@ -501,7 +498,7 @@ globalkeys = awful.util.table.join(
   awful.key({ modkey,     }, "q", function ()
   local c = client.focus
   if not c then return end
-  if c.class == 'FullScreenHtop' or c.class == 'TempTerm' then
+  if c.role == 'FullScreenHtop' or c.role == 'TempTerm' then
     awful.client.movetotag(tags[mouse.screen][10], c)
   end
   end),
@@ -615,6 +612,9 @@ floating_apps = {
     'Toplevel', 'Browser', -- 火狐的关于对话框
     'MATLAB', -- splash
   },
+  role = {
+    'TempTerm',
+  },
 }
 awful.rules.rules = {
   -- All clients will match this rule.
@@ -628,7 +628,7 @@ awful.rules.rules = {
     properties = { floating = true,
        focus = false,
        border_width = 0} },
-  { rule = { class = "FullScreenHtop" },
+  { rule = { role = "FullScreenHtop" },
     properties = { maximized_horizontal = true,
        maximized_vertical = true } },
 
