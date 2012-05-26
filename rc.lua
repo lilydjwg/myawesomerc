@@ -701,7 +701,7 @@ client.add_signal("manage", function (c, startup)
     local t
     t = c:tags()
     if #t == 1 and t[1] == tags[mouse.screen][6] then
-      awful.util.spawn_with_shell('sleep 0.1 && fcitx-remote -t', false)
+      awful.util.spawn_with_shell('sleep 0.1 && fcitx-remote -T', false)
     end
   end
   if c.instance == 'empathy-chat' or (c.role == 'conversation' and c.class == 'Pidgin') then
