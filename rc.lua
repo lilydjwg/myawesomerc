@@ -147,7 +147,7 @@ myclock:add_signal("timeout", function() mytextclock.text = os.date(" %Y年%m月
 myclock:start()
 
 -- {{{2 vicious widgets
-netif = 'eth0'
+netif = 'wlan0'
 function netwidget_text(netif)
   return '↓<span color="#5798d9">${' ..netif.. ' down_kb}</span> ↑<span color="#c2ba62">${' ..netif.. ' up_kb}</span> '
 end
