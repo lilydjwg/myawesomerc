@@ -465,7 +465,7 @@ globalkeys = awful.util.table.join(
   awful.key({ "Control", "Mod1" }, "e", function () awful.util.spawn("nautilus --no-desktop /home/lilydjwg/tmpfs") end),
   awful.key({ "Control", "Mod1", "Shift" }, "x", function () awful.util.spawn("xkill") end),
   awful.key({ "Control", "Mod1" }, "l", function () awful.util.spawn("leave") end),
-  awful.key({ modkey,     }, "x", function () awful.util.spawn("openmsg.py") end),
+  awful.key({ modkey,     }, "x", function () awful.util.spawn("openmsg.py", false) end),
   awful.key({ modkey,     }, "w", function () mymainmenu:show({keygrabber=true}) end),
   awful.key({ modkey, "Control" }, "r",    awesome.restart),
   awful.key({ modkey, "Control" }, "q",    awesome.quit),
@@ -601,7 +601,7 @@ floating_apps = {
     'MPlayer', 'Flashplayer', 'Gnome-mplayer', 'Totem',
     'Eog', 'feh', 'Display', 'Gimp', 'Gimp-2.6',
     'Screenkey', 'TempTerm', 'AliWangWang',
-    'Dia', 'Pavucontrol', 'Stardict',
+    'Dia', 'Pavucontrol', 'Stardict', 'XEyes',
   },
   name = {
     '文件传输', 'Firefox 首选项', '暂存器',
