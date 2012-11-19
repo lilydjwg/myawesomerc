@@ -462,7 +462,6 @@ globalkeys = awful.util.table.join(
 
   -- {{{3 程序
   awful.key({ modkey,     }, "g", function () awful.util.spawn("gvim") end),
-  awful.key({ "Control", "Mod1" }, "e", function () awful.util.spawn("nautilus --no-desktop /home/lilydjwg/tmpfs") end),
   awful.key({ "Control", "Mod1", "Shift" }, "x", function () awful.util.spawn("xkill") end),
   awful.key({ "Control", "Mod1" }, "l", function () awful.util.spawn("leave") end),
   awful.key({ modkey,     }, "x", function () awful.util.spawn("openmsg.py", false) end),
