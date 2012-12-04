@@ -17,7 +17,7 @@ require("empathy")
 require("myutil")
 require("menu")
 
-os.setlocale("zh_CN.UTF-8")
+os.setlocale("")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -601,6 +601,7 @@ floating_apps = {
     'Eog', 'feh', 'Display', 'Gimp', 'Gimp-2.6',
     'Screenkey', 'TempTerm', 'AliWangWang',
     'Dia', 'Pavucontrol', 'Stardict', 'XEyes',
+    'Skype',
   },
   name = {
     '文件传输', 'Firefox 首选项', '暂存器',
