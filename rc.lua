@@ -184,6 +184,10 @@ vicious.register(batwidget, vicious.widgets.bat, ' <span color="#0000ff">$1$2%</
 function volume (mode, widget)
   if mode == "update" then
     local volume = io.popen("pamixer --get-volume"):read("*all")
+    if not tonumber(volume) then
+      widget.text = "<span color='red'>ERR</span>"
+      do return end
+    end
     volume = string.format("% 3d", volume)
 
     local muted = io.popen("pamixer --get-mute"):read("*all")
