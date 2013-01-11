@@ -49,7 +49,7 @@ theme_path = awful.util.getdir("config") .. "/theme.lua"
 beautiful.init(theme_path)
 
 -- This is used later as the default terminal and editor to run.
-terminal = "terminal"
+terminal = "xfce4-terminal"
 editor = "gvim" or os.getenv("EDITOR") or "editor"
 editor_cmd = editor
 
@@ -126,7 +126,7 @@ mymenu = {
 }
 
 mymainmenu = awful.menu({ items = { { "Awesome", myawesomemenu, beautiful.awesome_icon },
-          { "终端 (&T)", terminal, '/usr/share/pixmaps/terminal.xpm' },
+          { "终端 (&T)", terminal, '/usr/share/icons/gnome/32x32/apps/utilities-terminal.png' },
           { "G&VIM", "gvim", '/usr/share/pixmaps/gvim.png' },
           { "火狐 (&F)", "firefox", '/usr/share/icons/hicolor/32x32/apps/firefox.png' },
           { "常用 (&U)", mymenu },
@@ -475,12 +475,12 @@ globalkeys = awful.util.table.join(
   -- {{{4 终端
   -- 找一个居中终端来
   awful.key({ modkey,     }, "Return", function ()
-    myutil.run_or_raise("terminal --role=TempTerm --geometry=80x24+343+180", { role = "TempTerm" })
+    myutil.run_or_raise("xfce4-terminal --role=TempTerm --geometry=80x24+343+180", { role = "TempTerm" })
   end),
 
   -- 新居中终端
   awful.key({ modkey, "Shift"   }, "Return", function ()
-    awful.util.spawn("terminal --role=TempTerm --geometry=80x24+343+180")
+    awful.util.spawn("xfce4-terminal --role=TempTerm --geometry=80x24+343+180")
   end),
 
   -- 普通终端
@@ -493,7 +493,7 @@ globalkeys = awful.util.table.join(
   if client.focus and client.focus.role == 'FullScreenHtop' then
     awful.client.movetotag(tags[mouse.screen][10], client.focus)
   else
-    myutil.run_or_raise("terminal --role=FullScreenHtop -e 'htop'", { role = "FullScreenHtop" })
+    myutil.run_or_raise("xfce4-terminal --role=FullScreenHtop -e 'htop'", { role = "FullScreenHtop" })
   end
   end),
 
@@ -680,7 +680,7 @@ client.add_signal("manage", function (c, startup)
     end
   end)
 
-  if c.class and (c.class == 'Gimp' or c.class == 'Gimp-2.6') then
+  if c.class and (c.class == 'Gimp' or c.class == 'Gimp-2.8') then
     raise_on_click[c] = false
   else
     raise_on_click[c] = true
