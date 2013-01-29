@@ -2,7 +2,8 @@
      {"Avahi VNC服务器浏览器", "/usr/bin/bvnc", "/usr/share//icons/gnome/16x16/devices/network-wired.png" },
      {"Dropbox", "dropboxd", "/usr/share//icons/hicolor/16x16/apps/dropbox.png" },
      {"ELinks", "xterm -e /usr/bin/elinks ", "/usr/share//icons/gnome/16x16/mimetypes/html.png" },
-     {"Firefox", "firefox ", "/usr/share//icons/hicolor/16x16/apps/firefox.png" },
+     {"Firefox", "/usr/lib/firefox/firefox ", "/usr/share//icons/hicolor/16x16/apps/firefox.png" },
+     {"GmoteServer", "/opt/gmote/GmoteServer.sh", "///opt/gmote/gmote.png" },
      {"Google Chrome", "/opt/google/chrome/google-chrome ", "/usr/share//icons/hicolor/16x16/apps/google-chrome.png" },
      {"Opera", "/usr/bin/opera ", "/usr/share//icons/hicolor/16x16/apps/opera-browser.png" },
      {"Pidgin 互联网通讯程序", "pidgin", "/usr/share//icons/hicolor/16x16/apps/pidgin.png" },
@@ -33,7 +34,11 @@
      {"LibreOffice Draw", "libreoffice --draw ", "/usr/share//icons/hicolor/16x16/apps/libreoffice-draw.png" },
      {"LibreOffice Impress", "libreoffice --impress ", "/usr/share//icons/hicolor/16x16/apps/libreoffice-impress.png" },
      {"LibreOffice Writer", "libreoffice --writer ", "/usr/share//icons/hicolor/16x16/apps/libreoffice-writer.png" },
+     {"WPS 文字", "/usr/bin/wps", "/usr/share//icons/hicolor/48x48/apps/wps-office-wpsmain.png" },
+     {"WPS 演示", "/usr/bin/wpp", "/usr/share//icons/hicolor/48x48/apps/wps-office-wppmain.png" },
+     {"WPS 表格", "/usr/bin/et", "/usr/share//icons/hicolor/48x48/apps/wps-office-etmain.png" },
      {"Zathura", "zathura "},
+     {"星际译王", "stardict", "/usr/share/pixmaps/stardict.png" },
  }
 
  menue1b7cee794666669f55acead93513971 = {     {"Blender", "blender", "/usr/share//icons/hicolor/16x16/apps/blender.png" },
@@ -42,6 +47,7 @@
      {"GNU 图像处理程序", "gimp-2.8 ", "/usr/share//icons/hicolor/16x16/apps/gimp.png" },
      {"Inkscape", "inkscape ", "/usr/share//icons/hicolor/16x16/apps/inkscape.png" },
      {"LibreOffice Draw", "libreoffice --draw ", "/usr/share//icons/hicolor/16x16/apps/libreoffice-draw.png" },
+     {"Pencil", "/usr/bin/pencil", "///usr/share/pencil/skin/classic/icon.svg" },
      {"图像查看器", "eog ", "/usr/share//icons/hicolor/16x16/apps/eog.png" },
  }
 
@@ -59,8 +65,7 @@
      {"Stellarium nightsky renderer", "stellarium", "/usr/share/pixmaps/stellarium.png" },
  }
 
- menuba08216f13dd1742157412386eee1225 = {     {"AssaultCube", "assaultcube", "/usr/share/pixmaps/assaultcube.png" },
-     {"Battle for Wesnoth", "wesnoth", "/usr/share/pixmaps/wesnoth-icon.png" },
+ menuba08216f13dd1742157412386eee1225 = {     {"Battle for Wesnoth", "wesnoth", "/usr/share/pixmaps/wesnoth-icon.png" },
      {"Battle for Wesnoth Map Editor", "wesnoth -e", "/usr/share/pixmaps/wesnoth_editor-icon.png" },
      {"Chromium B.S.U.", "chromium-bsu", "/usr/share/pixmaps/chromium-bsu.png" },
      {"Narcissu2-en", "/usr/bin/narcissu2-en", "/usr/share/pixmaps/narcissu2-en.png" },
@@ -82,7 +87,7 @@
      {"UXTerm", "uxterm", "/usr/share/pixmaps/xterm-color_48x48.xpm" },
      {"Wireshark", "wireshark ", "/usr/share//icons/hicolor/16x16/apps/wireshark.png" },
      {"XTerm", "xterm", "/usr/share/pixmaps/xterm-color_48x48.xpm" },
-     {"Xfce 终端", "Terminal", "/usr/share//icons/gnome/16x16/apps/utilities-terminal.png" },
+     {"Xfce Terminal", "xfce4-terminal", "/usr/share//icons/gnome/16x16/apps/utilities-terminal.png" },
      {"dconf 系统配置编辑器", "dconf-editor", "/usr/share//icons/hicolor/32x32/apps/dconf-editor.png" },
      {"磁盘使用分析器", "baobab", "/usr/share//icons/hicolor/16x16/apps/baobab.png" },
      {"配置编辑器", "gconf-editor", "/usr/share//icons/hicolor/16x16/apps/gconf-editor.png" },
@@ -98,6 +103,7 @@
      {"Java Monitoring and Management Console", "jconsole", "/usr/share//icons/hicolor/16x16/apps/sun-java.png" },
      {"Java VisualVM", "jvisualvm", "/usr/share//icons/hicolor/16x16/apps/sun-java.png" },
      {"Meld", "meld ", "/usr/share//icons/hicolor/16x16/apps/meld.png" },
+     {"Pencil", "/usr/bin/pencil", "///usr/share/pencil/skin/classic/icon.svg" },
      {"Qt Assistant", "/usr/bin/assistant", "/usr/share//icons/hicolor/32x32/apps/assistant.png" },
      {"Qt Designer", "/usr/bin/designer", "/usr/share//icons/hicolor/128x128/apps/designer.png" },
      {"Qt Linguist", "/usr/bin/linguist", "/usr/share//icons/hicolor/16x16/apps/linguist.png" },
