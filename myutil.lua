@@ -1,12 +1,12 @@
-local awful = awful
+local awful = require("awful")
 local client = client
 local pairs = pairs
 local table = table
 
-module("myutil")
+local myutil = {}
 
 -- Returns true if all pairs in table1 are present in table2 {{{1
-function match (table1, table2)
+local function match (table1, table2)
   for k, v in pairs(table1) do
     -- not all clients have all properties so first test if it is nil
     if not table2[k] or (table2[k] ~= v and not table2[k]:find(v)) then
@@ -17,7 +17,7 @@ function match (table1, table2)
 end
 
 -- Get clients by condition {{{1
-function getclients(properties)
+local function getclients(properties)
   local clients = client.get()
   local focused = awful.client.next(0)
   local findex = 0
@@ -38,7 +38,7 @@ end
 
 -- {{{1 run_or_raise
 -- 来源: http://awesome.naquadah.org/wiki/Run_or_raise
-function run_or_raise(cmd, properties, beforemove)
+function myutil.run_or_raise(cmd, properties, beforemove)
   local findex, matched_clients
   matched_clients, findex = getclients(properties)
   local n = #matched_clients
@@ -61,6 +61,8 @@ function run_or_raise(cmd, properties, beforemove)
   end
   awful.util.spawn(cmd)
 end
+
+return myutil
 
 -- {{{1 vim modeline
 -- vim: se fdm=marker:

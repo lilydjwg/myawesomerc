@@ -12,10 +12,7 @@ local table = table
 local buddylist_height = 295
 -- local naughty = naughty
 
---- empathy layouts module for awful
-module("awful.layout.suit.empathy")
-
-local function empathy(p)
+local function do_empathy(p)
   if #p.clients > 0 then
     -- 每行最多窗口数
     local cols = 4
@@ -78,8 +75,12 @@ local function empathy(p)
   end
 end
 
+local empathy = {}
+empathy.name = "empathy"
+
 -- @param screen The screen to arrange.
-name = "empathy"
-function arrange(p)
-  return empathy(p)
+function empathy.arrange(p)
+  return do_empathy(p)
 end
+
+return empathy
