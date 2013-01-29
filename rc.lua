@@ -213,14 +213,18 @@ vicious.register(batwidget, vicious.widgets.bat, ' <span color="#0000ff">$1$2%</
 -- {{{ Volume Controller
 function volumectl (mode, widget)
     if mode == "update" then
-        local volume = io.popen("pamixer --get-volume"):read("*all")
+        local f = io.popen("pamixer --get-volume")
+        local volume = f:read("*all")
+        f:close()
         if not tonumber(volume) then
             widget:set_markup("<span color='red'>ERR</span>")
             do return end
         end
         volume = string.format("% 3d", volume)
 
-        local muted = io.popen("pamixer --get-mute"):read("*all")
+        f = io.popen("pamixer --get-mute")
+        local muted = f:read("*all")
+        f:close()
         if muted == "false" then
             volume = '♫' .. volume .. "%"
         else
@@ -228,13 +232,19 @@ function volumectl (mode, widget)
         end
         widget:set_markup(volume)
     elseif mode == "up" then
-        io.popen("pamixer --increase 5"):read("*all")
+        local f = io.popen("pamixer --increase 5")
+        f:read("*all")
+        f:close()
         volumectl("update", widget)
     elseif mode == "down" then
-        io.popen("pamixer --decrease 5"):read("*all")
+        local f = io.popen("pamixer --decrease 5")
+        f:read("*all")
+        f:close()
         volumectl("update", widget)
     else
-        io.popen("pamixer --toggle-mute"):read("*all")
+        local f = io.popen("pamixer --toggle-mute")
+        f:read("*all")
+        f:close()
         volumectl("update", widget)
     end
 end
