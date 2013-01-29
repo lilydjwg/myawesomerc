@@ -7,17 +7,19 @@ require("awful.autofocus")
 local wibox = require("wibox")
 -- Theme handling library
 local beautiful = require("beautiful")
--- TODO: victous
--- local vicious = require("vicious")
 -- Notification library
 local naughty = require("naughty")
 local menubar = require("menubar")
 
+local vicious = require("vicious")
 local empathy = require("empathy")
 local myutil = require("myutil")
+local fixwidthtextbox = require("fixwidthtextbox")
 local menu = require("menu")
 
 os.setlocale("")
+-- A debugging func
+n = function(n) naughty.notify{title="消息", text=tostring(n)} end
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -151,18 +153,55 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 -- Create a textclock widget
 mytextclock = awful.widget.textclock(" %Y年%m月%d日 %H:%M:%S %A ", 1)
 
--- {{{ TODO: vicious widgets
---[[
-netif = 'wlan0'
-function netwidget_text(netif)
-  return '↓<span color="#5798d9">${' ..netif.. ' down_kb}</span> ↑<span color="#c2ba62">${' ..netif.. ' up_kb}</span> '
+-- {{{ my widgets
+-- {{{ Network speed indicator
+function update_netstat()
+    local interval = netwidget_clock.timeout
+    local netif, text
+    for line in io.lines("/proc/net/route") do
+        netif = line:match('^(%w+)%s+00000000%s')
+        if netif then
+            break
+        end
+    end
+    if netif then
+        local down, up
+        for line in io.lines("/proc/net/dev") do
+            -- Match wmaster0 as well as rt0 (multiple leading spaces)
+            local name, recv, send = string.match(line, "^%s*(%w+):%s+(%d+)%s+%d+%s+%d+%s+%d+%s+%d+%s+%d+%s+%d+%s+%d+%s+(%d+)")
+            if name == netif then
+                if netdata[name] == nil then
+                    -- Default values on the first run
+                    netdata[name] = {}
+                    down, up = 0, 0
+                else
+                    down = (recv - netdata[name][1]) / interval
+                    up   = (send - netdata[name][2]) / interval
+                end
+                netdata[name][1] = recv
+                netdata[name][2] = send
+                break
+            end
+        end
+        down = string.format('%.1f', down / 1024)
+        up = string.format('%.1f', up / 1024)
+        text = '↓<span color="#5798d9">'.. down ..'</span> ↑<span color="#c2ba62">'.. up ..'</span>'
+    else
+        text = '(No network)'
+    end
+    netwidget:set_markup(text)
 end
-netwidget = widget({ type = "textbox" })
-netwidget_v = vicious.register(netwidget, vicious.widgets.net, netwidget_text(netif) , 2)
-function set_netif(interface)
-  netwidget_v.format = netwidget_text(interface)
-end
+netdata = {}
+netwidget = fixwidthtextbox('(net)')
+netwidget.width = 85
+netwidget:set_align('center')
+netwidget_clock = timer({ timeout = 2 })
+netwidget_clock:connect_signal("timeout", update_netstat)
+netwidget_clock:start()
+-- }}}
 
+-- {{{ memory and battery widgets
+--[[TODO: memwidget, batwidget
 memwidget = widget({ type = "textbox" })
 vicious.register(memwidget, vicious.widgets.mem, 'Mem <span color="#90ee90">$1%</span>', 5)
 
@@ -171,49 +210,48 @@ vicious.register(batwidget, vicious.widgets.bat, ' <span color="#0000ff">$1$2%</
 --]]
 -- }}}
 
--- {{{ TODO: Volume Control
---[[
+-- {{{ Volume Controller
 function volumectl (mode, widget)
-  if mode == "update" then
-    local volume = io.popen("pamixer --get-volume"):read("*all")
-    if not tonumber(volume) then
-      widget.text = "<span color='red'>ERR</span>"
-      do return end
-    end
-    volume = string.format("% 3d", volume)
+    if mode == "update" then
+        local volume = io.popen("pamixer --get-volume"):read("*all")
+        if not tonumber(volume) then
+            widget:set_markup("<span color='red'>ERR</span>")
+            do return end
+        end
+        volume = string.format("% 3d", volume)
 
-    local muted = io.popen("pamixer --get-mute"):read("*all")
-    if muted == "false" then
-      volume = '♫' .. volume .. "%"
+        local muted = io.popen("pamixer --get-mute"):read("*all")
+        if muted == "false" then
+            volume = '♫' .. volume .. "%"
+        else
+            volume = '♫' .. volume .. "<span color='red'>M</span>"
+        end
+        widget:set_markup(volume)
+    elseif mode == "up" then
+        io.popen("pamixer --increase 5"):read("*all")
+        volumectl("update", widget)
+    elseif mode == "down" then
+        io.popen("pamixer --decrease 5"):read("*all")
+        volumectl("update", widget)
     else
-      volume = '♫' .. volume .. "<span color='red'>M</span>"
+        io.popen("pamixer --toggle-mute"):read("*all")
+        volumectl("update", widget)
     end
-    widget.text = volume
-  elseif mode == "up" then
-    io.popen("pamixer --increase 5"):read("*all")
-    volumectl("update", widget)
-  elseif mode == "down" then
-    io.popen("pamixer --decrease 5"):read("*all")
-    volumectl("update", widget)
-  else
-    io.popen("pamixer --toggle-mute"):read("*all")
-    volumectl("update", widget)
-  end
 end
 volume_clock = timer({ timeout = 10 })
-volume_clock:add_signal("timeout", function () volumectl("update", tb_volume) end)
+volume_clock:connect_signal("timeout", function () volumectl("update", volumewidget) end)
 volume_clock:start()
 
-tb_volume = widget({ type = "textbox", name = "tb_volume", align = "right" })
-tb_volume.width = 45
-tb_volume:buttons(awful.util.table.join(
-  awful.button({ }, 4, function () volumectl("up", tb_volume) end),
-  awful.button({ }, 5, function () volumectl("down", tb_volume) end),
-  awful.button({ }, 3, function () awful.util.spawn("pavucontrol") end),
-  awful.button({ }, 1, function () volumectl("mute", tb_volume) end)
+volumewidget = fixwidthtextbox('(volume)')
+volumewidget.width = 48
+volumewidget:set_align('right')
+volumewidget:buttons(awful.util.table.join(
+    awful.button({ }, 4, function () volumectl("up", volumewidget) end),
+    awful.button({ }, 5, function () volumectl("down", volumewidget) end),
+    awful.button({ }, 3, function () awful.util.spawn("pavucontrol") end),
+    awful.button({ }, 1, function () volumectl("mute", volumewidget) end)
 ))
-volumectl("update", tb_volume)
---]]
+volumectl("update", volumewidget)
 --}}}
 
 -- {{{ Create a wibox for each screen and add it
@@ -296,11 +334,11 @@ for s = 1, screen.count() do
     -- Widgets that are aligned to the right
     local right_layout = wibox.layout.fixed.horizontal()
     if s == 1 then right_layout:add(wibox.widget.systray()) end
-    -- TODO: Add mem, battery, network, volume indicators
+    -- TODO: Add mem, battery
     -- right_layout:add(memwidget)
     -- right_layout:add(batwidget)
-    -- right_layout:add(netwidget)
-    -- right_layout:add(tb_volume)
+    right_layout:add(netwidget)
+    right_layout:add(volumewidget)
     right_layout:add(mytextclock)
     right_layout:add(mylayoutbox[s])
 
@@ -399,7 +437,7 @@ globalkeys = awful.util.table.join(
             awful.client.focus.byidx(-1)
             if client.focus then client.focus:raise() end
         end),
-    awful.key({ modkey,           }, "w", function () mymainmenu:show(--[[ TODO: not needed? {keygrabber=true} --]]) end),
+    awful.key({ modkey,           }, "w", function () mymainmenu:show() end),
 
     -- Layout manipulation
     awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(  1)    end),
@@ -549,10 +587,10 @@ globalkeys = awful.util.table.join(
             _dict_notify = naughty.notify({ text = fc, timeout = 5, width = 320 })
         end),
 
-    -- Volumn
-    awful.key({ }, 'XF86AudioRaiseVolume', function () volumectl("up", tb_volume) end),
-    awful.key({ }, 'XF86AudioLowerVolume', function () volumectl("down", tb_volume) end),
-    awful.key({ }, 'XF86AudioMute', function () volumectl("mute", tb_volume) end)
+    -- Volume
+    awful.key({ }, 'XF86AudioRaiseVolume', function () volumectl("up", volumewidget) end),
+    awful.key({ }, 'XF86AudioLowerVolume', function () volumectl("down", volumewidget) end),
+    awful.key({ }, 'XF86AudioMute', function () volumectl("mute", volumewidget) end)
 ) -- }}}
 
 -- {{{ clientkeys
@@ -596,8 +634,6 @@ end
 
 -- Whether to raise the client on single click
 raise_on_click = {}
--- A debugging func
-n = function(n) naughty.notify{title="消息", text=tostring(n)} end
 
 -- {{{ clientbuttons
 clientbuttons = awful.util.table.join(
@@ -666,7 +702,6 @@ end
 
 -- {{{ Signals
 -- Signal function to execute when a new client appears.
--- {{{2 manage
 qqad_blocked = 0
 local qq_dontblock = {
     '上线提醒', 'TXMenuWindow', '关闭提示', '系统消息', '选择文件夹',
@@ -745,16 +780,14 @@ end)
 
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
--- }}}
 
--- {{{ unmanage
 client.add_signal("unmanage", function(c)
     raise_on_click[c] = nil
 end)
 -- }}}
 
 -- {{{ other things
-awful.util.spawn("awesomeup")
+awful.util.spawn("awesomeup", false)
 awful.tag.viewonly(tags[1][6])
 -- vim: set fdm=marker et sw=4:
 -- }}}
