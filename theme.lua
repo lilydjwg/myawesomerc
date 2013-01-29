@@ -1,5 +1,6 @@
 ---------------------------
--- Default awesome theme --
+-- My awesome theme --
+-- originally /usr/share/awesome/themes/default/theme.lua
 ---------------------------
 local awful = require("awful")
 local confdir = awful.util.getdir("config")
