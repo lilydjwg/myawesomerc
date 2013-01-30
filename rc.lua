@@ -311,6 +311,7 @@ volumewidget:buttons(awful.util.table.join(
 ))
 volumectl("update", volumewidget)
 --}}}
+-- }}}
 
 -- {{{ Create a wibox for each screen and add it
 mywibox = {}
