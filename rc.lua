@@ -186,6 +186,7 @@ function update_netstat()
         up = string.format('%.1f', up / 1024)
         text = '↓<span color="#5798d9">'.. down ..'</span> ↑<span color="#c2ba62">'.. up ..'</span>'
     else
+        netdata = {} -- clear as the interface may have been reset
         text = '(No network)'
     end
     netwidget:set_markup(text)
