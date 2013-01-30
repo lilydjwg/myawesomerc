@@ -717,7 +717,7 @@ floating_apps = {
     },
     instance = {
         'QQ.exe',
-        'Toplevel', 'Browser', -- 火狐的关于对话框
+        'Browser', -- 火狐的关于对话框
         'MATLAB', -- splash
     },
     role = {
@@ -744,6 +744,9 @@ awful.rules.rules = {
      properties = { tag = tags[1][6] } },
 
    { rule = { class = "Firefox", instance = "firefox" },
+     properties = { floating = true } },
+
+   { rule = { class = "Wireshark", name = "Wireshark" }, -- wireshark startup window
      properties = { floating = true } },
 }
 
