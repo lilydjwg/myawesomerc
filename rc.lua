@@ -11,7 +11,6 @@ local beautiful = require("beautiful")
 local naughty = require("naughty")
 local menubar = require("menubar")
 
-local vicious = require("vicious")
 local empathy = require("empathy")
 local myutil = require("myutil")
 local fixwidthtextbox = require("fixwidthtextbox")
@@ -198,16 +197,65 @@ netwidget:set_align('center')
 netwidget_clock = timer({ timeout = 2 })
 netwidget_clock:connect_signal("timeout", update_netstat)
 netwidget_clock:start()
+update_netstat()
 -- }}}
 
--- {{{ memory and battery widgets
---[[TODO: memwidget, batwidget
-memwidget = widget({ type = "textbox" })
-vicious.register(memwidget, vicious.widgets.mem, 'Mem <span color="#90ee90">$1%</span>', 5)
+-- {{{ memory usage indicator
+function update_memwidget()
+    local f = io.open('/proc/meminfo')
+    local total = f:read('*l')
+    local free = f:read('*l')
+    f:close()
+    total = total:match('%d+')
+    free = free:match('%d+')
+    local percent = 100 - math.floor(free / total * 100 + 0.5)
+    memwidget:set_markup('Mem <span color="#90ee90">'.. percent ..'%</span>')
+end
+memwidget = fixwidthtextbox('Mem ??')
+memwidget.width = 55
+update_memwidget()
+mem_clock = timer({ timeout = 5 })
+mem_clock:connect_signal("timeout", update_memwidget)
+mem_clock:start()
+-- }}}
 
-batwidget = widget({ type = "textbox" })
-vicious.register(batwidget, vicious.widgets.bat, ' <span color="#0000ff">$1$2%</span>', 5, 'BAT1')
---]]
+--{{{ battery indicator, using smapi
+function update_batwidget()
+    local bat_dir = '/sys/devices/platform/smapi/BAT0/'
+    local f = io.open(bat_dir .. 'state')
+    if not f then
+        batwidget:set_markup('<span color="red">ERR</span>')
+        return
+    end
+
+    local battery_state = {
+        unknown     = '<span color="yellow">? ',
+        idle        = '<span color="#0000ff">↯',
+        charging    = '<span color="green">+ ',
+        discharging = '<span color="#1e90ff">– ',
+    }
+    local state = f:read('*l')
+    f:close()
+    state = battery_state[state] or battery_state.unknown
+
+    f = io.open(bat_dir .. 'remaining_percent')
+    if not f then
+        batwidget:set_markup('<span color="red">ERR</span>')
+        return
+    end
+    local percent = tonumber(f:read('*l'))
+    f:close()
+    if percent <= 35 then
+        percent = '<span color="red">' .. percent .. '</span>'
+    end
+    batwidget:set_markup(state .. percent .. '%</span>')
+end
+batwidget = fixwidthtextbox('↯??%')
+batwidget.width = 45
+update_batwidget()
+bat_clock = timer({ timeout = 5 })
+bat_clock:connect_signal("timeout", update_batwidget)
+bat_clock:start()
 -- }}}
 
 -- {{{ Volume Controller
@@ -344,9 +392,8 @@ for s = 1, screen.count() do
     -- Widgets that are aligned to the right
     local right_layout = wibox.layout.fixed.horizontal()
     if s == 1 then right_layout:add(wibox.widget.systray()) end
-    -- TODO: Add mem, battery
-    -- right_layout:add(memwidget)
-    -- right_layout:add(batwidget)
+    right_layout:add(memwidget)
+    right_layout:add(batwidget)
     right_layout:add(netwidget)
     right_layout:add(volumewidget)
     right_layout:add(mytextclock)
