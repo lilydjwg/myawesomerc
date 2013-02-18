@@ -137,7 +137,7 @@ mymainmenu = awful.menu({ items = { { "Awesome", myawesomemenu, beautiful.awesom
           { "常用 (&U)", mymenu },
           { "应用程序 (&A)", xdgmenu },
           { "挂起 (&S)", "mysuspend" },
-          { "关机 (&H)", "dbus-send --system --print-reply --dest=org.freedesktop.ConsoleKit /org/freedesktop/ConsoleKit/Manager org.freedesktop.ConsoleKit.Manager.Stop", '/usr/share/icons/gnome/16x16/actions/gtk-quit.png' },
+          { "关机 (&H)", "systemctl poweroff", '/usr/share/icons/gnome/16x16/actions/gtk-quit.png' },
           }
 })
 
