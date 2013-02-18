@@ -24,12 +24,14 @@ local function do_empathy(p)
 
     -- “联系人列表”窗口
     local cls = {}
-    local buddylist
+    local buddylist_swap
     for k, c in ipairs(p.clients) do
       if c.name ~= '联系人列表' and c.name ~= 'Contact List' and c.name ~= '好友列表' then
 	table.insert(cls, c)
       else
-	buddylist = c
+	if k ~= 1 then
+	  buddylist_swap = c
+	end
 	c:geometry({
 	  width = buddylist_height - 2,
 	  height = area.height - 4,
@@ -77,6 +79,9 @@ local function do_empathy(p)
       c:geometry(g)
       -- naughty.notify({ title=c.name, text= 'w: '.. g.width .. '\th: '.. g.height .. '\nx: '.. g.x .. '\ty: '.. g.y,
       -- timeout = 0 })
+    end
+    if #cls > 0 and buddylist_swap then
+      buddylist_swap:swap(cls[1])
     end
   end
 end
