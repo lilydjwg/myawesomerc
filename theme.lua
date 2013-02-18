@@ -90,6 +90,7 @@ theme.layout_tile = "/usr/share/awesome/themes/default/layouts/tilew.png"
 theme.layout_tiletop = "/usr/share/awesome/themes/default/layouts/tiletopw.png"
 theme.layout_spiral  = "/usr/share/awesome/themes/default/layouts/spiralw.png"
 theme.layout_dwindle = "/usr/share/awesome/themes/default/layouts/dwindlew.png"
+theme.layout_empathy = confdir .. "/image/layout_empathy.png"
 
 theme.awesome_icon = "/usr/share/awesome/icons/awesome16.png"
 
