@@ -822,6 +822,9 @@ client.connect_signal("manage", function (c, startup)
             awful.util.spawn_with_shell('sleep 0.1 && fcitx-remote -T', false)
         end
     end
+    if c.instance == 'empathy-chat' or (c.role == 'conversation' and c.class == 'Pidgin') then
+        awful.client.movetotag(tags[mouse.screen][6], c)
+    end
 
     if c.instance == 'QQ.exe' then
         -- naughty.notify({title="新窗口", text="名称为 ".. c.name .."，class 为 " .. c.class:gsub('&', '&amp;') .. " 的窗口已接受管理。", preset=naughty.config.presets.critical})
