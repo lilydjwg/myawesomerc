@@ -31,8 +31,8 @@ local function do_empathy(p)
       else
 	buddylist = c
 	c:geometry({
-	  width = buddylist_height,
-	  height = area.height,
+	  width = buddylist_height - 2,
+	  height = area.height - 4,
 	  x = area.x,
 	  y = area.y,
 	})
@@ -60,6 +60,12 @@ local function do_empathy(p)
 
       g.x = area.x + (col-1) * g.width
       g.y = area.y + (row-1) * g.height
+      if row == rows then
+	g.height = g.height - 4
+      else
+	g.height = g.height - 2
+      end
+      g.width = g.width - 2
 
       if col == cols then
 	col = 1
