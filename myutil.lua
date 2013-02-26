@@ -57,6 +57,20 @@ function myutil.run_or_raise(cmd, properties, beforemove)
     -- And then focus the client
     client.focus = c
     c:raise()
+    -- if the client is maximized on another screen, re-maximize it if necessary
+    if c.maximized_horizontal and c.maximized_vertical then
+      local geo = c:geometry()
+      local area = geo.width * geo.height
+      local wa = screen[mouse.screen].workarea
+      local area_t = wa.width * wa.height
+      -- too large or small?
+      if area < area_t * 0.9 or area > area_t then
+	c.maximized_horizontal = false
+	c.maximized_vertical = false
+	c.maximized_horizontal = true
+	c.maximized_vertical = true
+      end
+    end
     return c
   end
   awful.util.spawn(cmd)
