@@ -723,7 +723,7 @@ floating_apps = {
         '文件传输', 'Firefox 首选项', '暂存器', 'Keyboard',
     },
     instance = {
-        'QQ.exe',
+        'QQ.exe', 'TM.exe',
         'Browser', -- 火狐的关于对话框
         'MATLAB', -- splash
     },
