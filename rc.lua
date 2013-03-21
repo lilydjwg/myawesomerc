@@ -723,7 +723,6 @@ floating_apps = {
         '文件传输', 'Firefox 首选项', '暂存器', 'Keyboard',
     },
     instance = {
-        'QQ.exe', 'TM.exe',
         'Browser', -- 火狐的关于对话框
         'MATLAB', -- splash
     },
@@ -755,6 +754,14 @@ awful.rules.rules = {
 
    { rule = { class = "Wireshark", name = "Wireshark" }, -- wireshark startup window
      properties = { floating = true } },
+
+    { rule = { instance = "TM.exe" },
+      properties = { floating = true,
+                     border_width = 0} },
+
+    { rule = { instance = "QQ.exe" },
+      properties = { floating = true,
+                     border_width = 0} },
 }
 
 for k, v in pairs(floating_apps) do
