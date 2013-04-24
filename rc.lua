@@ -629,9 +629,7 @@ globalkeys = awful.util.table.join(
     -- sdcv
     awful.key({ modkey            }, "d",
         function ()
-            local f = io.popen("xsel -p")
-            local new_word = f:read("*a")
-            f:close()
+            local new_word = selection()
 
             if _dict_notify ~= nil then
                 naughty.destroy(_dict_notify)
