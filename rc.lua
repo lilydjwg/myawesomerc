@@ -157,15 +157,19 @@ mytextclock = awful.widget.textclock(" %Y年%m月%d日 %H:%M:%S %A ", 1)
 function update_netstat()
     local interval = netwidget_clock.timeout
     local netif, text
-    for line in io.lines("/proc/net/route") do
+    local f = io.open('/proc/net/route')
+    for line in f:lines() do
         netif = line:match('^(%w+)%s+00000000%s')
         if netif then
             break
         end
     end
+    f:close()
+
     if netif then
         local down, up
-        for line in io.lines("/proc/net/dev") do
+        f = io.open('/proc/net/dev')
+        for line in f:lines() do
             -- Match wmaster0 as well as rt0 (multiple leading spaces)
             local name, recv, send = string.match(line, "^%s*(%w+):%s+(%d+)%s+%d+%s+%d+%s+%d+%s+%d+%s+%d+%s+%d+%s+%d+%s+(%d+)")
             if name == netif then
@@ -182,6 +186,7 @@ function update_netstat()
                 break
             end
         end
+        f:close()
         down = string.format('%.1f', down / 1024)
         up = string.format('%.1f', up / 1024)
         text = '↓<span color="#5798d9">'.. down ..'</span> ↑<span color="#c2ba62">'.. up ..'</span>'
