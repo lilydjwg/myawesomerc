@@ -116,7 +116,7 @@ end
 
 -- {{{ Menu
 -- Create a laucher widget and a main menu
-myawesomemenu = {
+local myawesomemenu = {
    { "编辑配置 (&E)", editor_cmd .. " " .. awesome.conffile },
    { "重新加载 (&R)", awesome.restart, '/usr/share/icons/gnome/16x16/actions/stock_refresh.png' },
    { "注销 (&L)", awesome.quit },
@@ -231,6 +231,12 @@ mem_clock:start()
 -- }}}
 
 --{{{ battery indicator, using smapi
+local battery_state = {
+    unknown     = '<span color="yellow">? ',
+    idle        = '<span color="#0000ff">↯',
+    charging    = '<span color="green">+ ',
+    discharging = '<span color="#1e90ff">– ',
+}
 function update_batwidget()
     local bat_dir = '/sys/devices/platform/smapi/BAT0/'
     local f = io.open(bat_dir .. 'state')
@@ -239,12 +245,6 @@ function update_batwidget()
         return
     end
 
-    local battery_state = {
-        unknown     = '<span color="yellow">? ',
-        idle        = '<span color="#0000ff">↯',
-        charging    = '<span color="green">+ ',
-        discharging = '<span color="#1e90ff">– ',
-    }
     local state = f:read('*l')
     f:close()
     state = battery_state[state] or battery_state.unknown
@@ -837,6 +837,7 @@ client.connect_signal("manage", function (c, startup)
     end
 
     if c.instance == 'QQ.exe' then
+        local handled
         -- naughty.notify({title="新窗口", text="名称为 ".. c.name .."，class 为 " .. c.class:gsub('&', '&amp;') .. " 的窗口已接受管理。", preset=naughty.config.presets.critical})
         for _, i in pairs(qq_dontblock) do
             if c.name == i then
