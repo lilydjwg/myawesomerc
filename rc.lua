@@ -765,6 +765,11 @@ awful.rules.rules = {
     { rule = { instance = "QQ.exe" },
       properties = { floating = true,
                      border_width = 0} },
+
+    -- e.g. tool menus in Photoshop
+    { rule = { class = "Wine", skip_taskbar = true },
+      properties = { floating = true,
+                     border_width = 0} },
 }
 
 for k, v in pairs(floating_apps) do
