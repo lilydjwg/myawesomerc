@@ -765,11 +765,6 @@ awful.rules.rules = {
     { rule = { instance = "QQ.exe" },
       properties = { floating = true,
                      border_width = 0} },
-
-    -- e.g. tool menus in Photoshop
-    { rule = { class = "Wine", skip_taskbar = true },
-      properties = { floating = true,
-                     border_width = 0} },
 }
 
 for k, v in pairs(floating_apps) do
@@ -828,20 +823,15 @@ client.connect_signal("manage", function (c, startup)
     if c.name and c.name:match('^FlashGot') then
         c.minimized = true
         -- naughty.notify({title="FlashGot", text="OK"})
-    end
-
-    if c.instance == 'empathy-chat' or (c.role == 'conversation' and c.class == 'Pidgin') then
+    elseif c.instance == 'empathy-chat' or (c.role == 'conversation' and c.class == 'Pidgin') then
         local t
         t = c:tags()
         if #t == 1 and t[1] == tags[mouse.screen][6] then
             awful.util.spawn_with_shell('sleep 0.1 && fcitx-remote -T', false)
+        else
+            awful.client.movetotag(tags[mouse.screen][6], c)
         end
-    end
-    if c.instance == 'empathy-chat' or (c.role == 'conversation' and c.class == 'Pidgin') then
-        awful.client.movetotag(tags[mouse.screen][6], c)
-    end
-
-    if c.instance == 'QQ.exe' then
+    elseif c.instance == 'QQ.exe' then
         local handled
         -- naughty.notify({title="新窗口", text="名称为 ".. c.name .."，class 为 " .. c.class:gsub('&', '&amp;') .. " 的窗口已接受管理。", preset=naughty.config.presets.critical})
         for _, i in pairs(qq_dontblock) do
@@ -861,6 +851,10 @@ client.connect_signal("manage", function (c, startup)
             end
         end
         handled = false
+    elseif c.class == 'Wine' and c.skip_taskbar and c.name == nil then
+        -- e.g. tool menus in Photoshop
+        c.floating = true
+        c.border_width = 0
     end
 end)
 
