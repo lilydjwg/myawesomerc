@@ -291,12 +291,12 @@ function volumectl (mode, widget)
         end
         widget:set_markup(volume)
     elseif mode == "up" then
-        local f = io.popen("pamixer --increase 5")
+        local f = io.popen("pamixer --allow-boost --increase 5")
         f:read("*all")
         f:close()
         volumectl("update", widget)
     elseif mode == "down" then
-        local f = io.popen("pamixer --decrease 5")
+        local f = io.popen("pamixer --allow-boost --decrease 5")
         f:read("*all")
         f:close()
         volumectl("update", widget)
