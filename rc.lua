@@ -19,6 +19,7 @@ local menu = require("menu")
 os.setlocale("")
 -- A debugging func
 n = function(n) naughty.notify{title="消息", text=tostring(n)} end
+last_bat_warning = 0
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -247,7 +248,7 @@ function update_batwidget()
 
     local state = f:read('*l')
     f:close()
-    state = battery_state[state] or battery_state.unknown
+    local state_text = battery_state[state] or battery_state.unknown
 
     f = io.open(bat_dir .. 'remaining_percent')
     if not f then
@@ -257,9 +258,20 @@ function update_batwidget()
     local percent = tonumber(f:read('*l'))
     f:close()
     if percent <= 35 then
+        if state == 'discharging' then
+            local t = os.time()
+            if t - last_bat_warning > 60 * 5 then
+                naughty.notify{
+                    preset = naughty.config.presets.critical,
+                    title = "电量警报",
+                    text = '电池电量只剩下 ' .. percent .. '% 了！',
+                }
+                last_bat_warning = t
+            end
+        end
         percent = '<span color="red">' .. percent .. '</span>'
     end
-    batwidget:set_markup(state .. percent .. '%</span>')
+    batwidget:set_markup(state_text .. percent .. '%</span>')
 end
 batwidget = fixwidthtextbox('↯??%')
 batwidget.width = 45
