@@ -796,7 +796,9 @@ awful.rules.rules = {
         'TempTerm',
       },
     },
-    floating = true,
+    properties = {
+      floating = true,
+    }
   },
 }
 -- }}}
