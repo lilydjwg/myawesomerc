@@ -727,24 +727,6 @@ root.keys(globalkeys)
 -- }}}
 
 -- {{{ Rules
-floating_apps = {
-    class = {
-        'MPlayer', 'Flashplayer', 'Gnome-mplayer', 'Totem',
-        'Eog', 'feh', 'Display', 'Gimp', 'Gimp-2.6',
-        'Screenkey', 'TempTerm', 'AliWangWang',
-        'Dia', 'Pavucontrol', 'Stardict', 'XEyes', 'Skype',
-    },
-    name = {
-        '文件传输', 'Firefox 首选项', '暂存器', 'Keyboard',
-    },
-    instance = {
-        'Browser', -- 火狐的关于对话框
-        'MATLAB', -- splash
-    },
-    role = {
-        'TempTerm',
-    },
-}
 awful.rules.rules = {
   -- All clients will match this rule.
   {
@@ -795,17 +777,28 @@ awful.rules.rules = {
       floating = true,
       border_width = 0,
     }
+  }, {
+    rule_any = {
+      class = {
+        'MPlayer', 'Flashplayer', 'Gnome-mplayer', 'Totem',
+        'Eog', 'feh', 'Display', 'Gimp', 'Gimp-2.6',
+        'Screenkey', 'TempTerm', 'AliWangWang',
+        'Dia', 'Pavucontrol', 'Stardict', 'XEyes', 'Skype',
+      },
+      name = {
+        '文件传输', 'Firefox 首选项', '暂存器', 'Keyboard',
+      },
+      instance = {
+        'Browser', -- 火狐的关于对话框
+        'MATLAB', -- splash
+      },
+      role = {
+        'TempTerm',
+      },
+    },
+    floating = true,
   },
 }
-
-for k, v in pairs(floating_apps) do
-  for _, vv in ipairs(v) do
-    table.insert(awful.rules.rules, {
-      rule = { [k] = vv },
-      properties = { floating = true },
-    })
-  end
-end
 -- }}}
 
 -- {{{ Signals
