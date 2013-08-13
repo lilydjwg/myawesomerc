@@ -746,37 +746,56 @@ floating_apps = {
     },
 }
 awful.rules.rules = {
-    -- All clients will match this rule.
-    { rule = { },
-      properties = { border_width = beautiful.border_width,
-                     border_color = beautiful.border_normal,
-                     focus = awful.client.focus.filter,
-                     keys = clientkeys,
-                     buttons = clientbuttons } },
-    { rule = { class = "Screenruler" },
-      properties = { floating = true,
-                     focus = false,
-                     border_width = 0} },
-   { rule = { role = "FullScreenHtop" },
-     properties = { maximized_horizontal = true,
-                    maximized_vertical = true } },
-
-   { rule = { class = "Empathy" },
-     properties = { tag = tags[1][6] } },
-
-   { rule = { class = "Firefox", instance = "firefox" },
-     properties = { floating = true } },
-
-   { rule = { class = "Wireshark", name = "Wireshark" }, -- wireshark startup window
-     properties = { floating = true } },
-
-    { rule = { instance = "TM.exe" },
-      properties = { floating = true,
-                     border_width = 0} },
-
-    { rule = { instance = "QQ.exe" },
-      properties = { floating = true,
-                     border_width = 0} },
+  -- All clients will match this rule.
+  {
+    rule = { },
+    properties = {
+      border_width = beautiful.border_width,
+      border_color = beautiful.border_normal,
+      focus = awful.client.focus.filter,
+      keys = clientkeys,
+      buttons = clientbuttons,
+    }
+  }, {
+    rule = { class = "Screenruler" },
+    properties = {
+      floating = true,
+      focus = false,
+      border_width = 0,
+    }
+  }, {
+    rule = { role = "FullScreenHtop" },
+    properties = {
+      maximized_horizontal = true,
+      maximized_vertical = true,
+    }
+  }, {
+    rule = { class = "Empathy" },
+    properties = { tag = tags[1][6] },
+  }, {
+    rule = { class = "Firefox", instance = "firefox" },
+    properties = { floating = true }
+  }, {
+    rule = { class = "Wireshark", name = "Wireshark" }, -- wireshark startup window
+    properties = { floating = true }
+  }, {
+    rule_any = { 
+      instance = {'TM.exe', 'QQ.exe'},
+    },
+    properties = {
+      floating = true,
+      border_width = 0,
+    }
+  }, {
+    rule = {
+      class = "Wine",
+      skip_taskbar = true,
+    },
+    properties = {
+      floating = true,
+      border_width = 0,
+    }
+  },
 }
 
 for k, v in pairs(floating_apps) do
