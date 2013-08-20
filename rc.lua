@@ -10,6 +10,8 @@ local beautiful = require("beautiful")
 -- Notification library
 local naughty = require("naughty")
 local menubar = require("menubar")
+-- for fcitx-chttrans
+table.insert(naughty.config.icon_dirs, '/usr/share/icons/hicolor/48x48/status/')
 
 local empathy = require("empathy")
 local myutil = require("myutil")
