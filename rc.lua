@@ -783,8 +783,9 @@ awful.rules.rules = {
     }
   }, {
     rule = {
+      -- mainly for picpick
       class = "Wine",
-      skip_taskbar = true,
+      above = true,
     },
     properties = {
       floating = true,
