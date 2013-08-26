@@ -729,6 +729,16 @@ root.keys(globalkeys)
 -- }}}
 
 -- {{{ Rules
+function myfocus_filter(c)
+  if awful.client.focus.filter(c) then
+    -- This works with tooltips and some popup-menus
+    if c.class == 'Wine' and c.above == true then
+      return nil
+    else
+      return c
+    end
+  end
+end
 awful.rules.rules = {
   -- All clients will match this rule.
   {
@@ -736,7 +746,7 @@ awful.rules.rules = {
     properties = {
       border_width = beautiful.border_width,
       border_color = beautiful.border_normal,
-      focus = awful.client.focus.filter,
+      focus = myfocus_filter,
       keys = clientkeys,
       buttons = clientbuttons,
     }
@@ -828,7 +838,7 @@ client.connect_signal("manage", function (c, startup)
     -- Enable sloppy focus
     c:connect_signal("mouse::leave", function(c)
         if awful.layout.get(c.screen) ~= awful.layout.suit.magnifier
-            and awful.client.focus.filter(c) then
+            and myfocus_filter(c) then
             client_unfocused = c.window
         end
     end)
@@ -837,7 +847,7 @@ client.connect_signal("manage", function (c, startup)
     -- 如果离开后又进入同一窗口则忽略，这解决了由于输入条而造成的焦点移动
         if client_unfocused ~= c.window
             and awful.layout.get(c.screen) ~= awful.layout.suit.magnifier
-            and awful.client.focus.filter(c) then
+            and myfocus_filter(c) then
             client.focus = c
         end
     end)
