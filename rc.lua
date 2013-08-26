@@ -891,10 +891,6 @@ client.connect_signal("manage", function (c, startup)
             end
         end
         handled = false
-    elseif c.class == 'Wine' and c.skip_taskbar and c.name == nil then
-        -- e.g. tool menus in Photoshop
-        c.floating = true
-        c.border_width = 0
     end
 end)
 
