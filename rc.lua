@@ -821,6 +821,15 @@ awful.rules.rules = {
       end
     end,
   }, {
+    rule = {
+      -- 白板的工具栏
+      name = 'frmPresentationTool',
+      instance = 'picpick.exe',
+    },
+    properties = {
+      ontop = true,
+    }
+  }, {
     rule_any = {
       class = {
         'MPlayer', 'Flashplayer', 'Gnome-mplayer', 'Totem',
