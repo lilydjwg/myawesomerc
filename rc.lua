@@ -810,6 +810,17 @@ awful.rules.rules = {
     }
   }, {
     rule = {
+      -- for WinHex
+      class = "Wine",
+      instance = "WinHex.exe",
+      name = "数据解释器",
+    },
+    properties = {
+      floating = true,
+      border_width = 0,
+    }
+  }, {
+    rule = {
       class = "Wine",
       skip_taskbar = true,
       type = "dialog",
