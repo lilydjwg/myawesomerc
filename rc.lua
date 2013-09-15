@@ -140,7 +140,7 @@ mymainmenu = awful.menu({ items = { { "Awesome", myawesomemenu, beautiful.awesom
           { "常用 (&U)", mymenu },
           { "应用程序 (&A)", xdgmenu },
           { "挂起 (&S)", "mysuspend" },
-          { "关机 (&H)", "systemctl poweroff", '/usr/share/icons/gnome/16x16/actions/gtk-quit.png' },
+          { "关机 (&H)", "zenity --question --title '关机' --text '你确定关机吗？' --default-no && systemctl poweroff", '/usr/share/icons/gnome/16x16/actions/gtk-quit.png' },
           }
 })
 
