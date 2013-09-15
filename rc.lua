@@ -734,6 +734,13 @@ function myfocus_filter(c)
     -- This works with tooltips and some popup-menus
     if c.class == 'Wine' and c.above == true then
       return nil
+    elseif c.class == 'Wine'
+      and c.type == 'dialog'
+      and c.skip_taskbar == true
+      and c.size_hints.max_width and c.size_hints.max_width < 160
+      then
+      -- for popup item menus of Photoshop CS5
+      return nil
     else
       return c
     end
@@ -800,6 +807,27 @@ awful.rules.rules = {
     properties = {
       floating = true,
       border_width = 0,
+    }
+  }, {
+    rule = {
+      class = "Wine",
+      skip_taskbar = true,
+      type = "dialog",
+    },
+    callback = function (c)
+      if c.size_hints.max_width and c.size_hints.max_width < 160 then
+        -- for popup item menus of Photoshop CS5
+        c.border_width = 0
+      end
+    end,
+  }, {
+    rule = {
+      -- 白板的工具栏
+      name = 'frmPresentationTool',
+      instance = 'picpick.exe',
+    },
+    properties = {
+      ontop = true,
     }
   }, {
     rule_any = {
