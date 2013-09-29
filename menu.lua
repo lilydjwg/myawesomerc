@@ -24,10 +24,134 @@ xdgmenu = function(terminal)
         {'aMuleGUI', 'amulegui', '/usr/share/pixmaps/amulegui.xpm'},
         {'mutt', (terminal or "xterm") .. " -e 'mutt'"},
         {'wxCas', 'wxcas', '/usr/share/pixmaps/wxcas.xpm'},
-        {'傲兔 (Qt)', 'hotot-qt', '/usr/share/icons/hicolor/128x128/apps/hotot.png'},
+        {'傲兔 (Qt)', 'hotot-qt', '/usr/share/icons/hicolor/48x48/apps/hotot.png'},
         {'网络浏览器', 'exo-open --launch WebBrowser', '/usr/share/icons/gnome/16x16/apps/web-browser.png'},
         {'邮件阅读器', 'exo-open --launch MailReader'},
         {'阿里旺旺', 'AliWangWang', '/usr/share/pixmaps/AliWangWang.png'},
+      }
+    }, {'Wine', {
+        {'Programs', {
+            {'PDF-XChange PDF Viewer', {
+                {'Live Update', 'env WINEPREFIX="/home/lilydjwg/tmpfs/winetest/wine" wine C:\\\\windows\\\\command\\\\start.exe /Unix /home/lilydjwg/tmpfs/winetest/wine/dosdevices/c:/users/Public/Start\\ Menu/Programs/PDF-XChange\\ PDF\\ Viewer/Live\\ Update.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/6721_LiveUpdate.0.png'},
+                {'PDF-Viewer', 'env WINEPREFIX="/home/lilydjwg/tmpfs/winetest/wine" wine C:\\\\windows\\\\command\\\\start.exe /Unix /home/lilydjwg/tmpfs/winetest/wine/dosdevices/c:/users/Public/Start\\ Menu/Programs/PDF-XChange\\ PDF\\ Viewer/PDF-Viewer.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/C055_PDFXCview.0.png'},
+                {'PDF-Viewer License', 'env WINEPREFIX="/home/lilydjwg/tmpfs/winetest/wine" wine C:\\\\windows\\\\command\\\\start.exe /Unix /home/lilydjwg/tmpfs/winetest/wine/dosdevices/c:/users/Public/Start\\ Menu/Programs/PDF-XChange\\ PDF\\ Viewer/PDF-Viewer\\ License.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/8E13_PDFVLicense.0.png'},
+                {'PDF-Viewer Users Manual', 'env WINEPREFIX="/home/lilydjwg/tmpfs/winetest/wine" wine C:\\\\windows\\\\command\\\\start.exe /Unix /home/lilydjwg/tmpfs/winetest/wine/dosdevices/c:/users/Public/Start\\ Menu/Programs/PDF-XChange\\ PDF\\ Viewer/PDF-Viewer\\ Users\\ Manual.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/2A78_PDFVManualSm.0.png'},
+                {'Uninstall', 'env WINEPREFIX="/home/lilydjwg/tmpfs/winetest/wine" wine C:\\\\windows\\\\command\\\\start.exe /Unix /home/lilydjwg/tmpfs/winetest/wine/dosdevices/c:/users/Public/Start\\ Menu/Programs/PDF-XChange\\ PDF\\ Viewer/Uninstall.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/02A2_unins000.0.png'},
+              }
+            }, {'PicPick', {
+                {'PicPick', 'env WINEPREFIX="/home/lilydjwg/tmpfs/winetest/wine" wine C:\\\\windows\\\\command\\\\start.exe /Unix /home/lilydjwg/tmpfs/winetest/wine/dosdevices/c:/users/lilydjwg/Start\\ Menu/Programs/PicPick/PicPick.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/5AD3_picpick.0.png'},
+              }
+            }, {'Python 2.7', {
+                {'IDLE (Python GUI)', 'env WINEPREFIX="/ldata/txtfiles/src/vim_win64/.wine64" wine C:\\\\windows\\\\command\\\\start.exe /Unix /ldata/txtfiles/src/vim_win64/.wine64/dosdevices/c:/users/lilydjwg/Start\\ Menu/Programs/Python\\ 2.7/IDLE\\ \\(Python\\ GUI\\).lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/5CCF_python_icon.0.png'},
+                {'Module Docs', 'env WINEPREFIX="/ldata/txtfiles/src/vim_win64/.wine64" wine C:\\\\windows\\\\command\\\\start.exe /Unix /ldata/txtfiles/src/vim_win64/.wine64/dosdevices/c:/users/lilydjwg/Start\\ Menu/Programs/Python\\ 2.7/Module\\ Docs.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/5CCF_python_icon.0.png'},
+                {'Python (command line)', 'env WINEPREFIX="/ldata/txtfiles/src/vim_win64/.wine64" wine C:\\\\windows\\\\command\\\\start.exe /Unix /ldata/txtfiles/src/vim_win64/.wine64/dosdevices/c:/users/lilydjwg/Start\\ Menu/Programs/Python\\ 2.7/Python\\ \\(command\\ line\\).lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/5CCF_python_icon.2.png'},
+                {'Python Manuals', 'env WINEPREFIX="/ldata/txtfiles/src/vim_win64/.wine64" wine C:\\\\windows\\\\command\\\\start.exe /Unix /ldata/txtfiles/src/vim_win64/.wine64/dosdevices/c:/users/lilydjwg/Start\\ Menu/Programs/Python\\ 2.7/Python\\ Manuals.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/937E_python275.0.png'},
+                {'Uninstall Python', 'env WINEPREFIX="/ldata/txtfiles/src/vim_win64/.wine64" wine C:\\\\windows\\\\command\\\\start.exe /Unix /ldata/txtfiles/src/vim_win64/.wine64/dosdevices/c:/users/lilydjwg/Start\\ Menu/Programs/Python\\ 2.7/Uninstall\\ Python.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/2984_msiexec.0.png'},
+              }
+            }, {'RegexBuddy 3', {
+                {'RegexBuddy', 'env WINEPREFIX="/home/lilydjwg/.wine" wine C:\\\\windows\\\\command\\\\start.exe /Unix /home/lilydjwg/.wine/dosdevices/c:/users/Public/Start\\ Menu/Programs/RegexBuddy\\ 3/RegexBuddy.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/0C61_RegexBuddy.0.png'},
+                {'RegexBuddy Help', 'env WINEPREFIX="/home/lilydjwg/.wine" wine C:\\\\windows\\\\command\\\\start.exe /Unix /home/lilydjwg/.wine/dosdevices/c:/users/Public/Start\\ Menu/Programs/RegexBuddy\\ 3/RegexBuddy\\ Help.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/0B8D_RegexBuddy.0.png'},
+                {'RegexBuddy Manual', 'env WINEPREFIX="/home/lilydjwg/.wine" wine C:\\\\windows\\\\command\\\\start.exe /Unix /home/lilydjwg/.wine/dosdevices/c:/users/Public/Start\\ Menu/Programs/RegexBuddy\\ 3/RegexBuddy\\ Manual.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/0938_RegexBuddy.0.png'},
+                {'Remove RegexBuddy 3', 'env WINEPREFIX="/home/lilydjwg/.wine" wine C:\\\\windows\\\\command\\\\start.exe /Unix /home/lilydjwg/.wine/dosdevices/c:/users/Public/Start\\ Menu/Programs/RegexBuddy\\ 3/Remove\\ RegexBuddy\\ 3.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/5D13_UnDeploy.0.png'},
+              }
+            }, {'Rosetta Stone', {
+                {'Rosetta Stone Version 3', {
+                    {'Rosetta Stone Version 3', 'env WINEPREFIX="/ldata/txtfiles/soft/wine4rosetta" wine C:\\\\windows\\\\command\\\\start.exe /Unix /ldata/txtfiles/soft/wine4rosetta/dosdevices/c:/users/lilydjwg/Start\\ Menu/Programs/Rosetta\\ Stone/Rosetta\\ Stone\\ Version\\ 3/Rosetta\\ Stone\\ Version\\ 3.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/D36F_MainIcon.0.png'},
+                    {'Visit www.RosettaStone.com', 'env WINEPREFIX="/ldata/txtfiles/soft/wine4rosetta" wine C:\\\\windows\\\\command\\\\start.exe /Unix /ldata/txtfiles/soft/wine4rosetta/dosdevices/c:/users/lilydjwg/Start\\ Menu/Programs/Rosetta\\ Stone/Rosetta\\ Stone\\ Version\\ 3/Visit\\ www.RosettaStone.com.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/F0A2_www.RosettaStone.com.0.png'},
+                  }
+                }
+              }
+            }, {'Vim 7.4', {
+                {'Help', 'env WINEPREFIX="/ldata/txtfiles/src/vim_win64/.wine64_test" wine C:\\\\windows\\\\command\\\\start.exe /Unix /ldata/txtfiles/src/vim_win64/.wine64_test/dosdevices/c:/users/Public/Start\\ Menu/Programs/Vim\\ 7.4/Help.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/E28A_gvim.0.png'},
+                {'Uninstall', 'env WINEPREFIX="/ldata/txtfiles/src/vim_win64/.wine64_test" wine C:\\\\windows\\\\command\\\\start.exe /Unix /ldata/txtfiles/src/vim_win64/.wine64_test/dosdevices/c:/users/Public/Start\\ Menu/Programs/Vim\\ 7.4/Uninstall.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/3CF4_uninstall-gui.0.png'},
+                {'Vim', 'env WINEPREFIX="/ldata/txtfiles/src/vim_win64/.wine64_test" wine C:\\\\windows\\\\command\\\\start.exe /Unix /ldata/txtfiles/src/vim_win64/.wine64_test/dosdevices/c:/users/Public/Start\\ Menu/Programs/Vim\\ 7.4/Vim.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/2E42_vim.0.png'},
+                {'Vim Diff', 'env WINEPREFIX="/ldata/txtfiles/src/vim_win64/.wine64_test" wine C:\\\\windows\\\\command\\\\start.exe /Unix /ldata/txtfiles/src/vim_win64/.wine64_test/dosdevices/c:/users/Public/Start\\ Menu/Programs/Vim\\ 7.4/Vim\\ Diff.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/2E42_vim.0.png'},
+                {'Vim Read-only', 'env WINEPREFIX="/ldata/txtfiles/src/vim_win64/.wine64_test" wine C:\\\\windows\\\\command\\\\start.exe /Unix /ldata/txtfiles/src/vim_win64/.wine64_test/dosdevices/c:/users/Public/Start\\ Menu/Programs/Vim\\ 7.4/Vim\\ Read-only.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/2E42_vim.0.png'},
+                {'Vim tutor', 'env WINEPREFIX="/ldata/txtfiles/src/vim_win64/.wine64_test" wine C:\\\\windows\\\\command\\\\start.exe /Unix /ldata/txtfiles/src/vim_win64/.wine64_test/dosdevices/c:/users/Public/Start\\ Menu/Programs/Vim\\ 7.4/Vim\\ tutor.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/6887_vimtutor.0.png'},
+                {'gVim', 'env WINEPREFIX="/ldata/txtfiles/src/vim_win64/.wine64_test" wine C:\\\\windows\\\\command\\\\start.exe /Unix /ldata/txtfiles/src/vim_win64/.wine64_test/dosdevices/c:/users/Public/Start\\ Menu/Programs/Vim\\ 7.4/gVim.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/E28A_gvim.0.png'},
+                {'gVim Diff', 'env WINEPREFIX="/ldata/txtfiles/src/vim_win64/.wine64_test" wine C:\\\\windows\\\\command\\\\start.exe /Unix /ldata/txtfiles/src/vim_win64/.wine64_test/dosdevices/c:/users/Public/Start\\ Menu/Programs/Vim\\ 7.4/gVim\\ Diff.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/E28A_gvim.0.png'},
+                {'gVim Easy', 'env WINEPREFIX="/ldata/txtfiles/src/vim_win64/.wine64_test" wine C:\\\\windows\\\\command\\\\start.exe /Unix /ldata/txtfiles/src/vim_win64/.wine64_test/dosdevices/c:/users/Public/Start\\ Menu/Programs/Vim\\ 7.4/gVim\\ Easy.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/E28A_gvim.0.png'},
+                {'gVim Read-only', 'env WINEPREFIX="/ldata/txtfiles/src/vim_win64/.wine64_test" wine C:\\\\windows\\\\command\\\\start.exe /Unix /ldata/txtfiles/src/vim_win64/.wine64_test/dosdevices/c:/users/Public/Start\\ Menu/Programs/Vim\\ 7.4/gVim\\ Read-only.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/E28A_gvim.0.png'},
+              }
+            }, {'White Noise Sleep System', {
+                {'Uninstall White Noise Sleep System', 'env WINEPREFIX="/home/lilydjwg/tmpfs/winetest/wine" wine C:\\\\windows\\\\command\\\\start.exe /Unix /home/lilydjwg/tmpfs/winetest/wine/dosdevices/c:/users/Public/Start\\ Menu/Programs/White\\ Noise\\ Sleep\\ System/Uninstall\\ White\\ Noise\\ Sleep\\ System.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/0524_unins000.0.png'},
+                {'White Noise Sleep System', 'env WINEPREFIX="/home/lilydjwg/tmpfs/winetest/wine" wine C:\\\\windows\\\\command\\\\start.exe /Unix /home/lilydjwg/tmpfs/winetest/wine/dosdevices/c:/users/Public/Start\\ Menu/Programs/White\\ Noise\\ Sleep\\ System/White\\ Noise\\ Sleep\\ System.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/A60E_WNSS.0.png'},
+              }
+            }, {'cz88.net', {
+                {'ip', {
+                    {'卸载 纯真IP地址数据库', 'env WINEPREFIX="/home/lilydjwg/tmpfs/winetest/wine" wine C:\\\\windows\\\\command\\\\start.exe /Unix /home/lilydjwg/tmpfs/winetest/wine/dosdevices/c:/users/Public/Start\\ Menu/Programs/cz88.net/ip/卸载\\ 纯真IP地址数据库.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/677C_unins000.0.png'},
+                    {'纯真IP地址数据库', 'env WINEPREFIX="/home/lilydjwg/tmpfs/winetest/wine" wine C:\\\\windows\\\\command\\\\start.exe /Unix /home/lilydjwg/tmpfs/winetest/wine/dosdevices/c:/users/Public/Start\\ Menu/Programs/cz88.net/ip/纯真IP地址数据库.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/FBD4_ip.0.png'},
+                    {'纯真IP地址数据库 说明文件', 'env WINEPREFIX="/home/lilydjwg/tmpfs/winetest/wine" wine C:\\\\windows\\\\command\\\\start.exe /Unix /home/lilydjwg/tmpfs/winetest/wine/dosdevices/c:/users/Public/Start\\ Menu/Programs/cz88.net/ip/纯真IP地址数据库\\ 说明文件.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/A0A0_说明.0.png'},
+                    {'纯真网络', 'env WINEPREFIX="/home/lilydjwg/tmpfs/winetest/wine" wine C:\\\\windows\\\\command\\\\start.exe /Unix /home/lilydjwg/tmpfs/winetest/wine/dosdevices/c:/users/Public/Start\\ Menu/Programs/cz88.net/ip/纯真网络.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/6EC5_纯真网络.0.png'},
+                  }
+                }
+              }
+            }, {'亿图图示专家', {
+                {'亿图图示专家V7', 'env WINEPREFIX="/home/lilydjwg/tmpfs/winetest/wine" wine C:\\\\windows\\\\command\\\\start.exe /Unix /home/lilydjwg/tmpfs/winetest/wine/dosdevices/c:/users/Public/Start\\ Menu/Programs/亿图图示专家/亿图图示专家V7.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/83AF_Edraw.0.png'},
+                {'反安装亿图软件V7', 'env WINEPREFIX="/home/lilydjwg/tmpfs/winetest/wine" wine C:\\\\windows\\\\command\\\\start.exe /Unix /home/lilydjwg/tmpfs/winetest/wine/dosdevices/c:/users/Public/Start\\ Menu/Programs/亿图图示专家/反安装亿图软件V7.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/1E2B_Uninstall.0.png'},
+                {'访问亿图网站', 'env WINEPREFIX="/home/lilydjwg/tmpfs/winetest/wine" wine C:\\\\windows\\\\command\\\\start.exe /Unix /home/lilydjwg/tmpfs/winetest/wine/dosdevices/c:/users/Public/Start\\ Menu/Programs/亿图图示专家/访问亿图网站.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/E068_Edraw.0.png'},
+              }
+            }, {'多玩', {
+                {'YY语音', 'env WINEPREFIX="/home/lilydjwg/tmpfs/winetest/wine" wine C:\\\\windows\\\\command\\\\start.exe /Unix /home/lilydjwg/tmpfs/winetest/wine/dosdevices/c:/users/lilydjwg/Start\\ Menu/Programs/多玩/YY语音.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/7886_YY.0.png'},
+                {'卸载YY语音', 'env WINEPREFIX="/home/lilydjwg/tmpfs/winetest/wine" wine C:\\\\windows\\\\command\\\\start.exe /Unix /home/lilydjwg/tmpfs/winetest/wine/dosdevices/c:/users/lilydjwg/Start\\ Menu/Programs/多玩/卸载YY语音.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/E8D6_Uninstall.0.png'},
+              }
+            }, {'德语助手', {
+                {'工具', {
+                    {'使用帮助', 'env WINEPREFIX="/home/lilydjwg/tmpfs/winetest/wine" wine C:\\\\windows\\\\command\\\\start.exe /Unix /home/lilydjwg/tmpfs/winetest/wine/dosdevices/c:/users/Public/Start\\ Menu/Programs/德语助手/工具/使用帮助.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/189B_Dehelper.0.png'},
+                    {'学习记录管理器', 'env WINEPREFIX="/home/lilydjwg/tmpfs/winetest/wine" wine C:\\\\windows\\\\command\\\\start.exe /Unix /home/lilydjwg/tmpfs/winetest/wine/dosdevices/c:/users/Public/Start\\ Menu/Programs/德语助手/工具/学习记录管理器.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/3B3A_ListMng.0.png'},
+                    {'德语助手官方网站', 'env WINEPREFIX="/home/lilydjwg/tmpfs/winetest/wine" wine C:\\\\windows\\\\command\\\\start.exe /Unix /home/lilydjwg/tmpfs/winetest/wine/dosdevices/c:/users/Public/Start\\ Menu/Programs/德语助手/工具/德语助手官方网站.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/83C0_德语助手官方网站.0.png'},
+                    {'德语字符输入 DeKey', 'env WINEPREFIX="/home/lilydjwg/tmpfs/winetest/wine" wine C:\\\\windows\\\\command\\\\start.exe /Unix /home/lilydjwg/tmpfs/winetest/wine/dosdevices/c:/users/Public/Start\\ Menu/Programs/德语助手/工具/德语字符输入\\ DeKey.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/5172_IntelliInput.0.png'},
+                    {'文章翻译朗读', 'env WINEPREFIX="/home/lilydjwg/tmpfs/winetest/wine" wine C:\\\\windows\\\\command\\\\start.exe /Unix /home/lilydjwg/tmpfs/winetest/wine/dosdevices/c:/users/Public/Start\\ Menu/Programs/德语助手/工具/文章翻译朗读.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/E4B8_Parler.0.png'},
+                    {'词库制作工具', 'env WINEPREFIX="/home/lilydjwg/tmpfs/winetest/wine" wine C:\\\\windows\\\\command\\\\start.exe /Unix /home/lilydjwg/tmpfs/winetest/wine/dosdevices/c:/users/Public/Start\\ Menu/Programs/德语助手/工具/词库制作工具.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/BC81_EuDicBuilder.0.png'},
+                    {'迷你背单词', 'env WINEPREFIX="/home/lilydjwg/tmpfs/winetest/wine" wine C:\\\\windows\\\\command\\\\start.exe /Unix /home/lilydjwg/tmpfs/winetest/wine/dosdevices/c:/users/Public/Start\\ Menu/Programs/德语助手/工具/迷你背单词.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/C232_Reciter.0.png'},
+                  }
+                }, {'德语助手 Dehelper', 'env WINEPREFIX="/home/lilydjwg/tmpfs/winetest/wine" wine C:\\\\windows\\\\command\\\\start.exe /Unix /home/lilydjwg/tmpfs/winetest/wine/dosdevices/c:/users/Public/Start\\ Menu/Programs/德语助手/德语助手\\ Dehelper.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/7576_DeHelper.0.png'},
+              }
+            }, {'汉王 PDF OCR', {
+                {'卸载', 'env WINEPREFIX="/home/lilydjwg/tmpfs/winetest/wine" wine C:\\\\windows\\\\command\\\\start.exe /Unix /home/lilydjwg/tmpfs/winetest/wine/dosdevices/c:/users/Public/Start\\ Menu/Programs/汉王\\ PDF\\ OCR/卸载.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/3624_SETUP.0.png'},
+                {'帮助', 'env WINEPREFIX="/home/lilydjwg/tmpfs/winetest/wine" wine C:\\\\windows\\\\command\\\\start.exe /Unix /home/lilydjwg/tmpfs/winetest/wine/dosdevices/c:/users/Public/Start\\ Menu/Programs/汉王\\ PDF\\ OCR/帮助.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/29F4_HWPDFOCR80.0.png'},
+                {'汉王 PDF OCR', 'env WINEPREFIX="/home/lilydjwg/tmpfs/winetest/wine" wine C:\\\\windows\\\\command\\\\start.exe /Unix /home/lilydjwg/tmpfs/winetest/wine/dosdevices/c:/users/Public/Start\\ Menu/Programs/汉王\\ PDF\\ OCR/汉王\\ PDF\\ OCR.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/EB6B_HWPDFOCR80.0.png'},
+              }
+            }, {'法语助手', {
+                {'工具', {
+                    {'使用帮助', 'env WINEPREFIX="/home/lilydjwg/tmpfs/winetest/wine" wine C:\\\\windows\\\\command\\\\start.exe /Unix /home/lilydjwg/tmpfs/winetest/wine/dosdevices/c:/users/Public/Start\\ Menu/Programs/法语助手/工具/使用帮助.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/C779_FrHelper.0.png'},
+                    {'学习记录管理器', 'env WINEPREFIX="/home/lilydjwg/tmpfs/winetest/wine" wine C:\\\\windows\\\\command\\\\start.exe /Unix /home/lilydjwg/tmpfs/winetest/wine/dosdevices/c:/users/Public/Start\\ Menu/Programs/法语助手/工具/学习记录管理器.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/6E32_ListMng.0.png'},
+                    {'文章翻译朗读 Parler', 'env WINEPREFIX="/home/lilydjwg/tmpfs/winetest/wine" wine C:\\\\windows\\\\command\\\\start.exe /Unix /home/lilydjwg/tmpfs/winetest/wine/dosdevices/c:/users/Public/Start\\ Menu/Programs/法语助手/工具/文章翻译朗读\\ Parler.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/EC74_Parler.0.png'},
+                    {'法语助手官方网站', 'env WINEPREFIX="/home/lilydjwg/tmpfs/winetest/wine" wine C:\\\\windows\\\\command\\\\start.exe /Unix /home/lilydjwg/tmpfs/winetest/wine/dosdevices/c:/users/Public/Start\\ Menu/Programs/法语助手/工具/法语助手官方网站.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/B099_法语助手官方网站.0.png'},
+                    {'法语字符输入 FrKey', 'env WINEPREFIX="/home/lilydjwg/tmpfs/winetest/wine" wine C:\\\\windows\\\\command\\\\start.exe /Unix /home/lilydjwg/tmpfs/winetest/wine/dosdevices/c:/users/Public/Start\\ Menu/Programs/法语助手/工具/法语字符输入\\ FrKey.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/A3A8_Frhelper.FrKey.0.png'},
+                    {'词库制作工具', 'env WINEPREFIX="/home/lilydjwg/tmpfs/winetest/wine" wine C:\\\\windows\\\\command\\\\start.exe /Unix /home/lilydjwg/tmpfs/winetest/wine/dosdevices/c:/users/Public/Start\\ Menu/Programs/法语助手/工具/词库制作工具.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/B171_EuDicBuilder.0.png'},
+                    {'迷你背单词', 'env WINEPREFIX="/home/lilydjwg/tmpfs/winetest/wine" wine C:\\\\windows\\\\command\\\\start.exe /Unix /home/lilydjwg/tmpfs/winetest/wine/dosdevices/c:/users/Public/Start\\ Menu/Programs/法语助手/工具/迷你背单词.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/973A_Reciter.0.png'},
+                  }
+                }, {'法语助手 Frhelper', 'env WINEPREFIX="/home/lilydjwg/tmpfs/winetest/wine" wine C:\\\\windows\\\\command\\\\start.exe /Unix /home/lilydjwg/tmpfs/winetest/wine/dosdevices/c:/users/Public/Start\\ Menu/Programs/法语助手/法语助手\\ Frhelper.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/C095_FrHelper.0.png'},
+              }
+            }, {'腾讯软件', {
+                {'TM2009', {
+                    {'卸载TM2009', 'env WINEPREFIX="/home/lilydjwg/tmpfs/winetest/wine" wine C:\\\\windows\\\\command\\\\start.exe /Unix /home/lilydjwg/tmpfs/winetest/wine/dosdevices/c:/users/lilydjwg/Start\\ Menu/Programs/腾讯软件/TM2009/卸载TM2009.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/F101_NewShortcut1_D9D5B7D8DFD54C95AED145D0340B05CC.0.png'},
+                    {'腾讯TM2009', 'env WINEPREFIX="/home/lilydjwg/tmpfs/winetest/wine" wine C:\\\\windows\\\\command\\\\start.exe /Unix /home/lilydjwg/tmpfs/winetest/wine/dosdevices/c:/users/lilydjwg/Start\\ Menu/Programs/腾讯软件/TM2009/腾讯TM2009.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/0252_NewShortcut3_1DB7EE0B2B0441489C00BD398A969231.0.png'},
+                  }
+                }
+              }
+            }, {'讯飞输入法 测试版', {
+                {'卸载', 'env WINEPREFIX="/home/lilydjwg/tmpfs/winetest/wine" wine C:\\\\windows\\\\command\\\\start.exe /Unix /home/lilydjwg/tmpfs/winetest/wine/dosdevices/c:/users/Public/Start\\ Menu/Programs/讯飞输入法\\ 测试版/卸载.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/0401_Uninstall.0.png'},
+                {'意见反馈', 'env WINEPREFIX="/home/lilydjwg/tmpfs/winetest/wine" wine C:\\\\windows\\\\command\\\\start.exe /Unix /home/lilydjwg/tmpfs/winetest/wine/dosdevices/c:/users/Public/Start\\ Menu/Programs/讯飞输入法\\ 测试版/意见反馈.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/F62C_iFlyIMEUser.0.png'},
+                {'设置', 'env WINEPREFIX="/home/lilydjwg/tmpfs/winetest/wine" wine C:\\\\windows\\\\command\\\\start.exe /Unix /home/lilydjwg/tmpfs/winetest/wine/dosdevices/c:/users/Public/Start\\ Menu/Programs/讯飞输入法\\ 测试版/设置.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/6A75_iFlyIMEConfig.0.png'},
+              }
+            }, {'迅雷软件', {
+                {'迅雷7', {
+                    {'卸载迅雷7', 'env WINEPREFIX="/home/lilydjwg/tmpfs/winetest/wine" wine C:\\\\windows\\\\command\\\\start.exe /Unix /home/lilydjwg/tmpfs/winetest/wine/dosdevices/c:/users/Public/Start\\ Menu/Programs/迅雷软件/迅雷7/卸载迅雷7.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/C13F_uninstall_xl7.0.png'},
+                    {'启动迅雷7', 'env WINEPREFIX="/home/lilydjwg/tmpfs/winetest/wine" wine C:\\\\windows\\\\command\\\\start.exe /Unix /home/lilydjwg/tmpfs/winetest/wine/dosdevices/c:/users/Public/Start\\ Menu/Programs/迅雷软件/迅雷7/启动迅雷7.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/41A7_Thunder.0.png'},
+                    {'启动迅雷看看播放器', 'env WINEPREFIX="/home/lilydjwg/tmpfs/winetest/wine" wine C:\\\\windows\\\\command\\\\start.exe /Unix /home/lilydjwg/tmpfs/winetest/wine/dosdevices/c:/users/Public/Start\\ Menu/Programs/迅雷软件/迅雷7/启动迅雷看看播放器.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/7C1B_XMP.0.png'},
+                    {'迅雷下载诊断工具', 'env WINEPREFIX="/home/lilydjwg/tmpfs/winetest/wine" wine C:\\\\windows\\\\command\\\\start.exe /Unix /home/lilydjwg/tmpfs/winetest/wine/dosdevices/c:/users/Public/Start\\ Menu/Programs/迅雷软件/迅雷7/迅雷下载诊断工具.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/27F0_XLDCOnLine.0.png'},
+                  }
+                }, {'迅雷精简版', {
+                    {'卸载迅雷精简版', 'env WINEPREFIX="/home/lilydjwg/tmpfs/winetest/wine" wine C:\\\\windows\\\\command\\\\start.exe /Unix /home/lilydjwg/tmpfs/winetest/wine/dosdevices/c:/users/Public/Start\\ Menu/Programs/迅雷软件/迅雷精简版/卸载迅雷精简版.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/D134_Uninst.0.png'},
+                    {'启动迅雷精简版', 'env WINEPREFIX="/home/lilydjwg/tmpfs/winetest/wine" wine C:\\\\windows\\\\command\\\\start.exe /Unix /home/lilydjwg/tmpfs/winetest/wine/dosdevices/c:/users/Public/Start\\ Menu/Programs/迅雷软件/迅雷精简版/启动迅雷精简版.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/178C_ThunderMini.0.png'},
+                  }
+                }
+              }
+            }, {'NSIS (64-bit)', 'env WINEPREFIX="/ldata/txtfiles/src/vim_win64/.wine64" wine C:\\\\windows\\\\command\\\\start.exe /Unix /ldata/txtfiles/src/vim_win64/.wine64/dosdevices/c:/users/lilydjwg/Start\\ Menu/Programs/NSIS\\ \\(64-bit\\).lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/967A_NSIS.0.png'},
+          }
+        }, {'YY语音', 'env WINEPREFIX="/home/lilydjwg/tmpfs/winetest/wine" wine C:\\\\windows\\\\command\\\\start.exe /Unix /home/lilydjwg/tmpfs/winetest/wine/dosdevices/c:/users/lilydjwg/Start\\ Menu/YY语音.lnk', '/home/lilydjwg/.local/share/icons/hicolor/16x16/apps/7886_YY.0.png'},
       }
     }, {'办公', {
         {'Adobe Reader 9', 'acroread', '/usr/share/pixmaps/acroread.png'},
