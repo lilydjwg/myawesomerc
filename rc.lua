@@ -702,12 +702,12 @@ clientkeys = awful.util.table.join(
 ) -- }}}
 
 -- {{{ Switching to the numbered tag
-for s = 1, screen.count() do
-    local keynumber = math.min(9, #tags[s]);
+do
+    local keynumber = math.min(9, #tags[1]);
     for i = 1, keynumber do
         keynumber_reg(i)
     end
-    if #tags[s] >= 10 then
+    if #tags[1] >= 10 then
         keynumber_reg(0, 10)
     end
 end
