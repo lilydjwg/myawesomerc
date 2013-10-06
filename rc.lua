@@ -702,12 +702,12 @@ clientkeys = awful.util.table.join(
 ) -- }}}
 
 -- {{{ Switching to the numbered tag
-for s = 1, screen.count() do
-    local keynumber = math.min(9, #tags[s]);
+do
+    local keynumber = math.min(9, #tags[1]);
     for i = 1, keynumber do
         keynumber_reg(i)
     end
-    if #tags[s] >= 10 then
+    if #tags[1] >= 10 then
         keynumber_reg(0, 10)
     end
 end
@@ -795,6 +795,10 @@ awful.rules.rules = {
       instance = {'TM.exe', 'QQ.exe'},
     },
     properties = {
+      -- This, together with myfocus_filter, make the popup menus flicker taskbars less
+      -- Non-focusable menus may cause TM2013preview1 to not highlight menu
+      -- items on hover and crash.
+      focusable = true,
       floating = true,
       border_width = 0,
     }
