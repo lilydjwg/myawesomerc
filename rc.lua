@@ -138,7 +138,7 @@ mymainmenu = awful.menu({ items = { { "Awesome", myawesomemenu, beautiful.awesom
           { "G&VIM", "gvim", '/usr/share/pixmaps/gvim.png' },
           { "火狐 (&F)", "firefox", '/usr/share/icons/hicolor/32x32/apps/firefox.png' },
           { "常用 (&U)", mymenu },
-          { "应用程序 (&A)", xdgmenu },
+          { "应用程序 (&A)", xdgmenu(terminal) },
           { "挂起 (&S)", "mysuspend" },
           { "关机 (&H)", "zenity --question --title '关机' --text '你确定关机吗？' --default-no && systemctl poweroff", '/usr/share/icons/gnome/16x16/actions/gtk-quit.png' },
           }
@@ -803,6 +803,17 @@ awful.rules.rules = {
       -- mainly for picpick
       class = "Wine",
       above = true,
+    },
+    properties = {
+      floating = true,
+      border_width = 0,
+    }
+  }, {
+    rule = {
+      -- for WinHex
+      class = "Wine",
+      instance = "WinHex.exe",
+      name = "数据解释器",
     },
     properties = {
       floating = true,
