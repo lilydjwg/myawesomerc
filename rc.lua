@@ -924,6 +924,12 @@ client.connect_signal("manage", function (c, startup)
         else
             awful.client.movetotag(tags[mouse.screen][6], c)
         end
+    elseif c.instance == 'TM.exe' then -- TM2013
+        if c.name and c.name:match('^腾讯') and c.above then
+            qqad_blocked = qqad_blocked + 1
+            naughty.notify{title="QQ广告屏蔽 " .. qqad_blocked, text="检测到一个符合条件的窗口，标题为".. c.name .."。"}
+            c:kill()
+        end
     elseif c.instance == 'QQ.exe' then
         local handled
         -- naughty.notify({title="新窗口", text="名称为 ".. c.name .."，class 为 " .. c.class:gsub('&', '&amp;') .. " 的窗口已接受管理。", preset=naughty.config.presets.critical})
