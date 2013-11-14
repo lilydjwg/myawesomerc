@@ -570,10 +570,18 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, "Control" }, "l",     function () awful.tag.incncol(-1)         end),
     awful.key({ modkey,           }, "space", function () awful.layout.inc(layouts,  1) end),
     awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(layouts, -1) end),
+    awful.key({ modkey, "Shift"   }, "s",
+        function ()
+            -- because they may be not focusable
+            local c = mouse.object_under_pointer()
+            if c then
+                c.sticky = not c.sticky
+            end
+        end),
 
     -- Prompt
     awful.key({ modkey            }, "r",     function () mypromptbox[mouse.screen]:run() end),
-    awful.key({ "Mod1"            }, "F2",     function () mypromptbox[mouse.screen]:run() end),
+    awful.key({ "Mod1"            }, "F2",    function () mypromptbox[mouse.screen]:run() end),
 
     awful.key({ modkey, "Shift"   }, "x",
               function ()
@@ -699,6 +707,7 @@ clientkeys = awful.util.table.join(
     awful.key({ modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end),
     awful.key({ modkey,           }, "o",      awful.client.movetoscreen                        ),
     awful.key({ modkey,           }, "a",      function (c) c.above = not c.above            end),
+    awful.key({ modkey,           }, "s",      function (c) c.sticky = not c.sticky          end),
     awful.key({ modkey, "Shift"   }, "r",      function (c) c:redraw()                       end),
     awful.key({ modkey, "Shift"   }, "m",
         function (c)
