@@ -444,7 +444,7 @@ root.buttons(awful.util.table.join(
 -- }}}
 
 -- {{{ Key bindings
--- {{{ Functions for Numbers
+-- {{{ Functions
 local movebyrelidx = function (n, view) -- {{{
     -- view: 要转到那个 tag 吗？
     local screen = mouse.screen
@@ -501,6 +501,23 @@ local keynumber_reg = function (i, which) -- {{{
                     awful.client.toggletag(tags[client.focus.screen][which])
                 end
             end))
+end -- }}}
+
+-- {{{ bind_alt_switch_tab_keys
+alt_switch_keys = awful.util.table.join(
+    -- it's easier for a vimer to manage this than figuring out a nice way to loop and concat
+    awful.key({'Mod1'}, 1, function(c) awful.util.spawn('xdotool key --window ' .. c.window .. ' ctrl+1') end),
+    awful.key({'Mod1'}, 2, function(c) awful.util.spawn('xdotool key --window ' .. c.window .. ' ctrl+2') end),
+    awful.key({'Mod1'}, 3, function(c) awful.util.spawn('xdotool key --window ' .. c.window .. ' ctrl+3') end),
+    awful.key({'Mod1'}, 4, function(c) awful.util.spawn('xdotool key --window ' .. c.window .. ' ctrl+4') end),
+    awful.key({'Mod1'}, 5, function(c) awful.util.spawn('xdotool key --window ' .. c.window .. ' ctrl+5') end),
+    awful.key({'Mod1'}, 6, function(c) awful.util.spawn('xdotool key --window ' .. c.window .. ' ctrl+6') end),
+    awful.key({'Mod1'}, 7, function(c) awful.util.spawn('xdotool key --window ' .. c.window .. ' ctrl+7') end),
+    awful.key({'Mod1'}, 8, function(c) awful.util.spawn('xdotool key --window ' .. c.window .. ' ctrl+8') end),
+    awful.key({'Mod1'}, 9, function(c) awful.util.spawn('xdotool key --window ' .. c.window .. ' ctrl+9') end)
+)
+function bind_alt_switch_tab_keys(client)
+    client:keys(awful.util.table.join(client:keys(), alt_switch_keys))
 end -- }}}
 -- }}}
 
@@ -925,6 +942,7 @@ client.connect_signal("manage", function (c, startup)
             awful.client.movetotag(tags[mouse.screen][6], c)
         end
     elseif c.instance == 'TM.exe' then -- TM2013
+        bind_alt_switch_tab_keys(c)
         if c.name and c.name:match('^腾讯') and c.above then
             qqad_blocked = qqad_blocked + 1
             naughty.notify{title="QQ广告屏蔽 " .. qqad_blocked, text="检测到一个符合条件的窗口，标题为".. c.name .."。"}
