@@ -892,6 +892,13 @@ awful.rules.rules = {
     properties = {
       floating = true,
     }
+  }, {
+    rule = {
+      instance = "xfce4-notifyd",
+    },
+    properties = {
+      border_width = 0,
+    }
   },
 }
 -- }}}
