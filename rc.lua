@@ -583,13 +583,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey            }, "r",     function () mypromptbox[mouse.screen]:run() end),
     awful.key({ "Mod1"            }, "F2",    function () mypromptbox[mouse.screen]:run() end),
 
-    awful.key({ modkey, "Shift"   }, "x",
-              function ()
-                  awful.prompt.run({ prompt = "Run Lua code: " },
-                  mypromptbox[mouse.screen].widget,
-                  awful.util.eval, nil,
-                  awful.util.getdir("cache") .. "/history_eval")
-              end),
+    awful.key({ modkey, "Shift"   }, "x", function () awful.util.spawn('openmsg_tm.py', false) end),
     -- Menubar
     awful.key({ modkey, "Mod1"    }, "p", function() menubar.show() end),
 
@@ -898,6 +892,7 @@ awful.rules.rules = {
     },
     properties = {
       border_width = 0,
+      focus = false,
     }
   },
 }
