@@ -503,8 +503,8 @@ local keynumber_reg = function (i, which) -- {{{
             end))
 end -- }}}
 
--- {{{ bind_alt_switch_tab_keys
-alt_switch_keys = awful.util.table.join(
+-- {{{ bind_linux_keys
+linux_keys = awful.util.table.join(
     -- it's easier for a vimer to manage this than figuring out a nice way to loop and concat
     awful.key({'Mod1'}, 1, function(c) awful.util.spawn('xdotool key --window ' .. c.window .. ' ctrl+1') end),
     awful.key({'Mod1'}, 2, function(c) awful.util.spawn('xdotool key --window ' .. c.window .. ' ctrl+2') end),
@@ -514,10 +514,16 @@ alt_switch_keys = awful.util.table.join(
     awful.key({'Mod1'}, 6, function(c) awful.util.spawn('xdotool key --window ' .. c.window .. ' ctrl+6') end),
     awful.key({'Mod1'}, 7, function(c) awful.util.spawn('xdotool key --window ' .. c.window .. ' ctrl+7') end),
     awful.key({'Mod1'}, 8, function(c) awful.util.spawn('xdotool key --window ' .. c.window .. ' ctrl+8') end),
-    awful.key({'Mod1'}, 9, function(c) awful.util.spawn('xdotool key --window ' .. c.window .. ' ctrl+9') end)
+    awful.key({'Mod1'}, 9, function(c) awful.util.spawn('xdotool key --window ' .. c.window .. ' ctrl+9') end),
+    awful.key({'Control'}, 'f',         function(c) awful.util.spawn('xdotool key --clearmodifiers --window ' .. c.window .. ' Right'     ) end),
+    awful.key({'Control'}, 'b',         function(c) awful.util.spawn('xdotool key --clearmodifiers --window ' .. c.window .. ' Left'      ) end),
+    awful.key({'Control'}, 'a',         function(c) awful.util.spawn('xdotool key --clearmodifiers --window ' .. c.window .. ' Home'      ) end),
+    awful.key({'Control'}, 'e',         function(c) awful.util.spawn('xdotool key --clearmodifiers --window ' .. c.window .. ' End'       ) end),
+    awful.key({'Control'}, 'Page_Up',   function(c) awful.util.spawn('xdotool key --clearmodifiers --window ' .. c.window .. ' ctrl+Left' ) end),
+    awful.key({'Control'}, 'Page_Down', function(c) awful.util.spawn('xdotool key --clearmodifiers --window ' .. c.window .. ' ctrl+Right') end)
 )
-function bind_alt_switch_tab_keys(client)
-    client:keys(awful.util.table.join(client:keys(), alt_switch_keys))
+function bind_linux_keys(client)
+    client:keys(awful.util.table.join(client:keys(), linux_keys))
 end -- }}}
 -- }}}
 
@@ -585,10 +591,11 @@ globalkeys = awful.util.table.join(
 
     awful.key({ modkey, "Shift"   }, "x",
               function ()
-                  awful.prompt.run({ prompt = "Run Lua code: " },
-                  mypromptbox[mouse.screen].widget,
-                  awful.util.eval, nil,
-                  awful.util.getdir("cache") .. "/history_eval")
+                  awful.util.spawn("openmsg_qq.py", false)
+                  -- awful.prompt.run({ prompt = "Run Lua code: " },
+                  -- mypromptbox[mouse.screen].widget,
+                  -- awful.util.eval, nil,
+                  -- awful.util.getdir("cache") .. "/history_eval")
               end),
     -- Menubar
     awful.key({ modkey, "Mod1"    }, "p", function() menubar.show() end),
@@ -951,7 +958,7 @@ client.connect_signal("manage", function (c, startup)
             awful.client.movetotag(tags[mouse.screen][6], c)
         end
     elseif c.instance == 'TM.exe' then -- TM2013
-        bind_alt_switch_tab_keys(c)
+        bind_linux_keys(c)
         if c.name and c.name:match('^腾讯') and c.above then
             qqad_blocked = qqad_blocked + 1
             naughty.notify{title="QQ广告屏蔽 " .. qqad_blocked, text="检测到一个符合条件的窗口，标题为".. c.name .."。"}
