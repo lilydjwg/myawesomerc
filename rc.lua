@@ -739,12 +739,15 @@ do
 end
 -- }}}
 
--- Whether to raise the client on single click
-raise_on_click = {}
-
 -- {{{ clientbuttons
 clientbuttons = awful.util.table.join(
-    awful.button({ }, 1, function (c) client.focus = c; if raise_on_click[c] then c:raise() end end),
+    awful.button({ }, 1, function (c)
+        client.focus = c
+        if c.class and (c.class == 'Gimp' or c.class == 'Gimp-2.8') then
+        else
+            c:raise()
+        end
+    end),
     awful.button({ modkey }, 1, awful.mouse.client.move),
     awful.button({ modkey }, 2, function (c) client.focus = c; c:kill() end),
     awful.button({ modkey }, 3, function (c) awful.mouse.client.resize(c, "bottom_right") end))
@@ -929,12 +932,6 @@ client.connect_signal("manage", function (c, startup)
         end
     end)
 
-    if c.class and (c.class == 'Gimp' or c.class == 'Gimp-2.8') then
-        raise_on_click[c] = false
-    else
-        raise_on_click[c] = true
-    end
-
     if not startup then
         -- Set the windows at the slave,
         -- i.e. put it at the end of others instead of setting it master.
@@ -990,10 +987,6 @@ end)
 
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
-
-client.connect_signal("unmanage", function(c)
-    raise_on_click[c] = nil
-end)
 -- }}}
 
 -- {{{ other things
