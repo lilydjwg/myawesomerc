@@ -517,8 +517,10 @@ linux_keys = awful.util.table.join(
     awful.key({'Mod1'}, 9, function(c) awful.util.spawn('xdotool key --window ' .. c.window .. ' ctrl+9') end),
     awful.key({'Control'}, 'f',         function(c) awful.util.spawn('xdotool key --clearmodifiers --window ' .. c.window .. ' Right'     ) end),
     awful.key({'Control'}, 'b',         function(c) awful.util.spawn('xdotool key --clearmodifiers --window ' .. c.window .. ' Left'      ) end),
-    awful.key({'Control'}, 'a',         function(c) awful.util.spawn('xdotool key --clearmodifiers --window ' .. c.window .. ' Home'      ) end),
-    awful.key({'Control'}, 'e',         function(c) awful.util.spawn('xdotool key --clearmodifiers --window ' .. c.window .. ' End'       ) end),
+    awful.key({'Control'}, 'p',         function(c) awful.util.spawn('xdotool key --clearmodifiers --window ' .. c.window .. ' Up'        ) end),
+    awful.key({'Control'}, 'n',         function(c) awful.util.spawn('xdotool key --clearmodifiers --window ' .. c.window .. ' Down'      ) end),
+    awful.key({'Control'}, 'a',         function(c) awful.util.spawn('xdotool key --clearmodifiers --window ' .. c.window .. ' ctrl+Home' ) end),
+    awful.key({'Control'}, 'e',         function(c) awful.util.spawn('xdotool key --clearmodifiers --window ' .. c.window .. ' ctrl+End'  ) end),
     awful.key({'Control'}, 'Page_Up',   function(c) awful.util.spawn('xdotool key --clearmodifiers --window ' .. c.window .. ' ctrl+Left' ) end),
     awful.key({'Control'}, 'Page_Down', function(c) awful.util.spawn('xdotool key --clearmodifiers --window ' .. c.window .. ' ctrl+Right') end)
 )
