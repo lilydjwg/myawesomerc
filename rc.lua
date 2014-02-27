@@ -990,6 +990,12 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 -- }}}
 
 -- {{{ other things
+pcall(function()
+    package.cpath = package.cpath .. ';/home/lilydjwg/scripts/lua/cmod/?.so'
+    local clua = require('clua')
+    clua.setsubreap(true)
+    clua.ignore_SIGCHLD()
+end)
 awful.util.spawn("awesomeup", false)
 awful.tag.viewonly(tags[1][6])
 -- vim: set fdm=marker et sw=4:
