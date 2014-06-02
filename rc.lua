@@ -201,7 +201,7 @@ function update_netstat()
 end
 netdata = {}
 netwidget = fixwidthtextbox('(net)')
-netwidget.width = 85
+netwidget.width = 100
 netwidget:set_align('center')
 netwidget_clock = timer({ timeout = 2 })
 netwidget_clock:connect_signal("timeout", update_netstat)
@@ -882,6 +882,7 @@ awful.rules.rules = {
         'Eog', 'feh', 'Display', 'Gimp', 'Gimp-2.6',
         'Screenkey', 'TempTerm', 'AliWangWang',
         'Dia', 'Pavucontrol', 'Stardict', 'XEyes', 'Skype',
+        'Xfce4-appfinder',
       },
       name = {
         '文件传输', 'Firefox 首选项', '暂存器', 'Keyboard',
