@@ -82,6 +82,17 @@ local layouts =
 }
 -- }}}
 
+-- {{{ Functions
+function get_memory_usage()
+    local ret = {}
+    for l in io.lines('/proc/meminfo') do
+        local k, v = l:match("([^:]+):%s+(%d+)")
+        ret[k] = tonumber(v)
+    end
+    return ret
+end
+-- }}}
+
 -- {{{ Wallpaper
 if beautiful.wallpaper then
     for s = 1, screen.count() do
@@ -211,17 +222,15 @@ update_netstat()
 
 -- {{{ memory usage indicator
 function update_memwidget()
-    local f = io.open('/proc/meminfo')
-    local total = f:read('*l')
-    local free = f:read('*l')
-    local buffered = f:read('*l')
-    local cached = f:read('*l')
-    f:close()
-    total = total:match('%d+')
-    free = free:match('%d+')
-    buffered = buffered:match('%d+')
-    cached = cached:match('%d+')
-    free = free + buffered + cached
+    local meminfo = get_memory_usage()
+    local free
+    if meminfo.MemAvailable then
+        -- Linux 3.14+
+        free = meminfo.MemAvailable
+    else
+        free = meminfo.MemFree + meminfo.Buffers + meminfo.Cached
+    end
+    local total = meminfo.MemTotal
     local percent = 100 - math.floor(free / total * 100 + 0.5)
     memwidget:set_markup('Mem <span color="#90ee90">'.. percent ..'%</span>')
 end
