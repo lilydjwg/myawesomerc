@@ -242,6 +242,34 @@ mem_clock:connect_signal("timeout", update_memwidget)
 mem_clock:start()
 -- }}}
 
+-- {{{ CPU Temperature
+function update_cputemp()
+    local pipe = io.popen('sensors')
+    if not pipe then
+        cputempwidget:set_markup('CPU <span color="red">ERR</span>℃')
+        return
+    end
+    local temp = 0
+    for line in pipe:lines() do
+        local newtemp = line:match('^Core [^:]+:%s+%+([0-9.]+)°C')
+        if newtemp then
+            newtemp = tonumber(newtemp)
+            if temp < newtemp then
+                temp = newtemp
+            end
+        end
+    end
+    pipe:close()
+    cputempwidget:set_markup('CPU <span color="#008000">'..temp..'</span>℃')
+end
+cputempwidget = fixwidthtextbox('CPU ??℃')
+cputempwidget.width = 65
+update_cputemp()
+cputemp_clock = timer({ timeout = 5 })
+cputemp_clock:connect_signal("timeout", update_cputemp)
+cputemp_clock:start()
+-- }}}
+
 --{{{ battery indicator, using smapi
 local battery_state = {
     unknown     = '<span color="yellow">? ',
@@ -427,6 +455,7 @@ for s = 1, screen.count() do
     -- Widgets that are aligned to the right
     local right_layout = wibox.layout.fixed.horizontal()
     right_layout:add(memwidget)
+    right_layout:add(cputempwidget)
     right_layout:add(batwidget)
     right_layout:add(netwidget)
     right_layout:add(volumewidget)
