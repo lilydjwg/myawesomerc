@@ -132,15 +132,16 @@ end
 _key_map_cache = {}
 function map_client_key(client, key_map)
     local t_insert = table.insert
+    local keys
     if _key_map_cache[key_map] then
         keys = awful.util.table.join(client:keys(), _key_map_cache[key_map])
     else
-        local keys = {}
+        keys = {}
         for from, to in pairs(key_map) do
             local mod, key = parse_key(from)
             local key = awful.key(mod, key, function(c)
                 awful.util.spawn(
-                'xdotool key --window '
+                'xdotool key --clearmodifiers --window '
                 .. c.window .. ' ' .. to)
             end)
             for _, k in ipairs(key) do
