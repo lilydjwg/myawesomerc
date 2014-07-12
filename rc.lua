@@ -91,6 +91,67 @@ function get_memory_usage()
     end
     return ret
 end
+
+function string_split(string, pat, plain)
+    local ret = {}
+    local pos = 0
+    local start, stop
+    local t_insert = table.insert
+    while true do
+        start, stop = string:find(pat, pos, plain)
+        if not start then
+            t_insert(ret, string:sub(pos))
+            break
+        end
+        t_insert(ret, string:sub(pos, start-1))
+        pos = stop + 1
+    end
+    return ret
+end
+
+function parse_key(string)
+    local t_insert = table.insert
+    local parts = string_split(string, '[+-]')
+    local last = table.remove(parts)
+    local ret = {}
+    for _, p in ipairs(parts) do
+        p_ = p:lower()
+        local m
+        if p_ == 'ctrl' then
+            m = 'Control'
+        elseif p_ == 'alt' then
+            m = 'Mod1'
+        else
+            m = p
+        end
+        t_insert(ret, m)
+    end
+    return ret, last
+end
+
+_key_map_cache = {}
+function map_client_key(client, key_map)
+    local t_insert = table.insert
+    if _key_map_cache[key_map] then
+        keys = awful.util.table.join(client:keys(), _key_map_cache[key_map])
+    else
+        local keys = {}
+        for from, to in pairs(key_map) do
+            local mod, key = parse_key(from)
+            local key = awful.key(mod, key, function(c)
+                awful.util.spawn(
+                'xdotool key --window '
+                .. c.window .. ' ' .. to)
+            end)
+            for _, k in ipairs(key) do
+                t_insert(keys, k)
+            end
+        end
+        _key_map_cache[key_map] = keys
+        keys = awful.util.table.join(client:keys(), keys)
+    end
+    client:keys(keys)
+end
 -- }}}
 
 -- {{{ Wallpaper
@@ -263,7 +324,7 @@ function update_cputemp()
     cputempwidget:set_markup('CPU <span color="#008000">'..temp..'</span>℃')
 end
 cputempwidget = fixwidthtextbox('CPU ??℃')
-cputempwidget.width = 65
+cputempwidget.width = 60
 update_cputemp()
 cputemp_clock = timer({ timeout = 5 })
 cputemp_clock:connect_signal("timeout", update_cputemp)
@@ -541,30 +602,27 @@ local keynumber_reg = function (i, which) -- {{{
             end))
 end -- }}}
 
--- {{{ bind_linux_keys
-linux_keys = awful.util.table.join(
-    -- it's easier for a vimer to manage this than figuring out a nice way to loop and concat
-    awful.key({'Mod1'}, 1, function(c) awful.util.spawn('xdotool key --window ' .. c.window .. ' ctrl+1') end),
-    awful.key({'Mod1'}, 2, function(c) awful.util.spawn('xdotool key --window ' .. c.window .. ' ctrl+2') end),
-    awful.key({'Mod1'}, 3, function(c) awful.util.spawn('xdotool key --window ' .. c.window .. ' ctrl+3') end),
-    awful.key({'Mod1'}, 4, function(c) awful.util.spawn('xdotool key --window ' .. c.window .. ' ctrl+4') end),
-    awful.key({'Mod1'}, 5, function(c) awful.util.spawn('xdotool key --window ' .. c.window .. ' ctrl+5') end),
-    awful.key({'Mod1'}, 6, function(c) awful.util.spawn('xdotool key --window ' .. c.window .. ' ctrl+6') end),
-    awful.key({'Mod1'}, 7, function(c) awful.util.spawn('xdotool key --window ' .. c.window .. ' ctrl+7') end),
-    awful.key({'Mod1'}, 8, function(c) awful.util.spawn('xdotool key --window ' .. c.window .. ' ctrl+8') end),
-    awful.key({'Mod1'}, 9, function(c) awful.util.spawn('xdotool key --window ' .. c.window .. ' ctrl+9') end),
-    awful.key({'Control'}, 'f',         function(c) awful.util.spawn('xdotool key --clearmodifiers --window ' .. c.window .. ' Right'     ) end),
-    awful.key({'Control'}, 'b',         function(c) awful.util.spawn('xdotool key --clearmodifiers --window ' .. c.window .. ' Left'      ) end),
-    awful.key({'Control'}, 'p',         function(c) awful.util.spawn('xdotool key --clearmodifiers --window ' .. c.window .. ' Up'        ) end),
-    awful.key({'Control'}, 'n',         function(c) awful.util.spawn('xdotool key --clearmodifiers --window ' .. c.window .. ' Down'      ) end),
-    awful.key({'Control'}, 'a',         function(c) awful.util.spawn('xdotool key --clearmodifiers --window ' .. c.window .. ' ctrl+Home' ) end),
-    awful.key({'Control'}, 'e',         function(c) awful.util.spawn('xdotool key --clearmodifiers --window ' .. c.window .. ' ctrl+End'  ) end),
-    awful.key({'Control'}, 'Page_Up',   function(c) awful.util.spawn('xdotool key --clearmodifiers --window ' .. c.window .. ' ctrl+Left' ) end),
-    awful.key({'Control'}, 'Page_Down', function(c) awful.util.spawn('xdotool key --clearmodifiers --window ' .. c.window .. ' ctrl+Right') end)
-)
-function bind_linux_keys(client)
-    client:keys(awful.util.table.join(client:keys(), linux_keys))
-end -- }}}
+-- {{{ per client keys
+tm_keys = {
+    ['alt+1'] = 'ctrl+1',
+    ['alt+2'] = 'ctrl+2',
+    ['alt+3'] = 'ctrl+3',
+    ['alt+4'] = 'ctrl+4',
+    ['alt+5'] = 'ctrl+5',
+    ['alt+6'] = 'ctrl+6',
+    ['alt+7'] = 'ctrl+7',
+    ['alt+8'] = 'ctrl+8',
+    ['alt+9'] = 'ctrl+9',
+    ['ctrl+f'] = 'Right',
+    ['ctrl+b'] = 'Left',
+    ['ctrl+p'] = 'Up',
+    ['ctrl+n'] = 'Down',
+    ['ctrl+a'] = 'ctrl+Home',
+    ['ctrl+e'] = 'ctrl+End',
+    -- 上/下一个标签页
+    ['ctrl+Page_Up'] = 'ctrl+Left',
+    ['ctrl+Page_Down'] = 'ctrl+Right',
+}
 -- }}}
 
 -- {{{ globalkeys
@@ -748,7 +806,6 @@ clientkeys = awful.util.table.join(
     awful.key({ modkey,           }, "o",      awful.client.movetoscreen                        ),
     awful.key({ modkey,           }, "a",      function (c) c.above = not c.above            end),
     awful.key({ modkey,           }, "s",      function (c) c.sticky = not c.sticky          end),
-    awful.key({ modkey, "Shift"   }, "r",      function (c) c:redraw()                       end),
     awful.key({ modkey, "Shift"   }, "m",
         function (c)
             -- The client currently has the input focus, so it cannot be
@@ -997,7 +1054,7 @@ client.connect_signal("manage", function (c, startup)
             awful.client.movetotag(tags[mouse.screen][6], c)
         end
     elseif c.instance == 'TM.exe' then -- TM2013
-        bind_linux_keys(c)
+        map_client_key(c, tm_keys)
         if c.name and c.name:match('^腾讯') and c.above then
             qqad_blocked = qqad_blocked + 1
             naughty.notify{title="QQ广告屏蔽 " .. qqad_blocked, text="检测到一个符合条件的窗口，标题为".. c.name .."。"}
