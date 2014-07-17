@@ -624,6 +624,10 @@ tm_keys = {
     ['ctrl+Page_Up'] = 'ctrl+Left',
     ['ctrl+Page_Down'] = 'ctrl+Right',
 }
+-- not work, see https://bugs.launchpad.net/ubuntu/+source/xdotool/+bug/1011333
+evince_keys = {
+    b = 'Page_Up',
+}
 -- }}}
 
 -- {{{ globalkeys
@@ -1061,6 +1065,8 @@ client.connect_signal("manage", function (c, startup)
             naughty.notify{title="QQ广告屏蔽 " .. qqad_blocked, text="检测到一个符合条件的窗口，标题为".. c.name .."。"}
             c:kill()
         end
+    elseif c.class == 'Evince' then
+        map_client_key(c, evince_keys)
     elseif c.instance == 'QQ.exe' then
         local handled
         -- naughty.notify({title="新窗口", text="名称为 ".. c.name .."，class 为 " .. c.class:gsub('&', '&amp;') .. " 的窗口已接受管理。", preset=naughty.config.presets.critical})
