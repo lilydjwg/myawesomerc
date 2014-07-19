@@ -1060,7 +1060,7 @@ client.connect_signal("manage", function (c, startup)
         end
     elseif c.instance == 'TM.exe' then -- TM2013
         map_client_key(c, tm_keys)
-        if c.name and c.name:match('^腾讯') and c.above then
+        if c.name and (c.name:match('^腾讯') or c.name == 'QQ版本升级') and c.above then
             qqad_blocked = qqad_blocked + 1
             naughty.notify{title="QQ广告屏蔽 " .. qqad_blocked, text="检测到一个符合条件的窗口，标题为".. c.name .."。"}
             c:kill()
