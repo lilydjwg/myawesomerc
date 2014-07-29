@@ -369,6 +369,9 @@ function update_batwidget()
                 }
                 last_bat_warning = t
             end
+            if percent <= 20 and not dont_hibernate then
+                awful.util.spawn("systemctl hibernate")
+            end
         end
         percent = '<span color="red">' .. percent .. '</span>'
     end
