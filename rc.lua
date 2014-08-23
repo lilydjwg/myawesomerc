@@ -985,7 +985,7 @@ awful.rules.rules = {
         'Eog', 'feh', 'Display', 'Gimp', 'Gimp-2.6',
         'Screenkey', 'TempTerm', 'AliWangWang',
         'Dia', 'Pavucontrol', 'Stardict', 'XEyes', 'Skype',
-        'Xfce4-appfinder',
+        'Xfce4-appfinder', 'mpv',
       },
       name = {
         '文件传输', 'Firefox 首选项', '暂存器', 'Keyboard',
