@@ -632,6 +632,7 @@ evince_keys = {
     b = 'Page_Up',
 }
 -- }}}
+-- }}}
 
 -- {{{ globalkeys
 globalkeys = awful.util.table.join(
@@ -981,11 +982,11 @@ awful.rules.rules = {
   }, {
     rule_any = {
       class = {
-        'MPlayer', 'Flashplayer', 'Gnome-mplayer', 'Totem',
+        'Flashplayer', 'Gnome-mplayer', 'Totem',
         'Eog', 'feh', 'Display', 'Gimp', 'Gimp-2.6',
         'Screenkey', 'TempTerm', 'AliWangWang',
         'Dia', 'Pavucontrol', 'Stardict', 'XEyes', 'Skype',
-        'Xfce4-appfinder', 'mpv',
+        'Xfce4-appfinder',
       },
       name = {
         '文件传输', 'Firefox 首选项', '暂存器', 'Keyboard',
@@ -1090,6 +1091,9 @@ client.connect_signal("manage", function (c, startup)
             end
         end
         handled = false
+      elseif c.class == 'MPlayer' or c.class == 'mpv' then
+        awful.client.floating.set(c, true)
+        awful.placement.centered(c)
     end
 end)
 
