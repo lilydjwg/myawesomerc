@@ -400,7 +400,7 @@ function volumectl (mode, widget)
         f = io.popen("pamixer --get-mute")
         local muted = f:read("*all")
         f:close()
-        if muted == "false" then
+        if muted:gsub('%s+', '') == "false" then
             volume = '♫' .. volume .. "%"
         else
             volume = '♫' .. volume .. "<span color='red'>M</span>"
