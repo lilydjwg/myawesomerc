@@ -1107,6 +1107,10 @@ pcall(function()
     local clua = require('clua')
     clua.setsubreap(true)
     clua.ignore_SIGCHLD()
+    local pid = 1
+    while pid ~= 0 do
+        _, pid = clua.reap()
+    end
 end)
 awful.util.spawn("awesomeup", false)
 awful.tag.viewonly(tags[1][6])
