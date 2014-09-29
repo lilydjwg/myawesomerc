@@ -1108,7 +1108,7 @@ pcall(function()
     clua.setsubreap(true)
     clua.ignore_SIGCHLD()
     local pid = 1
-    while pid ~= 0 do
+    while pid > 0 do
         _, pid = clua.reap()
     end
 end)
