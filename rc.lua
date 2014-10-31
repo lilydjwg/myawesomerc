@@ -306,7 +306,7 @@ mem_clock:start()
 
 -- {{{ CPU Temperature
 function update_cputemp()
-    local pipe = io.popen('sensors')
+    local pipe = io.popen('sensors coretemp-isa-0000')
     if not pipe then
         cputempwidget:set_markup('CPU <span color="red">ERR</span>℃')
         return
