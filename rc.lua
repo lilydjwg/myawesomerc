@@ -213,7 +213,7 @@ mymainmenu = awful.menu({ items = { { "Awesome", myawesomemenu, beautiful.awesom
           { "常用 (&U)", mymenu },
           { "应用程序 (&A)", xdgmenu(terminal) },
           { "挂起 (&S)", "systemctl suspend" },
-          { "关机 (&H)", "zenity --question --title '关机' --text '你确定关机吗？' --default-no && systemctl poweroff", '/usr/share/icons/gnome/16x16/actions/gtk-quit.png' },
+          { "关机 (&H)", "zenity --question --title '关机' --text '你确定关机吗？' --default-cancel && systemctl poweroff", '/usr/share/icons/gnome/16x16/actions/gtk-quit.png' },
           }
 })
 
@@ -1064,7 +1064,7 @@ client.connect_signal("manage", function (c, startup)
         end
     elseif c.instance == 'TM.exe' then -- TM2013
         map_client_key(c, tm_keys)
-        if c.name and (c.name:match('^腾讯') or c.name == 'QQ版本升级') and c.above then
+        if c.name and (c.name:match('^腾讯') or c.name:match('^QQ.+频道$') or c.name == 'QQ版本升级' or c.name == 'QQ浏览器') and c.above then
             qqad_blocked = qqad_blocked + 1
             naughty.notify{title="QQ广告屏蔽 " .. qqad_blocked, text="检测到一个符合条件的窗口，标题为".. c.name .."。"}
             c:kill()
