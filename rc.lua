@@ -866,8 +866,12 @@ root.keys(globalkeys)
 -- {{{ Rules
 function myfocus_filter(c)
   if awful.client.focus.filter(c) then
+    -- TM.exe completion pop-up windows
+    if c.instance == 'TM.exe' and c.above and c.skip_taskbar
+        and c.type == 'normal' and c.class == 'TM.exe' then
+        return nil
     -- This works with tooltips and some popup-menus
-    if c.class == 'Wine' and c.above == true then
+    elseif c.class == 'Wine' and c.above == true then
       return nil
     elseif c.class == 'Wine'
       and c.type == 'dialog'
@@ -1063,12 +1067,12 @@ client.connect_signal("manage", function (c, startup)
             awful.client.movetotag(tags[mouse.screen][6], c)
         end
     elseif c.instance == 'TM.exe' then -- TM2013
-        map_client_key(c, tm_keys)
         if c.name and (c.name:match('^腾讯') or c.name:match('^QQ.+频道$') or c.name == 'QQ版本升级' or c.name == 'QQ浏览器') and c.above then
             qqad_blocked = qqad_blocked + 1
             naughty.notify{title="QQ广告屏蔽 " .. qqad_blocked, text="检测到一个符合条件的窗口，标题为".. c.name .."。"}
             c:kill()
         end
+        map_client_key(c, tm_keys)
     elseif c.class == 'Evince' then
         map_client_key(c, evince_keys)
     elseif c.instance == 'QQ.exe' then
