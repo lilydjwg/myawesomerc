@@ -897,7 +897,7 @@ awful.rules.rules = {
     properties = {
       border_width = beautiful.border_width,
       border_color = beautiful.border_normal,
-      -- focus = myfocus_filter,
+      focus = myfocus_filter,
       keys = clientkeys,
       buttons = clientbuttons,
     }
