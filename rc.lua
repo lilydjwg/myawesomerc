@@ -865,8 +865,9 @@ root.keys(globalkeys)
 -- }}}
 
 -- {{{ Rules
+local old_filter = awful.client.focus.filter
 function myfocus_filter(c)
-  if awful.client.focus.filter(c) then
+  if old_filter(c) then
     -- TM.exe completion pop-up windows
     if c.instance == 'TM.exe' and c.above and c.skip_taskbar
         and c.type == 'normal' and c.class == 'TM.exe' then
@@ -881,11 +882,14 @@ function myfocus_filter(c)
       then
       -- for popup item menus of Photoshop CS5
       return nil
+    elseif c.class == 'Key-mon' then
+      return nil
     else
       return c
     end
   end
 end
+awful.client.focus.filter = myfocus_filter
 awful.rules.rules = {
   -- All clients will match this rule.
   {
@@ -893,7 +897,7 @@ awful.rules.rules = {
     properties = {
       border_width = beautiful.border_width,
       border_color = beautiful.border_normal,
-      focus = myfocus_filter,
+      -- focus = myfocus_filter,
       keys = clientkeys,
       buttons = clientbuttons,
     }
@@ -1014,6 +1018,17 @@ awful.rules.rules = {
     properties = {
       border_width = 0,
       focus = false,
+    }
+  }, {
+    rule = {
+      class = "Key-mon",
+    },
+    properties = {
+      border_width = 0,
+      focus = false,
+      focusable = false,
+      opacity = 0.65,
+      sticky = true,
     }
   },
 }
