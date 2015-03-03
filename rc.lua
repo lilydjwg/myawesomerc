@@ -439,6 +439,20 @@ volumewidget:buttons(awful.util.table.join(
 ))
 volumectl("update", volumewidget)
 --}}}
+
+-- {{{ GitHub contribution indicator
+github_contributed = awful.util.getdir("config") .. "/image/github_contributed.png"
+github_not_contributed = awful.util.getdir("config") .. "/image/github_not_contributed.png"
+github_widget = wibox.widget.imagebox()
+function update_github(has_contributions)
+    if has_contributions then
+        github_widget:set_image(github_contributed)
+    else
+        github_widget:set_image(github_not_contributed)
+    end
+end
+update_github(false)
+-- }}}
 -- }}}
 
 -- {{{ Create a wibox for each screen and add it
@@ -527,6 +541,7 @@ for s = 1, screen.count() do
     right_layout:add(volumewidget)
     if s == 1 then right_layout:add(wibox.widget.systray()) end
     right_layout:add(mytextclock)
+    right_layout:add(github_widget)
     right_layout:add(mylayoutbox[s])
 
     -- Now bring it all together (with the tasklist in the middle)

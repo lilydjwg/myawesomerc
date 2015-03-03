@@ -1,0 +1,14 @@
+#!/bin/bash -e
+
+github_contributed () {
+  count=$(curl -sS "https://github.com/users/$USER/contributions" | grep -oP '(?<=data-count=")\d+' | tail -1)
+  [[ $count -gt 0 ]]
+}
+
+if github_contributed; then
+  s='true'
+else
+  s='false'
+fi
+
+echo "update_github($s)" | awesome-client
