@@ -5,6 +5,28 @@ github_contributed () {
   [[ $count -gt 0 ]]
 }
 
+get_display () {
+  if [[ -n "$DISPLAY" ]]; then
+    return
+  fi
+
+  pid=$(pgrep -U$UID -x awesome)
+  if [[ -z "$pid" ]]; then
+    echo >&2 "awesome not running?"
+    exit 1
+  fi
+
+  display=$(tr '\0' '\n' < /proc/"$pid"/environ | grep -oP '(?<=^DISPLAY=).+')
+  if [[ -z "$display" ]]; then
+    echo >&2 "can't get DISPLAY of awesome (pid $pid)"
+    exit 2
+  fi
+
+  export DISPLAY=$display
+}
+
+get_display
+
 if github_contributed; then
   s='true'
 else
