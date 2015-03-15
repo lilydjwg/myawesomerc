@@ -14,7 +14,7 @@ def github_contributed():
   user = os.environ['USER']
   today = time.strftime('%Y-%m-%d')
   url = "https://github.com/users/%s/contributions" % user
-  data = requests.get(url).text
+  data = requests.get(url, timeout=30).text
   svg = ET.fromstring(data)
   rect = svg.find('.//rect[@data-date="%s"]' % today)
   if rect is None:
@@ -42,6 +42,7 @@ def get_display():
   display = display[0]
 
   os.environ['DISPLAY'] = display
+  return True
 
 def main():
   ok = get_display()
