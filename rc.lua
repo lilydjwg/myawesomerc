@@ -936,7 +936,7 @@ awful.rules.rules = {
     rule = { class = "Firefox", instance = "firefox" },
     properties = { floating = true }
   }, {
-    -- popup from FireGuesture with mouse wheel
+    -- popup from FireGestures with mouse wheel
     rule = {
       class = "Firefox",
       skip_taskbar = true,
@@ -950,7 +950,7 @@ awful.rules.rules = {
     rule = { class = "Wireshark", name = "Wireshark" }, -- wireshark startup window
     properties = { floating = true }
   }, {
-    rule_any = { 
+    rule_any = {
       instance = {'TM.exe', 'QQ.exe'},
     },
     properties = {
