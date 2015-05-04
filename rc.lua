@@ -1106,6 +1106,15 @@ client.connect_signal("manage", function (c, startup)
         map_client_key(c, tm_keys)
     elseif c.class == 'Evince' then
         map_client_key(c, evince_keys)
+    elseif c.class:match('^Minecraft ') then
+        local keys = c:keys()
+        local mykey = awful.key({'Control'}, 't', function(c)
+            awful.util.spawn('zhinput')
+        end)
+        keys = awful.util.table.join(keys, mykey)
+        c:keys(keys)
+    elseif c.name == '中文输入' then
+        awful.util.spawn_with_shell('sleep 0.05 && fcitx-remote -T', false)
     elseif c.instance == 'QQ.exe' then
         local handled
         -- naughty.notify({title="新窗口", text="名称为 ".. c.name .."，class 为 " .. c.class:gsub('&', '&amp;') .. " 的窗口已接受管理。", preset=naughty.config.presets.critical})
