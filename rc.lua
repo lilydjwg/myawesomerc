@@ -1106,7 +1106,7 @@ client.connect_signal("manage", function (c, startup)
         map_client_key(c, tm_keys)
     elseif c.class == 'Evince' then
         map_client_key(c, evince_keys)
-    elseif c.class:match('^Minecraft ') then
+    elseif c.class and c.class:match('^Minecraft ') then
         local keys = c:keys()
         local mykey = awful.key({'Control'}, 't', function(c)
             awful.util.spawn('zhinput')
