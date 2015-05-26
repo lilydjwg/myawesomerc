@@ -368,9 +368,8 @@ Battery 1: Unknown, 99%
         local t
         if rest ~= '' then
             t = rest:match('[1-9]*%d:%d+')
-        else
-            t = ''
         end
+        if not t then t = '' end
         percent = tonumber(percent)
         if percent > max_percent then
             max_percent = percent
