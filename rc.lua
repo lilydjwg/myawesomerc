@@ -333,53 +333,84 @@ cputemp_clock:connect_signal("timeout", update_cputemp)
 cputemp_clock:start()
 -- }}}
 
---{{{ battery indicator, using smapi
+--{{{ battery indicator, using the acpi command
 local battery_state = {
-    unknown     = '<span color="yellow">? ',
-    idle        = '<span color="#0000ff">↯',
-    charging    = '<span color="green">+ ',
-    discharging = '<span color="#1e90ff">– ',
+    -- Unknown     = '<span color="yellow">? ',
+    Unknown     = '<span color="#0000ff">↯',
+    Idle        = '<span color="#0000ff">↯',
+    Charging    = '<span color="green">+ ',
+    Discharging = '<span color="#1e90ff">– ',
 }
 function update_batwidget()
-    local bat_dir = '/sys/devices/platform/smapi/BAT0/'
-    local f = io.open(bat_dir .. 'state')
-    if not f then
+    local pipe = io.popen('acpi')
+    if not pipe then
         batwidget:set_markup('<span color="red">ERR</span>')
         return
     end
 
-    local state = f:read('*l')
-    f:close()
-    local state_text = battery_state[state] or battery_state.unknown
+--[[
+Battery 0: Unknown, 97%
+Battery 1: Unknown, 99%
 
-    f = io.open(bat_dir .. 'remaining_percent')
-    if not f then
-        batwidget:set_markup('<span color="red">ERR</span>')
-        return
+Battery 0: Discharging, 97%, discharging at zero rate - will never fully discharge.
+Battery 1: Unknown, 99%
+
+Battery 0: Discharging, 96%, 02:25:51 remaining
+Battery 1: Unknown, 99%
+]]
+    local bats = {}
+    local max_percent = 0
+    local max_percent_index = 0
+    local index = 0
+    for line in pipe:lines() do
+        index = index + 1
+        local state, percent, rest = line:match('^Battery %d+:%s+([^,]+), ([0-9.]+)%%(.*)')
+        local t
+        if rest ~= '' then
+            t = rest:match('[1-9]*%d:%d+')
+        else
+            t = ''
+        end
+        percent = tonumber(percent)
+        if percent > max_percent then
+            max_percent = percent
+            max_percent_index = index
+        end
+        table.insert(bats, {state, percent, t})
     end
-    local percent = tonumber(f:read('*l'))
-    f:close()
-    if percent <= 35 then
-        if state == 'discharging' then
+    pipe:close()
+
+    if max_percent <= 30 then
+        if bats[max_percent_index][0] == 'Discharging' then
             local t = os.time()
             if t - last_bat_warning > 60 * 5 then
                 naughty.notify{
                     preset = naughty.config.presets.critical,
                     title = "电量警报",
-                    text = '电池电量只剩下 ' .. percent .. '% 了！',
+                    text = '电池电量只剩下 ' .. max_percent .. '% 了！',
                 }
                 last_bat_warning = t
             end
-            if percent <= 20 and not dont_hibernate then
+            if max_percent <= 10 and not dont_hibernate then
                 awful.util.spawn("systemctl hibernate")
             end
         end
-        percent = '<span color="red">' .. percent .. '</span>'
     end
-    batwidget:set_markup(state_text .. percent .. '%</span>')
+    local text = ' '
+    for i, v in ipairs(bats) do
+        local percent = v[2]
+        if percent <= 30 then
+            percent = '<span color="red">' .. percent .. '</span>'
+        end
+        text = text .. (battery_state[v[1]] or battery_state.Unknown) .. percent .. '%'
+               .. (v[3] ~= '' and (' ' .. v[3]) or '') .. '</span>'
+        if i ~= #bats then
+            text = text .. ' '
+        end
+    end
+    batwidget:set_markup(text)
 end
-batwidget = fixwidthtextbox('↯??%')
-batwidget.width = 45
+batwidget = wibox.widget.textbox('↯??%')
 update_batwidget()
 bat_clock = timer({ timeout = 5 })
 bat_clock:connect_signal("timeout", update_batwidget)
