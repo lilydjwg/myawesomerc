@@ -379,8 +379,13 @@ Battery 1: Unknown, 99%
     end
     pipe:close()
 
+    if index == 0 then
+        batwidget:set_markup('<span color="red">ERR</span>')
+        return
+    end
+
     if max_percent <= 30 then
-        if bats[max_percent_index][0] == 'Discharging' then
+        if bats[max_percent_index][1] == 'Discharging' then
             local t = os.time()
             if t - last_bat_warning > 60 * 5 then
                 naughty.notify{
