@@ -850,6 +850,9 @@ globalkeys = awful.util.table.join(
             f:close()
             _dict_notify = naughty.notify({ text = fc, timeout = 5, width = 320 })
         end),
+    awful.key({ modkey, "Shift"   }, "d", function ()
+        awful.util.spawn('ydcv-notify')
+    end),
 
     -- Volume
     awful.key({ }, 'XF86AudioRaiseVolume', function () volumectl("up", volumewidget) end),
