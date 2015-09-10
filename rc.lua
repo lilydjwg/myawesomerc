@@ -1153,6 +1153,7 @@ client.connect_signal("manage", function (c, startup)
         c:keys(keys)
     elseif c.name == '中文输入' then
         awful.util.spawn_with_shell('sleep 0.05 && fcitx-remote -T', false)
+    --[[
     elseif c.instance == 'QQ.exe' then
         local handled
         -- naughty.notify({title="新窗口", text="名称为 ".. c.name .."，class 为 " .. c.class:gsub('&', '&amp;') .. " 的窗口已接受管理。", preset=naughty.config.presets.critical})
@@ -1168,12 +1169,11 @@ client.connect_signal("manage", function (c, startup)
                 qqad_blocked = qqad_blocked + 1
                 naughty.notify({title="QQ广告屏蔽 " .. qqad_blocked, text="检测到一个符合条件的窗口，标题为".. c.name .."。"})
                 c:kill()
-            else
-                awful.client.movetotag(tags[mouse.screen][3], c)
             end
         end
         handled = false
-      elseif c.class == 'MPlayer' or c.class == 'mpv' then
+    ]]
+    elseif c.class == 'MPlayer' or c.class == 'mpv' then
         awful.client.floating.set(c, true)
         awful.placement.centered(c)
     end
