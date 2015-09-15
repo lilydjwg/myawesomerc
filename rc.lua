@@ -989,12 +989,13 @@ awful.rules.rules = {
     properties = { floating = true }
   }, {
     rule_any = {
-      instance = {'TM.exe', 'QQ.exe'},
+      instance = {'TM.exe', 'QQ.exe', 'deepin-music-player'},
     },
     properties = {
       -- This, together with myfocus_filter, make the popup menus flicker taskbars less
       -- Non-focusable menus may cause TM2013preview1 to not highlight menu
       -- items on hover and crash.
+      -- Also for deepin-music, removing borders and floating pop-ups
       focusable = true,
       floating = true,
       border_width = 0,
