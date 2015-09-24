@@ -32,13 +32,13 @@ def github_contributed():
     return False
   return int(rect.get('data-count')) > 0
 
-def get_display():
-  if 'DISPLAY' in os.environ:
+def get_dbus():
+  if 'DBUS_SESSION_BUS_ADDRESS' in os.environ:
     return True
 
   cmd = ['pgrep', '-U%d' % os.getuid(), '-x', 'awesome']
   try:
-    pid = check_output(cmd).strip().decode('ascii')
+    pid = check_output(cmd).strip().decode('ascii', errors='ignore')
   except CalledProcessError as e:
     if e.returncode == 1:
       # Awesome not running
@@ -46,17 +46,17 @@ def get_display():
     raise
 
   with open('/proc/%s/environ' % pid) as f:
-    display = [x.split('=', 1)[1] for x in f.read().split('\0') if x.startswith('DISPLAY=')]
-  if not display:
-    logger.error("can't get DISPLAY of awesome (pid %s)", pid)
+    dbus = [x.split('=', 1)[1] for x in f.read().split('\0') if x.startswith('DBUS_SESSION_BUS_ADDRESS=')]
+  if not dbus:
+    logger.error("can't get DBUS_SESSION_BUS_ADDRESS of awesome (pid %s)", pid)
     return False
-  display = display[0]
+  dbus = dbus[0]
 
-  os.environ['DISPLAY'] = display
+  os.environ['DBUS_SESSION_BUS_ADDRESS'] = dbus
   return True
 
 def main():
-  ok = get_display()
+  ok = get_dbus()
   if not ok:
     return
 
