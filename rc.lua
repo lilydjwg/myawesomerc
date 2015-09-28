@@ -668,12 +668,6 @@ tm_keys = {
     ['alt+7'] = 'ctrl+7',
     ['alt+8'] = 'ctrl+8',
     ['alt+9'] = 'ctrl+9',
-    ['ctrl+f'] = 'Right',
-    ['ctrl+b'] = 'Left',
-    ['ctrl+p'] = 'Up',
-    ['ctrl+n'] = 'Down',
-    ['ctrl+a'] = 'ctrl+Home',
-    ['ctrl+e'] = 'ctrl+End',
     -- 上/下一个标签页
     ['ctrl+Page_Up'] = 'ctrl+Left',
     ['ctrl+Page_Down'] = 'ctrl+Right',
@@ -681,6 +675,14 @@ tm_keys = {
 -- not work, see https://bugs.launchpad.net/ubuntu/+source/xdotool/+bug/1011333
 evince_keys = {
     b = 'Page_Up',
+}
+emacs_keys = {
+    ['ctrl+f'] = 'Right',
+    ['ctrl+b'] = 'Left',
+    ['ctrl+p'] = 'Up',
+    ['ctrl+n'] = 'Down',
+    ['ctrl+a'] = 'ctrl+Home',
+    ['ctrl+e'] = 'ctrl+End',
 }
 -- }}}
 -- }}}
@@ -1143,6 +1145,9 @@ client.connect_signal("manage", function (c, startup)
             c:kill()
         end
         map_client_key(c, tm_keys)
+        map_client_key(c, emacs_keys)
+    elseif c.class == 'qTox' then
+        map_client_key(c, emacs_keys)
     elseif c.class == 'Evince' then
         map_client_key(c, evince_keys)
     elseif c.class and c.class:match('^Minecraft ') then
