@@ -1093,10 +1093,6 @@ awful.rules.rules = {
 -- {{{ Signals
 -- Signal function to execute when a new client appears.
 qqad_blocked = 0
-local qq_dontblock = {
-    '上线提醒', 'TXMenuWindow', '关闭提示', '系统消息', '选择文件夹',
-    '导出', '查找', '保存', '打开', '删除好友',
-}
 client.connect_signal("manage", function (c, startup)
     -- Enable sloppy focus
     c:connect_signal("mouse::leave", function(c)
@@ -1143,9 +1139,10 @@ client.connect_signal("manage", function (c, startup)
             qqad_blocked = qqad_blocked + 1
             naughty.notify{title="QQ广告屏蔽 " .. qqad_blocked, text="检测到一个符合条件的窗口，标题为".. c.name .."。"}
             c:kill()
+        else
+            map_client_key(c, tm_keys)
+            map_client_key(c, emacs_keys)
         end
-        map_client_key(c, tm_keys)
-        map_client_key(c, emacs_keys)
     elseif c.class == 'qTox' then
         map_client_key(c, emacs_keys)
     elseif c.class == 'Evince' then
@@ -1159,26 +1156,17 @@ client.connect_signal("manage", function (c, startup)
         c:keys(keys)
     elseif c.name == '中文输入' then
         awful.util.spawn_with_shell('sleep 0.05 && fcitx-remote -T', false)
-    --[[
     elseif c.instance == 'QQ.exe' then
-        local handled
         -- naughty.notify({title="新窗口", text="名称为 ".. c.name .."，class 为 " .. c.class:gsub('&', '&amp;') .. " 的窗口已接受管理。", preset=naughty.config.presets.critical})
-        for _, i in pairs(qq_dontblock) do
-            if c.name == i then
-                handled = true
-                break
-            end
-        end
 
-        if not handled then
-            if c.name and c.above and not c.name:match('^%w+$') then
-                qqad_blocked = qqad_blocked + 1
-                naughty.notify({title="QQ广告屏蔽 " .. qqad_blocked, text="检测到一个符合条件的窗口，标题为".. c.name .."。"})
-                c:kill()
-            end
+        if c.name and (c.name == '腾讯网迷你版' or c.name == '京东' or c.name:match('^腾讯.+新闻$')) then
+            qqad_blocked = qqad_blocked + 1
+            naughty.notify({title="QQ广告屏蔽 " .. qqad_blocked, text="检测到一个符合条件的窗口，标题为".. c.name .."。"})
+            c:kill()
+        else
+            map_client_key(c, tm_keys)
+            map_client_key(c, emacs_keys)
         end
-        handled = false
-    ]]
     elseif c.class == 'MPlayer' or c.class == 'mpv' then
         awful.client.floating.set(c, true)
         awful.placement.centered(c)
