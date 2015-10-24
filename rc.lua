@@ -683,6 +683,9 @@ emacs_keys = {
     ['ctrl+n'] = 'Down',
     ['ctrl+a'] = 'ctrl+Home',
     ['ctrl+e'] = 'ctrl+End',
+    -- the following two doesn't work with Qt (4 & 5) programs
+    ['alt+f'] = 'ctrl+Right',
+    ['alt+b'] = 'ctrl+Left',
 }
 -- }}}
 -- }}}
@@ -1140,8 +1143,8 @@ client.connect_signal("manage", function (c, startup)
             naughty.notify{title="QQ广告屏蔽 " .. qqad_blocked, text="检测到一个符合条件的窗口，标题为".. c.name .."。"}
             c:kill()
         else
-            map_client_key(c, tm_keys)
             map_client_key(c, emacs_keys)
+            map_client_key(c, tm_keys)
         end
     elseif c.class == 'qTox' then
         map_client_key(c, emacs_keys)
