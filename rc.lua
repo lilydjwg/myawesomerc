@@ -927,8 +927,10 @@ local old_filter = awful.client.focus.filter
 function myfocus_filter(c)
   if old_filter(c) then
     -- TM.exe completion pop-up windows
-    if c.instance == 'TM.exe' and c.above and c.skip_taskbar
-        and c.type == 'normal' and c.class == 'TM.exe' then
+    if (c.instance == 'TM.exe' or c.instance == 'QQ.exe')
+        and c.above and c.skip_taskbar
+        and c.type == 'normal'
+        and (c.class == 'TM.exe' or c.class == 'QQ.exe') then
         return nil
     -- This works with tooltips and some popup-menus
     elseif c.class == 'Wine' and c.above == true then
@@ -994,7 +996,11 @@ awful.rules.rules = {
     properties = { floating = true }
   }, {
     rule_any = {
-      instance = {'TM.exe', 'QQ.exe', 'deepin-music-player'},
+      instance = {
+          'TM.exe', 'QQ.exe',
+          'QQExternal.exe', -- QQ 截图
+          'deepin-music-player',
+      },
     },
     properties = {
       -- This, together with myfocus_filter, make the popup menus flicker taskbars less
