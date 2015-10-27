@@ -1172,8 +1172,6 @@ client.connect_signal("manage", function (c, startup)
             qqad_blocked = qqad_blocked + 1
             naughty.notify({title="QQ广告屏蔽 " .. qqad_blocked, text="检测到一个符合条件的窗口，标题为".. c.name .."。"})
             c:kill()
-        elseif c.above and c.skip_taskbar then
-            c:raise()
         else
             map_client_key(c, tm_keys)
             map_client_key(c, emacs_keys)
