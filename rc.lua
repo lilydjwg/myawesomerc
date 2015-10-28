@@ -929,7 +929,7 @@ function myfocus_filter(c)
     -- TM.exe completion pop-up windows
     if (c.instance == 'TM.exe' or c.instance == 'QQ.exe')
         and c.above and c.skip_taskbar
-        and c.type == 'normal'
+        and (c.type == 'normal' or c.type == 'dialog') -- dialog type is for tooltip windows
         and (c.class == 'TM.exe' or c.class == 'QQ.exe') then
         return nil
     -- This works with tooltips and some popup-menus
