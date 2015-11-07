@@ -975,8 +975,8 @@ awful.rules.rules = {
       maximized_vertical = true,
     }
   }, {
-    rule = { class = "Empathy" },
-    properties = { tag = tags[1][6] },
+    rule = { class = "Amule" },
+    properties = { tag = tags[1][3] },
   }, {
     rule = { class = "Firefox", instance = "firefox" },
     properties = { floating = true }
