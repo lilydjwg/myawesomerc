@@ -750,7 +750,7 @@ globalkeys = awful.util.table.join(
 
     -- Prompt
     awful.key({ modkey            }, "r",     function () mypromptbox[mouse.screen]:run() end),
-    awful.key({ "Mod1"            }, "F2",    function () mypromptbox[mouse.screen]:run() end),
+    awful.key({ "Mod1"            }, "F2",    function () awful.util.spawn('xfce4-appfinder', false) end),
 
     awful.key({ modkey, "Shift"   }, "x", function () awful.util.spawn('openmsg_tm.py', false) end),
     -- Menubar
