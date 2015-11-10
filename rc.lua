@@ -935,7 +935,7 @@ function myfocus_filter(c)
     -- This works with tooltips and some popup-menus
     elseif c.class == 'Wine' and c.above == true then
       return nil
-    elseif c.class == 'Wine'
+    elseif (c.class == 'Wine' or c.class == 'QQ.exe')
       and c.type == 'dialog'
       and c.skip_taskbar == true
       and c.size_hints.max_width and c.size_hints.max_width < 160
