@@ -1156,15 +1156,6 @@ client.connect_signal("manage", function (c, startup)
         else
             awful.client.movetotag(tags[mouse.screen][6], c)
         end
-    elseif c.instance == 'TM.exe' then -- TM2013
-        if c.name and (c.name:match('^腾讯') or c.name:match('^QQ.+频道$') or c.name == 'QQ版本升级' or c.name == 'QQ浏览器') and c.above then
-            qqad_blocked = qqad_blocked + 1
-            naughty.notify{title="QQ广告屏蔽 " .. qqad_blocked, text="检测到一个符合条件的窗口，标题为".. c.name .."。"}
-            c:kill()
-        else
-            map_client_key(c, emacs_keys)
-            map_client_key(c, tm_keys)
-        end
     elseif c.class == 'qTox' then
         map_client_key(c, emacs_keys)
     elseif c.class == 'Evince' then
@@ -1181,7 +1172,7 @@ client.connect_signal("manage", function (c, startup)
     elseif c.instance == 'QQ.exe' then
         -- naughty.notify({title="新窗口", text="名称为 ".. c.name .."，class 为 " .. c.class:gsub('&', '&amp;') .. " 的窗口已接受管理。", preset=naughty.config.presets.critical})
 
-        if c.name and (c.name == '腾讯网迷你版' or c.name == '京东' or c.name:match('^腾讯.+新闻$') or c.name == '提示') then
+        if c.name and (c.name == '腾讯网迷你版' or c.name == '京东' or c.name:match('^腾讯.+新闻$')) then
             qqad_blocked = qqad_blocked + 1
             naughty.notify({title="QQ广告屏蔽 " .. qqad_blocked, text="检测到一个符合条件的窗口，标题为".. c.name .."。"})
             c:kill()
