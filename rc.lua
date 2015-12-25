@@ -19,6 +19,19 @@ local myutil = require("myutil")
 local fixwidthtextbox = require("fixwidthtextbox")
 local menu = require("menu")
 
+local ok, localconf = pcall(require, "local")
+if ok and localconf.scale then
+  scale = localconf.scale
+else
+  scale = 1
+end
+
+if scale ~= 1 then
+  local dpi = 96 * scale
+  require("lgi").PangoCairo.FontMap.get_default():set_resolution(dpi)
+  awful.util.spawn("xrandr --dpi " .. dpi, false)
+end
+
 os.setlocale("")
 -- A debugging func
 n = function(n) naughty.notify{title="消息", text=tostring(n)} end
@@ -275,7 +288,7 @@ function update_netstat()
 end
 netdata = {}
 netwidget = fixwidthtextbox('(net)')
-netwidget.width = 100
+netwidget.width = 100 * scale
 netwidget:set_align('center')
 netwidget_clock = timer({ timeout = 2 })
 netwidget_clock:connect_signal("timeout", update_netstat)
@@ -298,7 +311,7 @@ function update_memwidget()
     memwidget:set_markup('Mem <span color="#90ee90">'.. percent ..'%</span>')
 end
 memwidget = fixwidthtextbox('Mem ??')
-memwidget.width = 55
+memwidget.width = 55 * scale
 update_memwidget()
 mem_clock = timer({ timeout = 5 })
 mem_clock:connect_signal("timeout", update_memwidget)
@@ -326,7 +339,7 @@ function update_cputemp()
     cputempwidget:set_markup('CPU <span color="#008000">'..temp..'</span>℃')
 end
 cputempwidget = fixwidthtextbox('CPU ??℃')
-cputempwidget.width = 60
+cputempwidget.width = 60 * scale
 update_cputemp()
 cputemp_clock = timer({ timeout = 5 })
 cputemp_clock:connect_signal("timeout", update_cputemp)
@@ -464,7 +477,7 @@ volume_clock:connect_signal("timeout", function () volumectl("update", volumewid
 volume_clock:start()
 
 volumewidget = fixwidthtextbox('(volume)')
-volumewidget.width = 48
+volumewidget.width = 48 * scale
 volumewidget:set_align('right')
 volumewidget:buttons(awful.util.table.join(
     awful.button({ }, 4, function () volumectl("up", volumewidget) end),
@@ -529,7 +542,7 @@ mytasklist.buttons = awful.util.table.join(
                                                   instance:hide()
                                                   instance = nil
                                               else
-                                                  instance = awful.menu.clients({ width=250 })
+                                                  instance = awful.menu.clients({ width=250 * scale })
                                               end
                                           end),
                      awful.button({ }, 4, function ()
@@ -559,7 +572,7 @@ for s = 1, screen.count() do
     mytasklist[s] = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, mytasklist.buttons)
 
     -- Create the wibox
-    mywibox[s] = awful.wibox({ position = "top", screen = s, height = 18 })
+    mywibox[s] = awful.wibox({ position = "top", screen = s, height = 18 * scale })
 
     -- Widgets that are aligned to the left
     local left_layout = wibox.layout.fixed.horizontal()
@@ -853,7 +866,7 @@ globalkeys = awful.util.table.join(
                 fc = fc .. line .. '\n'
             end
             f:close()
-            _dict_notify = naughty.notify({ text = fc, timeout = 5, width = 320 })
+            _dict_notify = naughty.notify({ text = fc, timeout = 5, width = 320 * scale })
         end),
     awful.key({ modkey, "Shift"   }, "d", function ()
         awful.util.spawn('ydcv-notify')
