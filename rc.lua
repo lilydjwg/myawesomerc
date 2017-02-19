@@ -16,7 +16,22 @@ table.insert(naughty.config.icon_dirs, '/usr/share/icons/hicolor/48x48/status/')
 
 local menu = require("menu")
 
+local ok, localconf = pcall(require, "local")
+if ok and localconf.scale then
+  scale = localconf.scale
+else
+  scale = 1
+end
+
+if scale ~= 1 then
+  local dpi = 96 * scale
+  require("lgi").PangoCairo.FontMap.get_default():set_resolution(dpi)
+  awful.spawn("xrandr --dpi " .. dpi, false)
+end
+
 os.setlocale("")
+-- A debugging func
+n = function(n) naughty.notify{title="消息", text=tostring(n)} end
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -90,7 +105,7 @@ local function client_menu_toggle_fn()
             instance:hide()
             instance = nil
         else
-            instance = awful.menu.clients({ theme = { width = 250 } })
+            instance = awful.menu.clients({ theme = { width = 250 * scale } })
         end
     end
 end
@@ -173,6 +188,7 @@ local tasklist_buttons = awful.util.table.join(
                                                   c:raise()
                                               end
                                           end),
+                     awful.button({ }, 2, function (c) c:kill() end),
                      awful.button({ }, 3, client_menu_toggle_fn()),
                      awful.button({ }, 4, function ()
                                               awful.client.focus.byidx(1)
@@ -220,7 +236,7 @@ awful.screen.connect_for_each_screen(function(s)
     s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, tasklist_buttons)
 
     -- Create the wibox
-    s.mywibox = awful.wibar({ position = "top", screen = s })
+    s.mywibox = awful.wibar({ position = "top", screen = s, height = 18 * scale })
 
     -- Add widgets to the wibox
     s.mywibox:setup {
@@ -320,6 +336,15 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(-1)                end,
               {description = "select previous", group = "layout"}),
 
+    awful.key({ modkey, "Shift"   }, "s",
+              function ()
+                  -- because they may be not focusable
+                  local c = mouse.object_under_pointer()
+                  if c then
+                      c.sticky = not c.sticky
+                  end
+              end,
+              {description = "toggle sticky", group = "client"}),
     awful.key({ modkey, "Control" }, "n",
               function ()
                   local c = awful.client.restore()
@@ -367,8 +392,10 @@ clientkeys = awful.util.table.join(
               {description = "move to master", group = "client"}),
     awful.key({ modkey,           }, "o",      function (c) c:move_to_screen()               end,
               {description = "move to screen", group = "client"}),
-    awful.key({ modkey,           }, "t",      function (c) c.ontop = not c.ontop            end,
-              {description = "toggle keep on top", group = "client"}),
+    awful.key({ modkey,           }, "a",      function (c) c.above = not c.above            end,
+              {description = "toggle above", group = "client"}),
+    -- awful.key({ modkey,           }, "t",      function (c) c.ontop = not c.ontop            end,
+    --           {description = "toggle keep on top", group = "client"}),
     awful.key({ modkey, "Shift"   }, "m",
         function (c)
             -- The client currently has the input focus, so it cannot be
@@ -439,7 +466,9 @@ for i = 1, 9 do
                   {description = "toggle focused client on tag #" .. i, group = "tag"})
     )
 end
+-- }}}
 
+-- {{{ clientbuttons
 clientbuttons = awful.util.table.join(
     awful.button({ }, 1, function (c) client.focus = c; c:raise() end),
     awful.button({ modkey }, 1, awful.mouse.client.move),
@@ -584,7 +613,7 @@ pcall(function()
 end)
 -- TODO
 -- awful.util.spawn("awesomeup", false)
--- FIXME
--- awful.tag.viewonly(tags[1][6])
+-- TODO
+-- screen[1].tags[6]:view_only()
 -- vim: set fdm=marker et sw=4:
 -- }}}
