@@ -480,12 +480,42 @@ root.keys(globalkeys)
 
 -- {{{ Rules
 -- Rules to apply to new clients (through the "manage" signal).
+local old_filter = awful.client.focus.filter
+function myfocus_filter(c)
+  if old_filter(c) then
+    -- TM.exe completion pop-up windows
+    if (c.instance == 'TM.exe' or c.instance == 'QQ.exe')
+        and c.above and c.skip_taskbar
+        and (c.type == 'normal' or c.type == 'dialog') -- dialog type is for tooltip windows
+        and (c.class == 'TM.exe' or c.class == 'QQ.exe') then
+        return nil
+    -- This works with tooltips and some popup-menus
+    elseif c.class == 'Wine' and c.above == true then
+      return nil
+    elseif (c.class == 'Wine' or c.class == 'QQ.exe')
+      and c.type == 'dialog'
+      and c.skip_taskbar == true
+      and c.size_hints.max_width and c.size_hints.max_width < 160
+      then
+      -- for popup item menus of Photoshop CS5
+      return nil
+    -- popups for Settings page in Firefox
+    elseif c.skip_taskbar and c.instance == 'Popup' and c.class == 'Firefox' then
+      return nil
+    elseif c.class == 'Key-mon' then
+      return nil
+    else
+      return c
+    end
+  end
+end
+awful.client.focus.filter = myfocus_filter
 awful.rules.rules = {
     -- All clients will match this rule.
     { rule = { },
       properties = { border_width = beautiful.border_width,
                      border_color = beautiful.border_normal,
-                     focus = awful.client.focus.filter,
+                     focus = myfocus_filter,
                      raise = true,
                      keys = clientkeys,
                      buttons = clientbuttons,
@@ -528,7 +558,141 @@ awful.rules.rules = {
     -- Set Firefox to always map on the tag named "2" on screen 1.
     -- { rule = { class = "Firefox" },
     --   properties = { screen = 1, tag = "2" } },
-}
+  }, {
+    rule = { class = "Screenruler" },
+    properties = {
+      floating = true,
+      focus = false,
+      border_width = 0,
+    }
+  }, {
+    rule = { role = "FullScreenHtop" },
+    properties = {
+      maximized_horizontal = true,
+      maximized_vertical = true,
+    }
+  }, {
+    rule = { class = "Amule" },
+    properties = { tag = "3" },
+  }, {
+    rule = { class = "Firefox", instance = "firefox" },
+    properties = { floating = true }
+  }, {
+    -- popup from FireGestures with mouse wheel
+    rule = {
+      class = "Firefox",
+      skip_taskbar = true,
+      instance = 'Popup',
+    },
+    properties = {
+      floating = true,
+      border_width = 0,
+    }
+  }, {
+    rule = { class = "Wireshark", name = "Wireshark" }, -- wireshark startup window
+    properties = { floating = true }
+  }, {
+    rule_any = {
+      instance = {
+          'TM.exe', 'QQ.exe',
+          'QQExternal.exe', -- QQ 截图
+          'deepin-music-player',
+      },
+    },
+    properties = {
+      -- This, together with myfocus_filter, make the popup menus flicker taskbars less
+      -- Non-focusable menus may cause TM2013preview1 to not highlight menu
+      -- items on hover and crash.
+      -- Also for deepin-music, removing borders and floating pop-ups
+      focusable = true,
+      floating = true,
+      border_width = 0,
+    }
+  }, {
+    rule = {
+      -- mainly for picpick
+      class = "Wine",
+      above = true,
+    },
+    properties = {
+      floating = true,
+      border_width = 0,
+    }
+  }, {
+    rule = {
+      -- for WinHex
+      class = "Wine",
+      instance = "WinHex.exe",
+      name = "数据解释器",
+    },
+    properties = {
+      floating = true,
+      border_width = 0,
+    }
+  }, {
+    rule = {
+      class = "Wine",
+      skip_taskbar = true,
+      type = "dialog",
+    },
+    callback = function (c)
+      if c.size_hints.max_width and c.size_hints.max_width < 160 then
+        -- for popup item menus of Photoshop CS5
+        c.border_width = 0
+      end
+    end,
+  }, {
+    rule = {
+      -- 白板的工具栏
+      name = 'frmPresentationTool',
+      instance = 'picpick.exe',
+    },
+    properties = {
+      ontop = true,
+    }
+  }, {
+    rule_any = {
+      class = {
+        'Flashplayer', 'Gnome-mplayer', 'Totem',
+        'Eog', 'feh', 'Display', 'Gimp', 'Gimp-2.6',
+        'Screenkey', 'TempTerm', 'AliWangWang',
+        'Dia', 'Pavucontrol', 'Stardict', 'XEyes', 'Skype',
+        'Xfce4-appfinder',
+      },
+      name = {
+        '文件传输', 'Firefox 首选项', '暂存器', 'Keyboard',
+      },
+      instance = {
+        'Browser', -- 火狐的关于对话框
+        'MATLAB', -- splash
+      },
+      role = {
+        'TempTerm',
+      },
+    },
+    properties = {
+      floating = true,
+    }
+  }, {
+    rule = {
+      instance = "xfce4-notifyd",
+    },
+    properties = {
+      border_width = 0,
+      focus = false,
+    }
+  }, {
+    rule = {
+      class = "Key-mon",
+    },
+    properties = {
+      border_width = 0,
+      focus = false,
+      focusable = false,
+      opacity = 0.65,
+      sticky = true,
+    }
+  }
 -- }}}
 
 -- {{{ Signals
