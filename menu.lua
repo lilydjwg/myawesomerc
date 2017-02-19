@@ -1,4 +1,4 @@
-xdgmenu = function(terminal)
+local xdgmenu = function(terminal)
   return {
     {'Internet', --[[/usr/share/desktop-directories/Arch-Internet.directory]] {
         {'Avahi SSH 服务器的浏览器', '/usr/bin/bssh', '/usr/share/icons/Adwaita/16x16/devices/network-wired.png' --[[/usr/share/applications/bssh.desktop]]},
@@ -174,3 +174,5 @@ xdgmenu = function(terminal)
     }
   }
 end
+
+return { xdgmenu = xdgmenu }
