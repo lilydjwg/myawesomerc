@@ -1077,6 +1077,7 @@ awful.rules.rules = {
         'Screenkey', 'TempTerm', 'AliWangWang',
         'Dia', 'Pavucontrol', 'Stardict', 'XEyes', 'Skype',
         'Xfce4-appfinder',
+        "/usr/lib/firefox/plugin-container",
       },
       name = {
         '文件传输', 'Firefox 首选项', '暂存器', 'Keyboard',
