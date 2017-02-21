@@ -9,7 +9,7 @@ local ipairs = ipairs
 local math = math
 local table = table
 -- “联系人列表”宽度
-local buddylist_height = 295
+local buddylist_width = 295
 -- local naughty = naughty
 
 local function do_empathy(p)
@@ -33,14 +33,14 @@ local function do_empathy(p)
 	  buddylist_swap = c
 	end
 	c:geometry({
-	  width = buddylist_height - 2,
+	  width = buddylist_width - 2,
 	  height = area.height - 4,
 	  x = area.x,
 	  y = area.y,
 	})
 	cols = cols - 1
-	area.x = area.x + buddylist_height
-	area.width = area.width - buddylist_height
+	area.x = area.x + buddylist_width
+	area.width = area.width - buddylist_width
       end
     end
 
