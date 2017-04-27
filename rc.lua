@@ -940,10 +940,10 @@ local old_filter = awful.client.focus.filter
 function myfocus_filter(c)
   if old_filter(c) then
     -- TM.exe completion pop-up windows
-    if (c.instance == 'TM.exe' or c.instance == 'QQ.exe')
+    if (c.instance == 'TM.exe' or c.instance == 'QQ.exe' or c.instance == 'TIM.exe')
         and c.above and c.skip_taskbar
         and (c.type == 'normal' or c.type == 'dialog') -- dialog type is for tooltip windows
-        and (c.class == 'TM.exe' or c.class == 'QQ.exe') then
+        and (c.class == 'TM.exe' or c.class == 'QQ.exe' or c.class == 'TIM.exe') then
         return nil
     -- This works with tooltips and some popup-menus
     elseif c.class == 'Wine' and c.above == true then
@@ -1013,7 +1013,7 @@ awful.rules.rules = {
   }, {
     rule_any = {
       instance = {
-          'TM.exe', 'QQ.exe',
+          'TM.exe', 'QQ.exe', 'TIM.exe',
           'QQExternal.exe', -- QQ 截图
           'deepin-music-player',
       },
