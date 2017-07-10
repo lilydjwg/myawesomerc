@@ -738,7 +738,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "Return",
         function ()
             -- Go and find a terminal for me
-            myutil.run_or_raise("xfce4-terminal --role=TempTerm --geometry=80x24+343+180", { role = "TempTerm" })
+            myutil.run_or_raise("xfce4-terminal --role=TempTerm --geometry=80x24+519+263", { role = "TempTerm" })
         end),
     awful.key({ modkey, "Control" }, "r", awesome.restart),
     awful.key({ modkey, "Control" }, "q", awesome.quit),
