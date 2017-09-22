@@ -189,7 +189,7 @@ tags_layout = {
     empathy,
     awful.layout.suit.tile,
     awful.layout.suit.tile,
-    awful.layout.suit.tile,
+    awful.layout.suit.floating,
     awful.layout.suit.floating,
 }
 tags = {}
@@ -938,15 +938,15 @@ local old_filter = awful.client.focus.filter
 function myfocus_filter(c)
   if old_filter(c) then
     -- TM.exe completion pop-up windows
-    if (c.instance == 'TM.exe' or c.instance == 'QQ.exe' or c.instance == 'TIM.exe')
+    if (c.instance == 'tm.exe' or c.instance == 'TIM.exe')
         and c.above and c.skip_taskbar
         and (c.type == 'normal' or c.type == 'dialog') -- dialog type is for tooltip windows
-        and (c.class == 'TM.exe' or c.class == 'QQ.exe' or c.class == 'TIM.exe') then
+        and (c.class == 'qq.exe' or c.class == 'QQ.exe' or c.class == 'TIM.exe') then
         return nil
     -- This works with tooltips and some popup-menus
     elseif c.class == 'Wine' and c.above == true then
       return nil
-    elseif (c.class == 'Wine' or c.class == 'QQ.exe')
+    elseif (c.class == 'Wine' or c.class == 'QQ.exe' or c.class == 'qq.exe')
       and c.type == 'dialog'
       and c.skip_taskbar == true
       and c.size_hints.max_width and c.size_hints.max_width < 160
@@ -1011,7 +1011,7 @@ awful.rules.rules = {
   }, {
     rule_any = {
       instance = {
-          'TM.exe', 'QQ.exe', 'TIM.exe',
+          'qq.exe', 'QQ.exe', 'TIM.exe',
           'QQExternal.exe', -- QQ 截图
           'deepin-music-player',
       },
@@ -1147,10 +1147,7 @@ client.connect_signal("manage", function (c, startup)
         end
     end
 
-    if c.name and c.name:match('^FlashGot') then
-        c.minimized = true
-        -- naughty.notify({title="FlashGot", text="OK"})
-    elseif c.instance == 'empathy-chat' or (c.role == 'conversation' and c.class == 'Pidgin') then
+    if c.instance == 'empathy-chat' or (c.role == 'conversation' and c.class == 'Pidgin') then
         local t
         t = c:tags()
         if #t == 1 and t[1] == tags[mouse.screen][6] then
@@ -1171,7 +1168,7 @@ client.connect_signal("manage", function (c, startup)
         c:keys(keys)
     elseif c.name == '中文输入' then
         awful.util.spawn_with_shell('sleep 0.05 && fcitx-remote -T', false)
-    elseif c.instance == 'QQ.exe' then
+    elseif c.instance == 'QQ.exe' or c.instance == 'qq.exe' then
         -- naughty.notify({title="新窗口", text="名称为 ".. c.name .."，class 为 " .. c.class:gsub('&', '&amp;') .. " 的窗口已接受管理。", preset=naughty.config.presets.critical})
 
         if c.name and (c.name == '腾讯网迷你版' or c.name == '京东' or c.name:match('^腾讯.+新闻$')) then
