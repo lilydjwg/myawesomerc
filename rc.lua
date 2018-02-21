@@ -222,7 +222,7 @@ local mymenu = {
 mymainmenu = awful.menu({ items = { { "Awesome", myawesomemenu, beautiful.awesome_icon },
           { "终端 (&T)", terminal, '/usr/share/icons/gnome/32x32/apps/utilities-terminal.png' },
           { "G&VIM", "gvim", '/usr/share/pixmaps/gvim.png' },
-          { "火狐 (&F)", "firefox", '/usr/share/icons/hicolor/32x32/apps/firefox.png' },
+          { "火狐 (&F)", "firefox-nightly -P nightly", '/usr/share/icons/hicolor/32x32/apps/firefox.png' },
           { "常用 (&U)", mymenu },
           { "应用程序 (&A)", xdgmenu(terminal) },
           { "挂起 (&S)", "systemctl suspend" },
