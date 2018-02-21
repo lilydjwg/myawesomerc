@@ -581,14 +581,22 @@ for s = 1, screen.count() do
 
     -- Widgets that are aligned to the right
     local right_layout = wibox.layout.fixed.horizontal()
-    right_layout:add(memwidget)
-    right_layout:add(cputempwidget)
-    right_layout:add(batwidget)
-    right_layout:add(netwidget)
-    right_layout:add(volumewidget)
+    -- screen 2 is e-ink
+    if s == 1 then
+        right_layout:add(memwidget)
+        right_layout:add(cputempwidget)
+        right_layout:add(batwidget)
+        right_layout:add(netwidget)
+        right_layout:add(volumewidget)
+    end
     if s == 1 then right_layout:add(wibox.widget.systray()) end
-    right_layout:add(mytextclock)
-    right_layout:add(github_widget)
+    if s == 1 then
+        right_layout:add(mytextclock)
+        right_layout:add(github_widget)
+    else
+        mytextclock2 = awful.widget.textclock(" %Y年%m月%d日 %H:%M %A ", 1)
+        right_layout:add(mytextclock2)
+    end
     right_layout:add(mylayoutbox[s])
 
     -- Now bring it all together (with the tasklist in the middle)
