@@ -953,7 +953,13 @@ function myfocus_filter(c)
         return nil
     -- This works with tooltips and some popup-menus
     elseif c.class == 'Wine' and c.above == true then
-      return nil
+        return nil
+    elseif c.class == 'WeChat.exe' and (
+        c.name == 'CMenuWnd' or not c.name
+        or c.name == 'SessionChatRoomDetailWnd'
+        ) then -- 微信菜单
+        c.border_width = 0
+        do return nil end
     elseif (c.class == 'Wine' or c.class == 'QQ.exe' or c.class == 'qq.exe')
       and c.type == 'dialog'
       and c.skip_taskbar == true
@@ -1084,6 +1090,7 @@ awful.rules.rules = {
         'Dia', 'Pavucontrol', 'Stardict', 'XEyes', 'Skype',
         'Xfce4-appfinder', 'Pinentry',
         "/usr/lib/firefox/plugin-container",
+        'WeChat.exe',
       },
       name = {
         '文件传输', 'Firefox 首选项', '暂存器', 'Keyboard',
