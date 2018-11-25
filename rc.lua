@@ -867,7 +867,12 @@ globalkeys = awful.util.table.join(
             _old_word = new_word
 
             local fc = ""
-            local f  = io.popen("sdcv -n --utf8-output -u 'stardict1.3英汉辞典' '"..new_word.."'")
+            local f
+            if new_word:match("%d+%.%d+%.%d+%.%d+") then
+                f = io.popen("cip "..new_word)
+            else
+                f = io.popen("sdcv -n --utf8-output -u 'stardict1.3英汉辞典' '"..new_word.."'")
+            end
             for line in f:lines() do
                 fc = fc .. line .. '\n'
             end
