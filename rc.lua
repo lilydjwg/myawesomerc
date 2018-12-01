@@ -1008,15 +1008,21 @@ awful.rules.rules = {
       maximized_vertical = true,
     }
   }, {
-    rule = { class = "Amule" },
-    properties = { tag = tags[1][3] },
-  }, {
     rule = { class = "Firefox", instance = "firefox" },
     properties = { floating = true }
   }, {
-    -- popup from FireGestures with mouse wheel
     rule = {
       class = "Firefox",
+      skip_taskbar = true,
+      instance = 'Popup',
+    },
+    properties = {
+      floating = true,
+      border_width = 0,
+    }
+  }, {
+    rule = {
+      class = "Nightly",
       skip_taskbar = true,
       instance = 'Popup',
     },
