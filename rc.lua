@@ -870,6 +870,8 @@ globalkeys = awful.util.table.join(
             local f
             if new_word:match("%d+%.%d+%.%d+%.%d+") then
                 f = io.popen("cip "..new_word)
+            elseif new_word:match(':') and new_word:match("[0-9a-fA-F:]+") then
+                f = io.popen("cip "..new_word)
             else
                 f = io.popen("sdcv -n --utf8-output -u 'stardict1.3英汉辞典' '"..new_word.."'")
             end
