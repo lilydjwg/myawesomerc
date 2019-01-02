@@ -1185,13 +1185,6 @@ client.connect_signal("manage", function (c, startup)
         map_client_key(c, emacs_keys)
     elseif c.class == 'Evince' then
         map_client_key(c, evince_keys)
-    elseif c.class and c.class:match('^Minecraft ') then
-        local keys = c:keys()
-        local mykey = awful.key({'Control'}, 't', function(c)
-            awful.util.spawn('zhinput')
-        end)
-        keys = awful.util.table.join(keys, mykey)
-        c:keys(keys)
     elseif c.name == '中文输入' then
         awful.util.spawn_with_shell('sleep 0.05 && fcitx-remote -T', false)
     elseif c.instance == 'QQ.exe' or c.instance == 'qq.exe' then
