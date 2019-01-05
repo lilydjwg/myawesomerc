@@ -1103,6 +1103,7 @@ awful.rules.rules = {
         'Dia', 'Pavucontrol', 'Stardict', 'XEyes', 'Skype',
         'Xfce4-appfinder', 'Pinentry',
         "/usr/lib/firefox/plugin-container",
+        "/opt/firefox-nightly/plugin-container",
         'WeChat.exe',
       },
       name = {
