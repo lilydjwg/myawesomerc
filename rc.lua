@@ -1041,6 +1041,7 @@ awful.rules.rules = {
           'qq.exe', 'QQ.exe', 'TIM.exe',
           'QQExternal.exe', -- QQ 截图
           'deepin-music-player',
+          'wechat.exe', 'wechatupdate.exe',
       },
     },
     properties = {
