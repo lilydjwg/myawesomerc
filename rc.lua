@@ -572,6 +572,9 @@ for s = 1, screen.count() do
 
     -- Create the wibox
     mywibox[s] = awful.wibox({ position = "top", screen = s, height = 18 * scale })
+    if s == 2 then
+        mywibox[s]:set_fg('#ffffff')
+    end
 
     -- Widgets that are aligned to the left
     local left_layout = wibox.layout.fixed.horizontal()
