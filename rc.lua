@@ -33,17 +33,38 @@ if scale ~= 1 then
 end
 
 os.setlocale("")
--- A debugging func
-n = function(n) naughty.notify{title="消息", text=tostring(n)} end
 last_bat_warning = 0
+
+notify = function(args)
+  args.font = '12'
+  args.height = 62 -- or Chinese won't be shown
+  args.screen = mouse.screen
+
+  if mouse.screen == 1 then
+    args.fg = '#ffffff'
+  else
+    args.fg = '#000000'
+    args.bg = '#ffffff'
+  end
+  if args.critical then
+    args.critical = nil
+    args.preset = naughty.config.presets.critical
+  end
+  return naughty.notify(args)
+end
+
+-- A debugging func
+n = function(n) notify{title="消息", text=tostring(n)} end
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
 if awesome.startup_errors then
-    naughty.notify({ preset = naughty.config.presets.critical,
-                     title = "Oops, there were errors during startup!",
-                     text = awesome.startup_errors })
+  notify{
+    critical = true,
+    title = "Oops, there were errors during startup!",
+    text = awesome.startup_errors,
+  }
 end
 
 -- Handle runtime errors after startup
@@ -54,9 +75,11 @@ do
         if in_error then return end
         in_error = true
 
-        naughty.notify({ preset = naughty.config.presets.critical,
-                         title = "Oops, an error happened!",
-                         text = err })
+        notify{
+          critical = true,
+          title = "Oops, an error happened!",
+          text = err,
+        }
         in_error = false
     end)
 end
@@ -67,7 +90,7 @@ end
 beautiful.init(awful.util.getdir("config") .. "/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "xfce4-terminal"
+terminal = "gnome-terminal"
 editor = "gvim"
 editor_cmd = editor
 
@@ -400,10 +423,10 @@ Battery 1: Unknown, 99%
         if bats[max_percent_index][1] == 'Discharging' then
             local t = os.time()
             if t - last_bat_warning > 60 * 5 then
-                naughty.notify{
-                    preset = naughty.config.presets.critical,
-                    title = "电量警报",
-                    text = '电池电量只剩下 ' .. max_percent .. '% 了！',
+                notify{
+                  critical = true,
+                  title = "电量警报",
+                  text = '电池电量只剩下 ' .. max_percent .. '% 了！',
                 }
                 last_bat_warning = t
             end
@@ -749,7 +772,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "Return",
         function ()
             -- Go and find a terminal for me
-            myutil.run_or_raise("xfce4-terminal --role=TempTerm --geometry=80x24+401+205", { role = "TempTerm" })
+            myutil.run_or_raise("gnome-terminal --role=TempTerm --geometry=80x24+401+205", { role = "TempTerm" })
         end),
     awful.key({ modkey, "Control" }, "r", awesome.restart),
     awful.key({ modkey, "Control" }, "q", awesome.quit),
@@ -795,7 +818,7 @@ globalkeys = awful.util.table.join(
     awful.key({                   }, "Print",
         function ()
             awful.util.spawn_with_shell('maim ~/tmpfs/$(date +"%Y-%m-%d_%H:%M:%S").png')
-            naughty.notify({title="截图", text="全屏截图已保存。"})
+            notify{title="截图", text="全屏截图已保存。"}
         end),
 
     -- Alt-Tab
@@ -827,12 +850,12 @@ globalkeys = awful.util.table.join(
     -- My programs
     awful.key({ modkey,           }, "g", function () awful.util.spawn("gvim") end),
     awful.key({ "Control", "Mod1", "Shift" }, "x", function () awful.util.spawn("xkill") end),
-    awful.key({ "Control", "Mod1" }, "l", function () awful.util.spawn("leave") end),
+    awful.key({ "Control", "Mod1" }, "l", function () awful.util.spawn("lockscreen") end),
     awful.key({ modkey,           }, "x", function () awful.util.spawn("openmsg.py", false) end),
     awful.key({ modkey,           }, "t", function () awful.util.spawn(terminal) end),
     awful.key({ modkey, "Shift"   }, "Return",
         function ()
-            awful.util.spawn("xfce4-terminal --role=TempTerm --geometry=80x24+343+180")
+            awful.util.spawn("gnome-terminal --role=TempTerm --geometry=80x24+343+180")
         end),
 
     -- htop
@@ -841,7 +864,7 @@ globalkeys = awful.util.table.join(
             if client.focus and client.focus.role == 'FullScreenHtop' then
                 awful.client.movetotag(tags[mouse.screen][10], client.focus)
             else
-                myutil.run_or_raise("xfce4-terminal --role=FullScreenHtop -e 'htop'", { role = "FullScreenHtop" })
+                myutil.run_or_raise("gnome-terminal --role=FullScreenHtop -e 'htop'", { role = "FullScreenHtop" })
             end
         end),
 
@@ -881,8 +904,9 @@ globalkeys = awful.util.table.join(
             for line in f:lines() do
                 fc = fc .. line .. '\n'
             end
+            fc = fc .. '.\n' -- one less line is shown with 1:1.44.1-1
             f:close()
-            _dict_notify = naughty.notify({ text = fc, timeout = 5, width = 320 * scale })
+            _dict_notify = notify{ text = fc, timeout = 5, width = 320 * scale }
         end),
     awful.key({ modkey, "Shift"   }, "d", function ()
         awful.util.spawn('ydcv-notify')
@@ -1195,11 +1219,12 @@ client.connect_signal("manage", function (c, startup)
     elseif c.name == '中文输入' then
         awful.util.spawn_with_shell('sleep 0.05 && fcitx-remote -T', false)
     elseif c.instance == 'QQ.exe' or c.instance == 'qq.exe' then
-        -- naughty.notify({title="新窗口", text="名称为 ".. c.name .."，class 为 " .. c.class:gsub('&', '&amp;') .. " 的窗口已接受管理。", preset=naughty.config.presets.critical})
-
         if c.name and (c.name == '腾讯网迷你版' or c.name == '京东' or c.name:match('^腾讯.+新闻$')) then
             qqad_blocked = qqad_blocked + 1
-            naughty.notify({title="QQ广告屏蔽 " .. qqad_blocked, text="检测到一个符合条件的窗口，标题为".. c.name .."。"})
+            notify{
+              title = "QQ广告屏蔽 " .. qqad_blocked,
+              text = "检测到一个符合条件的窗口，标题为".. c.name .."。",
+            }
             c:kill()
         else
             map_client_key(c, tm_keys)
