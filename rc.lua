@@ -37,8 +37,18 @@ last_bat_warning = 0
 
 notify = function(args)
   args.font = '12'
-  args.height = 62 -- or Chinese won't be shown
   args.screen = mouse.screen
+  local lines = 0
+  for _ in string.gmatch(args.text, '\n') do
+      lines = lines + 1
+  end
+  if args.text:sub(-1) ~= '\n' then
+      lines = lines + 1
+  end
+  if args.title then
+      lines = lines + 1
+  end
+  args.height = 31 * lines -- or Chinese won't be shown
 
   if mouse.screen == 1 then
     args.fg = '#ffffff'
@@ -904,9 +914,8 @@ globalkeys = awful.util.table.join(
             for line in f:lines() do
                 fc = fc .. line .. '\n'
             end
-            fc = fc .. '.\n' -- one less line is shown with 1:1.44.1-1
             f:close()
-            _dict_notify = notify{ text = fc, timeout = 5, width = 320 * scale }
+            _dict_notify = notify{ title = new_word, text = fc, timeout = 5, width = 320 * scale }
         end),
     awful.key({ modkey, "Shift"   }, "d", function ()
         awful.util.spawn('ydcv-notify')
