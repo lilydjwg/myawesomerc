@@ -38,17 +38,6 @@ last_bat_warning = 0
 notify = function(args)
   args.font = '12'
   args.screen = mouse.screen
-  local lines = 0
-  for _ in string.gmatch(args.text, '\n') do
-      lines = lines + 1
-  end
-  if args.text:sub(-1) ~= '\n' then
-      lines = lines + 1
-  end
-  if args.title then
-      lines = lines + 1
-  end
-  args.height = 31 * lines -- or Chinese won't be shown
 
   if mouse.screen == 1 then
     args.fg = '#ffffff'
