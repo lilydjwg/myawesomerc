@@ -2,7 +2,6 @@
 
 import os
 import time
-import xml.etree.ElementTree as ET
 from subprocess import (
   check_output, CalledProcessError,
   Popen, PIPE,
@@ -11,12 +10,14 @@ import logging
 import logging.handlers
 
 import requests
+import htmlutils
 
 try:
   import setproctitle
   setproctitle.setproctitle('update_github')
 except ImportError:
   pass
+
 logger = logging.getLogger(__name__)
 logger.addHandler(logging.handlers.SysLogHandler(address='/dev/log'))
 logger.setLevel(logging.INFO)
@@ -24,10 +25,10 @@ logger.setLevel(logging.INFO)
 def github_contributed():
   user = os.environ['USER']
   today = time.strftime('%Y-%m-%d')
-  url = "https://github.com/users/%s/contributions" % user
-  data = requests.get(url, timeout=30).text
-  svg = ET.fromstring(data)
-  rect = svg.find('.//rect[@data-date="%s"]' % today)
+  url = f'https://github.com/users/{user}/contributions'
+  r = requests.get(url, timeout=30)
+  doc = htmlutils.parse_document_from_requests(r)
+  rect = doc.find('.//rect[@data-date="%s"]' % today)
   if rect is None:
     return False
   return int(rect.get('data-count')) > 0
