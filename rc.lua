@@ -1063,7 +1063,7 @@ awful.rules.rules = {
   }, {
     rule_any = {
       instance = {
-          'qq.exe', 'QQ.exe', 'TIM.exe',
+          'qq.exe', 'QQ.exe', 'TIM.exe', 'tim.exe',
           'QQExternal.exe', -- QQ 截图
           'deepin-music-player',
           'wechat.exe', 'wechatupdate.exe',
