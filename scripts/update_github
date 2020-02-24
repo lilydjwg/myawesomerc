@@ -10,7 +10,7 @@ import logging
 import logging.handlers
 
 import requests
-import htmlutils
+from lxml.html import fromstring
 
 try:
   import setproctitle
@@ -26,8 +26,8 @@ def github_contributed():
   user = os.environ['USER']
   today = time.strftime('%Y-%m-%d')
   url = f'https://github.com/users/{user}/contributions'
-  r = requests.get(url, timeout=30)
-  doc = htmlutils.parse_document_from_requests(r)
+  page = requests.get(url, timeout=30).text
+  doc = fromstring(page)
   rect = doc.find('.//rect[@data-date="%s"]' % today)
   if rect is None:
     return False
