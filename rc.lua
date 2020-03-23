@@ -999,8 +999,12 @@ function myfocus_filter(c)
       then
       -- for popup item menus of Photoshop CS5
       return nil
-    -- popups for Settings page in Firefox
+    elseif c.class == 'TelegramDesktop' and c.above == true then
+      -- Telegram picture-in-picture
+      c.border_width = 0
+      return c
     elseif c.skip_taskbar and c.instance == 'Popup' and c.class == 'Firefox' then
+      -- popups for Settings page in Firefox
       return nil
     elseif c.class == 'Key-mon' then
       return nil
