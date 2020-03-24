@@ -863,7 +863,7 @@ globalkeys = awful.util.table.join(
             if client.focus and client.focus.role == 'FullScreenHtop' then
                 awful.client.movetotag(tags[mouse.screen][10], client.focus)
             else
-                myutil.run_or_raise("gnome-terminal --role=FullScreenHtop -e 'htop'", { role = "FullScreenHtop" })
+                myutil.run_or_raise("gnome-terminal --role=FullScreenHtop -- htop", { role = "FullScreenHtop" })
             end
         end),
 
