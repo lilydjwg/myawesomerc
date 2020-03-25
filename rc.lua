@@ -376,40 +376,32 @@ local battery_state = {
     Discharging = '<span color="#1e90ff">– ',
 }
 function update_batwidget()
-    local pipe = io.popen('acpi')
+    local pipe = io.popen('batstatus')
     if not pipe then
         batwidget:set_markup('<span color="red">ERR</span>')
         return
     end
 
---[[
-Battery 0: Unknown, 97%
-Battery 1: Unknown, 99%
-
-Battery 0: Discharging, 97%, discharging at zero rate - will never fully discharge.
-Battery 1: Unknown, 99%
-
-Battery 0: Discharging, 96%, 02:25:51 remaining
-Battery 1: Unknown, 99%
-]]
     local bats = {}
     local max_percent = 0
     local max_percent_index = 0
     local index = 0
     for line in pipe:lines() do
         index = index + 1
-        local state, percent, rest = line:match('^Battery %d+:%s+([^,]+), ([0-9.]+)%%(.*)')
-        local t
-        if rest ~= '' then
-            t = rest:match('[1-9]*%d:%d+')
+        local state, percent, rest = line:match('^BAT%d+:%s+([^,]+), ([0-9.]+)%%(.*)')
+        if state then
+            local t
+            if rest ~= '' then
+                t = rest:match('[1-9]*%d:%d+')
+            end
+            if not t then t = '' end
+            percent = tonumber(percent)
+            if percent > max_percent then
+                max_percent = percent
+                max_percent_index = index
+            end
+            table.insert(bats, {state, percent, t})
         end
-        if not t then t = '' end
-        percent = tonumber(percent)
-        if percent > max_percent then
-            max_percent = percent
-            max_percent_index = index
-        end
-        table.insert(bats, {state, percent, t})
     end
     pipe:close()
 
