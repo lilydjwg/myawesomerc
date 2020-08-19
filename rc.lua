@@ -808,8 +808,7 @@ globalkeys = awful.util.table.join(
     -- Screenshot
     awful.key({                   }, "Print",
         function ()
-            awful.util.spawn_with_shell('maim ~/tmpfs/$(date +"%Y-%m-%d_%H:%M:%S").png')
-            notify{title="截图", text="全屏截图已保存。"}
+            awful.util.spawn_with_shell('flameshot gui')
         end),
 
     -- Alt-Tab
