@@ -786,7 +786,7 @@ globalkeys = awful.util.table.join(
         end),
 
     -- Prompt
-    awful.key({ modkey            }, "r",     function () mypromptbox[mouse.screen]:run() end),
+    awful.key({ modkey, "Shift"   }, "r",     function () mypromptbox[mouse.screen]:run() end),
     awful.key({ "Mod1"            }, "F2",    function () awful.util.spawn('xfce4-appfinder', false) end),
 
     awful.key({ modkey, "Shift"   }, "x", function () awful.util.spawn('openmsg_qq.py', false) end),
@@ -1063,6 +1063,7 @@ awful.rules.rules = {
           'QQExternal.exe', -- QQ 截图
           'deepin-music-player',
           'wechat.exe', 'wechatupdate.exe',
+          "megasync",
       },
     },
     properties = {

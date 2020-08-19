@@ -26,6 +26,7 @@ def github_contributed():
   user = os.environ['USER']
   today = time.strftime('%Y-%m-%d')
   url = f'https://github.com/users/{user}/contributions'
+  # url = f'https://github.com.cnpmjs.org/users/{user}/contributions'
   page = requests.get(url, timeout=30).text
   doc = fromstring(page)
   rect = doc.find('.//rect[@data-date="%s"]' % today)
