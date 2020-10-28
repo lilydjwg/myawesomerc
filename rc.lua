@@ -990,6 +990,10 @@ function myfocus_filter(c)
       then
       -- for popup item menus of Photoshop CS5
       return nil
+    elseif c.class == 'TelegramDesktop' and c.above == true and c.name == 'Media viewer' then
+      -- Telegram media preview (https://t.me/archlinuxcn_group/1823691)
+      c.fullscreen = true
+      return c
     elseif c.class == 'TelegramDesktop' and c.above == true then
       -- Telegram picture-in-picture
       c.border_width = 0
