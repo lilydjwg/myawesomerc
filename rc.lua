@@ -29,8 +29,10 @@ end
 if scale ~= 1 then
   local dpi = 96 * scale
   require("lgi").PangoCairo.FontMap.get_default():set_resolution(dpi)
-  awful.util.spawn("xrandr --dpi " .. dpi, false)
 end
+
+main_screen = 1
+eink_screen = 3
 
 os.setlocale("")
 last_bat_warning = 0
@@ -39,11 +41,11 @@ notify = function(args)
   args.font = '12'
   args.screen = mouse.screen
 
-  if mouse.screen == 1 then
-    args.fg = '#ffffff'
-  else
+  if mouse.screen == eink_screen then
     args.fg = '#000000'
     args.bg = '#ffffff'
+  else
+    args.fg = '#ffffff'
   end
   if args.critical then
     args.critical = nil
@@ -211,7 +213,7 @@ tags_layout = {
     empathy,
     awful.layout.suit.tile,
     awful.layout.suit.tile,
-    awful.layout.suit.floating,
+    awful.layout.suit.max,
     awful.layout.suit.floating,
 }
 tags = {}
@@ -586,7 +588,7 @@ for s = 1, screen.count() do
 
     -- Create the wibox
     mywibox[s] = awful.wibox({ position = "top", screen = s, height = 18 * scale })
-    if s == 2 then
+    if s == eink_screen then
         mywibox[s]:set_fg('#ffffff')
     end
 
@@ -598,21 +600,20 @@ for s = 1, screen.count() do
 
     -- Widgets that are aligned to the right
     local right_layout = wibox.layout.fixed.horizontal()
-    -- screen 2 is e-ink
-    if s == 1 then
+    if s == main_screen then
         right_layout:add(memwidget)
         right_layout:add(cputempwidget)
         right_layout:add(batwidget)
         right_layout:add(netwidget)
         right_layout:add(volumewidget)
     end
-    if s == 1 then right_layout:add(wibox.widget.systray()) end
-    if s == 1 then
-        right_layout:add(mytextclock)
-        right_layout:add(github_widget)
-    else
+    if s == main_screen then right_layout:add(wibox.widget.systray()) end
+    if s == eink_screen then
         mytextclock2 = awful.widget.textclock(" %Y年%m月%d日 %H:%M %A ", 1)
         right_layout:add(mytextclock2)
+    else
+        right_layout:add(mytextclock)
+        right_layout:add(github_widget)
     end
     right_layout:add(mylayoutbox[s])
 
@@ -788,6 +789,7 @@ globalkeys = awful.util.table.join(
     -- Prompt
     awful.key({ modkey, "Shift"   }, "r",     function () mypromptbox[mouse.screen]:run() end),
     awful.key({ "Mod1"            }, "F2",    function () awful.util.spawn('xfce4-appfinder', false) end),
+    awful.key({ "Mod1"            }, "space", function () awful.util.spawn('rofi -show combi', false) end),
 
     awful.key({ modkey, "Shift"   }, "x", function () awful.util.spawn('openmsg_qq.py', false) end),
     -- Menubar
@@ -868,35 +870,9 @@ globalkeys = awful.util.table.join(
             end
         end),
 
-    -- sdcv
-    awful.key({ modkey            }, "d",
-        function ()
-            local new_word = selection()
-
-            if _dict_notify ~= nil then
-                naughty.destroy(_dict_notify)
-                _dict_notify = nil
-                if _old_word == new_word then
-                    return
-                end
-            end
-            _old_word = new_word
-
-            local fc = ""
-            local f
-            if new_word:match("%d+%.%d+%.%d+%.%d+") then
-                f = io.popen("cip "..new_word)
-            elseif new_word:match(':') and new_word:match("[0-9a-fA-F:]+") then
-                f = io.popen("cip "..new_word)
-            else
-                f = io.popen("sdcv -n --utf8-output -u 'stardict1.3英汉辞典' '"..new_word.."'")
-            end
-            for line in f:lines() do
-                fc = fc .. line .. '\n'
-            end
-            f:close()
-            _dict_notify = notify{ title = new_word, text = fc, timeout = 5, width = 320 * scale }
-        end),
+    awful.key({ modkey            }, "d", function ()
+        awful.util.spawn('sdcv-notify')
+    end),
     awful.key({ modkey, "Shift"   }, "d", function ()
         awful.util.spawn('ydcv-notify')
     end),
@@ -1231,6 +1207,8 @@ client.connect_signal("manage", function (c, startup)
     elseif c.class == 'MPlayer' or c.class == 'mpv' then
         awful.client.floating.set(c, true)
         awful.placement.centered(c)
+    elseif c.class == 'TelegramDesktop' then
+        awful.client.movetotag(tags[mouse.screen][1], c)
     end
 end)
 
@@ -1249,6 +1227,7 @@ pcall(function()
         _, pid = clua.reap()
     end
 end)
+dbus.release_name("session", "org.freedesktop.Notifications")
 awful.util.spawn("awesomeup", false)
 awful.tag.viewonly(tags[1][6])
 -- vim: set fdm=marker et sw=4:
