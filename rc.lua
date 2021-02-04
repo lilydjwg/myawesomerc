@@ -359,7 +359,7 @@ function update_cputemp()
         end
     end
     pipe:close()
-    cputempwidget:set_markup('CPU <span color="#008000">'..temp..'</span>℃')
+    cputempwidget:set_markup('CPU <span color="#41ff41">'..temp..'</span>℃')
 end
 cputempwidget = fixwidthtextbox('CPU ??℃')
 cputempwidget.width = 60 * scale
@@ -372,8 +372,8 @@ cputemp_clock:start()
 --{{{ battery indicator, using the acpi command
 local battery_state = {
     -- Unknown     = '<span color="yellow">? ',
-    Unknown     = '<span color="#0000ff">↯',
-    Idle        = '<span color="#0000ff">↯',
+    Unknown     = '<span color="#1e90ff">↯',
+    Idle        = '<span color="#1e90ff">↯',
     Charging    = '<span color="green">+ ',
     Discharging = '<span color="#1e90ff">– ',
 }
@@ -600,7 +600,7 @@ for s = 1, screen.count() do
 
     -- Widgets that are aligned to the right
     local right_layout = wibox.layout.fixed.horizontal()
-    if s == main_screen then
+    if s ~= eink_screen then
         right_layout:add(memwidget)
         right_layout:add(cputempwidget)
         right_layout:add(batwidget)
@@ -880,7 +880,12 @@ globalkeys = awful.util.table.join(
     -- Volume
     awful.key({ }, 'XF86AudioRaiseVolume', function () volumectl("up", volumewidget) end),
     awful.key({ }, 'XF86AudioLowerVolume', function () volumectl("down", volumewidget) end),
-    awful.key({ }, 'XF86AudioMute', function () volumectl("mute", volumewidget) end)
+    awful.key({ }, 'XF86AudioMute', function () volumectl("mute", volumewidget) end),
+
+    awful.key({ }, 'XF86AudioPause', function () awful.util.spawn('playerctl pause') end),
+    awful.key({ }, 'XF86AudioPlay', function () awful.util.spawn('playerctl play') end),
+    awful.key({ }, 'XF86AudioNext', function () awful.util.spawn('playerctl next') end),
+    awful.key({ }, 'XF86AudioPrev', function () awful.util.spawn('playerctl previous') end)
 ) -- }}}
 
 -- {{{ clientkeys
@@ -1042,7 +1047,7 @@ awful.rules.rules = {
           'QQExternal.exe', -- QQ 截图
           'deepin-music-player',
           'wechat.exe', 'wechatupdate.exe',
-          "megasync",
+          "megasync", "kruler",
       },
     },
     properties = {
