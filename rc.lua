@@ -1187,7 +1187,7 @@ client.connect_signal("manage", function (c, startup)
         local t
         t = c:tags()
         if #t == 1 and t[1] == tags[mouse.screen][6] then
-            awful.util.spawn_with_shell('sleep 0.1 && fcitx-remote -T', false)
+            awful.util.spawn_with_shell('sleep 0.1 && fcitx5-remote -T', false)
         else
             awful.client.movetotag(tags[mouse.screen][6], c)
         end
@@ -1196,7 +1196,7 @@ client.connect_signal("manage", function (c, startup)
     elseif c.class == 'Evince' then
         map_client_key(c, evince_keys)
     elseif c.name == '中文输入' then
-        awful.util.spawn_with_shell('sleep 0.05 && fcitx-remote -T', false)
+        awful.util.spawn_with_shell('sleep 0.05 && fcitx5-remote -T', false)
     elseif c.instance == 'QQ.exe' or c.instance == 'qq.exe' then
         if c.name and (c.name == '腾讯网迷你版' or c.name == '京东' or c.name:match('^腾讯.+新闻$')) then
             qqad_blocked = qqad_blocked + 1
