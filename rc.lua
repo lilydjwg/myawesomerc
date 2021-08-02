@@ -883,9 +883,12 @@ globalkeys = awful.util.table.join(
     awful.key({ }, 'XF86AudioMute', function () volumectl("mute", volumewidget) end),
 
     awful.key({ }, 'XF86AudioPause', function () awful.util.spawn('playerctl pause') end),
-    awful.key({ }, 'XF86AudioPlay', function () awful.util.spawn('playerctl play') end),
+    awful.key({ }, 'XF86AudioPlay', function () awful.util.spawn('sh -c "playerctl play || playmusic -q"') end),
     awful.key({ }, 'XF86AudioNext', function () awful.util.spawn('playerctl next') end),
-    awful.key({ }, 'XF86AudioPrev', function () awful.util.spawn('playerctl previous') end)
+    awful.key({ }, 'XF86AudioPrev', function () awful.util.spawn('playerctl previous') end),
+
+    awful.key({ }, 'XF86MonBrightnessUp', function () awful.util.spawn('monitor-brightness up') end),
+    awful.key({ }, 'XF86MonBrightnessDown', function () awful.util.spawn('monitor-brightness down') end)
 ) -- }}}
 
 -- {{{ clientkeys
