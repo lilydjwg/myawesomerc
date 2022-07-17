@@ -203,16 +203,16 @@ end
 
 -- {{{ Tags
 -- Define a tag table which hold all screen tags.
-tags_name = { "1", "2", "3", "4", "5文件", "6聊天", "7GVIM", "8", "9火狐", '0' }
+tags_name = { "1聊天", "2火狐", "3", "4", "5", "6", "7", "8GVIM", "9", '0' }
 tags_layout = {
-    awful.layout.suit.tile,
-    awful.layout.suit.tile,
-    awful.layout.suit.tile,
-    awful.layout.suit.tile,
-    awful.layout.suit.tile,
+    awful.layout.suit.max,
+    awful.layout.suit.max,
+    awful.layout.suit.max,
+    awful.layout.suit.max,
+    awful.layout.suit.max,
     empathy,
-    awful.layout.suit.tile,
-    awful.layout.suit.tile,
+    awful.layout.suit.max,
+    awful.layout.suit.max,
     awful.layout.suit.max,
     awful.layout.suit.floating,
 }
@@ -732,7 +732,7 @@ emacs_keys = {
 globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "Left",   awful.tag.viewprev       ),
     awful.key({ modkey,           }, "Right",  awful.tag.viewnext       ),
-    awful.key({ modkey,           }, "Escape", awful.tag.history.restore),
+    awful.key({ modkey,           }, "Tab", awful.tag.history.restore),
 
     awful.key({ modkey,           }, "j",
         function ()
@@ -750,9 +750,10 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(  1)    end),
     awful.key({ modkey, "Shift"   }, "k", function () awful.client.swap.byidx( -1)    end),
     awful.key({ modkey, "Control" }, "j", function () awful.screen.focus_relative( 1) end),
+    awful.key({ modkey,           }, "o", function () awful.screen.focus_relative( 1) end),
     awful.key({ modkey, "Control" }, "k", function () awful.screen.focus_relative(-1) end),
     awful.key({ modkey,           }, "u", awful.client.urgent.jumpto),
-    awful.key({ modkey,           }, "Tab",
+    awful.key({ modkey,           }, "Escape",
         function ()
             awful.client.focus.history.previous()
             if client.focus then
@@ -769,8 +770,8 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, "Control" }, "r", awesome.restart),
     awful.key({ modkey, "Control" }, "q", awesome.quit),
 
-    awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)    end),
-    awful.key({ modkey,           }, "h",     function () awful.tag.incmwfact(-0.05)    end),
+    awful.key({ modkey,           }, "l",     awful.tag.viewnext),
+    awful.key({ modkey,           }, "h",     awful.tag.viewprev),
     awful.key({ modkey, "Shift"   }, "h",     function () awful.tag.incnmaster( 1)      end),
     awful.key({ modkey, "Shift"   }, "l",     function () awful.tag.incnmaster(-1)      end),
     awful.key({ modkey, "Control" }, "h",     function () awful.tag.incncol( 1)         end),
@@ -789,7 +790,7 @@ globalkeys = awful.util.table.join(
     -- Prompt
     awful.key({ modkey, "Shift"   }, "r",     function () mypromptbox[mouse.screen]:run() end),
     awful.key({ "Mod1"            }, "F2",    function () awful.util.spawn('xfce4-appfinder', false) end),
-    awful.key({ "Mod1"            }, "space", function () awful.util.spawn('rofi -show combi', false) end),
+    awful.key({ "Mod1"            }, "space", function () awful.util.spawn('xfce4-appfinder', false) end),
 
     awful.key({ modkey, "Shift"   }, "x", function () awful.util.spawn('openmsg_qq.py', false) end),
     -- Menubar
@@ -882,10 +883,10 @@ globalkeys = awful.util.table.join(
     awful.key({ }, 'XF86AudioLowerVolume', function () volumectl("down", volumewidget) end),
     awful.key({ }, 'XF86AudioMute', function () volumectl("mute", volumewidget) end),
 
-    awful.key({ }, 'XF86AudioPause', function () awful.util.spawn('playerctl pause', false) end),
-    awful.key({ }, 'XF86AudioPlay', function () awful.util.spawn_with_shell('playerctl play || playmusic -q', false) end),
-    awful.key({ }, 'XF86AudioNext', function () awful.util.spawn('playerctl next', false) end),
-    awful.key({ }, 'XF86AudioPrev', function () awful.util.spawn('playerctl previous', false) end),
+    -- awful.key({ }, 'XF86AudioPause', function () awful.util.spawn('playerctl pause', false) end),
+    -- awful.key({ }, 'XF86AudioPlay', function () awful.util.spawn_with_shell('playerctl play || playmusic -q', false) end),
+    -- awful.key({ }, 'XF86AudioNext', function () awful.util.spawn('playerctl next', false) end),
+    -- awful.key({ }, 'XF86AudioPrev', function () awful.util.spawn('playerctl previous', false) end),
 
     awful.key({ }, 'XF86MonBrightnessUp', function () awful.util.spawn('monitor-brightness up', false) end),
     awful.key({ }, 'XF86MonBrightnessDown', function () awful.util.spawn('monitor-brightness down', false) end)
@@ -897,7 +898,7 @@ clientkeys = awful.util.table.join(
     awful.key({ modkey,           }, "c",      function (c) c:kill()                         end),
     awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle                     ),
     awful.key({ modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end),
-    awful.key({ modkey,           }, "o",      awful.client.movetoscreen                        ),
+    awful.key({ modkey, "Shift"   }, "o",      awful.client.movetoscreen                        ),
     awful.key({ modkey,           }, "a",      function (c) c.above = not c.above            end),
     awful.key({ modkey,           }, "s",      function (c) c.sticky = not c.sticky          end),
     awful.key({ modkey, "Shift"   }, "m",
@@ -1024,7 +1025,7 @@ awful.rules.rules = {
     rule = {
       class = "Firefox",
       skip_taskbar = true,
-      instance = 'Popup',
+      role = 'Popup',
     },
     properties = {
       floating = true,
@@ -1034,7 +1035,7 @@ awful.rules.rules = {
     rule = {
       class = "Nightly",
       skip_taskbar = true,
-      instance = 'Popup',
+      role = 'Popup',
     },
     properties = {
       floating = true,
@@ -1237,6 +1238,5 @@ pcall(function()
 end)
 dbus.release_name("session", "org.freedesktop.Notifications")
 awful.util.spawn("awesomeup", false)
-awful.tag.viewonly(tags[1][6])
 -- vim: set fdm=marker et sw=4:
 -- }}}

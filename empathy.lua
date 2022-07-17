@@ -9,7 +9,8 @@ local ipairs = ipairs
 local math = math
 local table = table
 -- “联系人列表”宽度
-local buddylist_width = 295
+-- local buddylist_width = 295
+local buddylist_width = 295 * 2
 -- local naughty = naughty
 
 local function do_empathy(p)
